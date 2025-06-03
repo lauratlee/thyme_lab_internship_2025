@@ -38,6 +38,8 @@ def pymol_runner(gpcr_dir):
                 match = re.search(r'\(([^)]+)\)', gene)
                 if match: name = match.group(1)
 
+            print(f"NAME: {name}")
+
             #initialize pymol2 in headless mode
             with pymol2.PyMOL() as pymol:
                 #set the internal gui width
@@ -45,9 +47,13 @@ def pymol_runner(gpcr_dir):
 
                 #load in reference (4S0V)
                 pymol.cmd.fetch("4S0V", "ref")
+                print("loaded 4S0V")
                 
                 #load in target gene
                 pymol.cmd.load(gene, "target")
+                target_atoms = pymol.cmd.count_atoms("target")
+                if target_atoms == 0:
+                    print(f"[WARNING] Failed to load target structure: {gene}")
 
                 #use the "super" command to align by structure
                 pymol.cmd.super("ref", "target")
@@ -55,15 +61,20 @@ def pymol_runner(gpcr_dir):
 
                 #select reference ligand
                 pymol.cmd.select("ligand", "resn suv")
+                ligand_atoms = pymol.cmd.count_atoms("ligand")
+                if ligand_atoms == 0:
+                    print(f"[WARNING] No atoms found for ligand in {gene}")
 
                 #locate and select pocket residues of target
                 pocket_sele = "byres (target within 5 of ligand) and target"
                 pymol.cmd.select("pocket", pocket_sele)
+                print(f"Atom count in pocket: {pymol.cmd.count_atoms('pocket')}")
 
                 #save pocket
                 output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir))
+                os.makedirs(output_dir, exist_ok=True)
                 output_path = os.path.join(output_dir, f"{name}_pocket.pdb")
-                pymol.cmd.save(output_path, "pocket.pdb")
+                pymol.cmd.save(output_path, "pocket")
                 print(f"saved ... {gpcr_dir} complete")
     os.chdir("..")
                 
