@@ -51,6 +51,7 @@ def pymol_runner(gpcr_dir):
 
                 #use the "super" command to align by structure
                 pymol.cmd.super("ref", "target")
+                print("structures aligned.")
 
                 #select reference ligand
                 pymol.cmd.select("ligand", "resn suv")
@@ -63,6 +64,7 @@ def pymol_runner(gpcr_dir):
                 output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir))
                 output_path = os.path.join(output_dir, f"{name}_pocket.pdb")
                 pymol.cmd.save(output_path, "pocket")
+                print(f"saved ... {gpcr_dir} complete")
     os.chdir("..")
                 
 
