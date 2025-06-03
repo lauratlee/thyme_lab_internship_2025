@@ -13,6 +13,9 @@
 #save the pocket as a .pdb file titled "[gene]_pocket.pdb".
 
 #this uses pymol2, which may be better
+
+print("script started.")
+
 import os, sys, re
 import pymol2
 
