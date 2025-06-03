@@ -19,6 +19,7 @@ import pymol2
 #define the directory containing your files as a command line argument
 #directory = 'path/to/your/files'
 directory = sys.argv[1]
+os.chdir(directory)
 
 #have the directory end with a backslash if it doesn't from the input
 if directory.endswith("/") == False:
