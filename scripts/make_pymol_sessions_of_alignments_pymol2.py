@@ -39,7 +39,7 @@ def pymol_runner(gpcr_dir):
                 if match: name = match.group(1)
 
             #initialize pymol2 in headless mode
-            with pymol2.PYMOL() as pymol:
+            with pymol2.PyMOL() as pymol:
                 #set the internal gui width
                 pymol.cmd.set('internal_gui_width', 600)
 
