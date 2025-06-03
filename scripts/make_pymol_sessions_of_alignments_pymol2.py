@@ -83,6 +83,7 @@ def pymol_runner(gpcr_dir):
 
 
 #walk through gpcr directory and run pymol_runner on each gpcr subdir
-for _, gpcr_dirs, _ in os.walk(directory):
-    for gpcr_dir in gpcr_dirs:
-        pymol_runner(os.path.join(directory, gpcr_dir))
+for sub in os.listdir(directory):
+    sub_path = os.path.join(directory, sub)
+    if os.path.isdir(sub_path):
+        pymol_runner(sub_path)
