@@ -33,11 +33,13 @@ if directory.endswith("/") == False:
 
 #helper function that takes in a gpcr directory and runs necessary pymol commands
 def pymol_runner(gpcr_dir): 
+    print(f"Entered pymol_runner for {gpcr_dir}")
     os.chdir(gpcr_dir)
-    for _, _, genes in os.walk(gpcr_dir):
+    for _, _, genes in os.walk("."):
         for gene in genes:
+            print(f"Found gene file: {gene}")
             #make note of gene name for exported pdb
-            if "(" not in gene: name = gpcr_dir
+            if "(" not in gene: name = os.path.basename(gpcr_dir)
             else: 
                 match = re.search(r'\(([^)]+)\)', gene)
                 if match: name = match.group(1)
@@ -62,6 +64,20 @@ def pymol_runner(gpcr_dir):
                 #use the "super" command to align by structure
                 pymol.cmd.super("ref", "target")
                 print("structures aligned.")
+                
+                # ----- TEMPORARY DEBUG -------
+                
+                # Create a combined selection of the aligned reference and target structures
+                combined_name = f"{name}_aligned"
+                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir))
+                os.makedirs(output_dir, exist_ok=True)
+                aligned_output_path = os.path.join(output_dir, f"{combined_name}.pdb")
+
+                # Save both aligned structures (ref and target) into a single file
+                pymol.cmd.save(aligned_output_path, "ref target")
+                print(f"Saved aligned structure to: {aligned_output_path}")
+                
+                # ------ END OF DEBUG ----------
 
                 #select reference ligand
                 pymol.cmd.select("ligand", "resn suv")
