@@ -32,17 +32,13 @@ def parse_centers(filename):
 def distance(c1, c2):
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
 
-def main():
-    # Get threshold from command line argument, default to 2.0 if missing or invalid
-    try:
-        threshold = float(sys.argv[1])
-    except (IndexError, ValueError):
-        print("Warning: Invalid or missing threshold argument. Using default threshold = 2.0 Å.")
-        threshold = 2.0
-
+def process_subfolder(folder, threshold):
+    os.chdir(folder)
     center_files = sorted(glob("*_centers.txt"))
+
     if len(center_files) < 2:
-        print("Need at least two *_centers.txt files in the current directory.")
+        print(f"[{folder}] Skipping: fewer than 2 *_centers.txt files.")
+        os.chdir("..")
         return
 
     for i in range(len(center_files)):
@@ -83,7 +79,24 @@ def main():
 
                     writer.writerow([res_a_str, res_b_str])
 
-            print(f"Wrote alignment file: {output_csv}")
+            print(f"[{folder}] Wrote: {output_csv}")
+    os.chdir("..")
+
+def main():
+    try:
+        threshold = float(sys.argv[1])
+    except (IndexError, ValueError):
+        print("Warning: Invalid or missing threshold argument. Using default threshold = 2.0 Å.")
+        threshold = 2.0
+
+    subfolders = [f for f in os.listdir(".") if os.path.isdir(f)]
+    if not subfolders:
+        print("No subfolders found.")
+        return
+
+    for folder in sorted(subfolders):
+        process_subfolder(folder, threshold)
 
 if __name__ == "__main__":
     main()
+
