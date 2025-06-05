@@ -53,7 +53,9 @@ def main():
             residues_a = parse_centers(file_a)
             residues_b = parse_centers(file_b)
 
-            output_csv = f"{os.path.splitext(file_a)[0]}-{os.path.splitext(file_b)[0]}_alignments.csv"
+            gene_a = os.path.splitext(file_a)[0].replace("_pocket_centers", "")
+            gene_b = os.path.splitext(file_b)[0].replace("_pocket_centers", "")
+            output_csv = f"{gene_a}-{gene_b}_{threshold:.1f}.csv"
 
             with open(output_csv, "w", newline='') as csvfile:
                 writer = csv.writer(csvfile)
