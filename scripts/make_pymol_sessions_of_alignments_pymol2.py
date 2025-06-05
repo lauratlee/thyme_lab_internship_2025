@@ -62,9 +62,10 @@ def pymol_runner(gpcr_dir):
                     print(f"[WARNING] Failed to load target structure: {gene}")
 
                 #use the "super" command to align by structure
-                pymol.cmd.super("ref", "target")
+                pymol.cmd.super("target", "ref")
                 print("structures aligned.")
                 
+                '''
                 # ----- TEMPORARY DEBUG -------
                 
                 # Create a combined selection of the aligned reference and target structures
@@ -78,6 +79,7 @@ def pymol_runner(gpcr_dir):
                 print(f"Saved aligned structure to: {aligned_output_path}")
                 
                 # ------ END OF DEBUG ----------
+                '''
 
                 #select reference ligand
                 pymol.cmd.select("ligand", "resn suv")
