@@ -1,6 +1,6 @@
 # file intended to output the center x-, y-, and z- coordinates of a molecule.
 
-import sys
+import sys, os
 from collections import defaultdict
 
 pdb_file = sys.argv[1]
