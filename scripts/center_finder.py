@@ -2,8 +2,25 @@
 
 import sys
 
-file_path = sys.argv[1]
+pdb_file = sys.argv[1]
 
+
+with open(pdb_file, "r") as f:
+    for line in f:
+        if line.startswith("ATOM") or line.startswith("HETATM"):
+            atom_name = line[12:16].strip()
+            element = line[76:78].strip().upper()
+
+            # Skip hydrogen atoms
+            if element == "H" or atom_name.startswith("H"):
+                continue
+
+            x = float(line[30:38])
+            y = float(line[38:46])
+            z = float(line[46:54])
+            print(f"{atom_name}: x={x}, y={y}, z={z}")
+
+'''
 # variable setup
 x_data = []
 x_index = 5
@@ -26,6 +43,7 @@ with open(file_path, 'r') as file:
 x_center = min(x_data) + (max(x_data)-min(x_data))*0.5
 y_center = min(y_data) + (max(y_data)-min(y_data))*0.5
 z_center = min(z_data) + (max(z_data)-min(z_data))*0.5
+'''
 
 
 print(x_center)
