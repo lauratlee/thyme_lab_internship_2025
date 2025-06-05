@@ -4,6 +4,7 @@ import sys
 from collections import defaultdict
 
 pdb_file = sys.argv[1]
+output_file = os.path.splitext(pdb_file)[0] + "_centers.txt"
 
 # Dictionary to hold coordinates per residue
 # Key = (chain, resi, resn), Value = list of (x, y, z) tuples
