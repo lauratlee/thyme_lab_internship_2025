@@ -59,7 +59,10 @@ def main():
 
             with open(output_csv, "w", newline='') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow([f"Residue_in_{os.path.splitext(file_a)[0]}", f"Closest_Residue_in_{os.path.splitext(file_b)[0]}"])
+                writer.writerow([
+                    f"{gene_a}_pocket_residue",
+                    f"closest {gene_b}_pocket_residue within {threshold:.1f} angstroms"
+                ])
 
                 for res_a in residues_a:
                     closest_residue = None
