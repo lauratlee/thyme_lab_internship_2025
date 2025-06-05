@@ -1,51 +1,43 @@
-# file intended to output the center x-, y-, and z- coordinates of a ligand.
+# file intended to output the center x-, y-, and z- coordinates of a molecule.
 
 import sys
+from collections import defaultdict
 
 pdb_file = sys.argv[1]
 
+# Dictionary to hold coordinates per residue
+# Key = (chain, resi, resn), Value = list of (x, y, z) tuples
+residue_coords = defaultdict(list)
 
 with open(pdb_file, "r") as f:
     for line in f:
-        if line.startswith("ATOM") or line.startswith("HETATM"):
+        if line.startswith(("ATOM", "HETATM")):
             atom_name = line[12:16].strip()
             element = line[76:78].strip().upper()
 
-            # Skip hydrogen atoms
+            # Skip hydrogens
             if element == "H" or atom_name.startswith("H"):
                 continue
+
+            chain = line[21]
+            resi = line[22:26].strip()
+            resn = line[17:20].strip()
 
             x = float(line[30:38])
             y = float(line[38:46])
             z = float(line[46:54])
-            print(f"{atom_name}: x={x}, y={y}, z={z}")
 
-'''
-# variable setup
-x_data = []
-x_index = 5
+            key = (chain, resi, resn)
+            residue_coords[key].append((x, y, z))
 
-y_data = []
-y_index = 6
+# Compute and print center of each residue
+for (chain, resi, resn), coords in residue_coords.items():
+    n = len(coords)
+    if n == 0:
+        continue
 
-z_data = []
-z_index = 7
+    x_avg = sum(x for x, _, _ in coords) / n
+    y_avg = sum(y for _, y, _ in coords) / n
+    z_avg = sum(z for _, _, z in coords) / n
 
-# extracts x-, y-, and z- data from table and adds to respective lists
-with open(file_path, 'r') as file:
-    for line in file:
-        columns = line.strip().split()
-        x_data.append(float(columns[x_index]))
-        y_data.append(float(columns[y_index]))
-        z_data.append(float(columns[z_index]))
-
-# calculates x-, y-, and z- center coordinates
-x_center = min(x_data) + (max(x_data)-min(x_data))*0.5
-y_center = min(y_data) + (max(y_data)-min(y_data))*0.5
-z_center = min(z_data) + (max(z_data)-min(z_data))*0.5
-'''
-
-
-print(x_center)
-print(y_center)
-print(z_center)
+    print(f"{resn} {resi} (chain {chain}): center = ({x_avg:.3f}, {y_avg:.3f}, {z_avg:.3f})")
