@@ -30,14 +30,18 @@ with open(pdb_file, "r") as f:
             key = (chain, resi, resn)
             residue_coords[key].append((x, y, z))
 
-# Compute and print center of each residue
-for (chain, resi, resn), coords in residue_coords.items():
-    n = len(coords)
-    if n == 0:
-        continue
+# Compute and center of each residue and write to a .txt file
+with open(output_file, "w") as out:
+    for (chain, resi, resn), coords in residue_coords.items():
+        n = len(coords)
+        if n == 0:
+            continue
 
-    x_avg = sum(x for x, _, _ in coords) / n
-    y_avg = sum(y for _, y, _ in coords) / n
-    z_avg = sum(z for _, _, z in coords) / n
+        x_avg = sum(x for x, _, _ in coords) / n
+        y_avg = sum(y for _, y, _ in coords) / n
+        z_avg = sum(z for _, _, z in coords) / n
 
-    print(f"{resn} {resi} (chain {chain}): center = ({x_avg:.3f}, {y_avg:.3f}, {z_avg:.3f})")
+        line = f"{resn} {resi} (chain {chain}): center = ({x_avg:.3f}, {y_avg:.3f}, {z_avg:.3f})\n"
+        out.write(line)
+        
+print(f"{pdb_file} done")
