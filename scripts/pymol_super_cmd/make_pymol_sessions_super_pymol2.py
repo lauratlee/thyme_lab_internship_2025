@@ -20,7 +20,7 @@ import pymol2
 directory = sys.argv[1]
 print(f"Directory provided: {directory}")
 os.chdir(directory)
-print(f"Now in: {os.path.basename('.')}")
+print(f"Now in: {os.getcwd()}")
 
 #have the directory end with a backslash if it doesn't from the input
 if directory.endswith("/") == False:
