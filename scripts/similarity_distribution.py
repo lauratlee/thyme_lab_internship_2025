@@ -2,6 +2,8 @@
 
 import sys
 import pandas as pd
+import matplotlib
+matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 
 csv_file = sys.argv[1]
