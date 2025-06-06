@@ -35,6 +35,8 @@ def pymol_runner(gpcr_dir):
     os.chdir(gpcr_dir)
     for _, _, genes in os.walk("."):
         for gene in genes:
+            if !gene.endswith(".pdb"):
+                continue
             print(f"Found gene file: {gene}")
             #make note of gene name for exported pdb
             if "(" not in gene: name = os.path.basename(gpcr_dir)
