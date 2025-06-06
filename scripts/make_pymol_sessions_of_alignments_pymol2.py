@@ -1,8 +1,6 @@
 #note, this script was initially written by ChatGPT to write most of the pymol logic, and further modified by me (Laura) to enhance use of inputs
 
-#usage: [UPDATE]
-#python make_pymol_sessions_of_placements_pymol2.py /path/to/placements/directory/ ligandresidueindex list+string+of+residue+indices
-#python make_pymol_sessions_of_placements_pymol2.py /scratch/abgvg9/discovery_results/top_1000_placement/agonist_12M_passing_placements/0 282 227+86+253+63+257
+#python make_pymol_sessions_of_alignments_pymol2.py path/to/gpcr_dir
 
 #breakdown of steps:
 #load in 4S0V (which includes ligand suv)
