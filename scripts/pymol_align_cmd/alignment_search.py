@@ -33,13 +33,12 @@ def parse_centers(filename):
 def distance(c1, c2):
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
 
-def process_subfolder(folder, threshold):
-    align_path = os.path.join(folder, "cmd_align")
-    if not os.path.exists(align_path):
-        print(f"[{folder}] Skipping: 'cmd_align' folder not found.")
+def process_subfolder(threshold):
+    if not os.path.exists("cmd_align):
+        print(f"[{os.path.basename(".")}] Skipping: 'cmd_align' folder not found.")
         return
     
-    os.chdir(align_path)
+    os.chdir("cmd_align")
 
     center_files = sorted(glob("*_centers.txt"))
 
@@ -102,7 +101,8 @@ def main():
         return
 
     for folder in sorted(subfolders):
-        process_subfolder(folder, threshold)
+        os.chdir(folder)
+        process_subfolder(threshold)
 
 if __name__ == "__main__":
     main()
