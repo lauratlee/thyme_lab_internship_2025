@@ -35,6 +35,8 @@ def pymol_runner(gpcr_dir):
     os.chdir(gpcr_dir)
     for _, _, genes in os.walk("."):
         for gene in genes:
+            if not gene.endswith(".pdb"):
+                continue
             print(f"Found gene file: {gene}")
             #make note of gene name for exported pdb
             if "(" not in gene: name = os.path.basename(gpcr_dir)
@@ -51,7 +53,7 @@ def pymol_runner(gpcr_dir):
 
                 #load in reference (4S0V)
                 pymol.cmd.fetch("4S0V", "ref")
-                print("loaded 4S0V")
+                
                 
                 #load in target gene
                 pymol.cmd.load(gene, "target")
@@ -103,10 +105,8 @@ def pymol_runner(gpcr_dir):
 
 
 #walk through gpcr directory and run pymol_runner on each gpcr subdir
-print("Scanning for subdirectories...")
 for sub in os.listdir(directory):
     sub_path = os.path.join(directory, sub)
-    print(f"Found: {sub_path}")
     if os.path.isdir(sub_path):
         print(f"Calling pymol_runner on: {sub_path}")
         pymol_runner(sub_path)
