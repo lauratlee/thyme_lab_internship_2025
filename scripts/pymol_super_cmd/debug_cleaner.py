@@ -5,6 +5,6 @@ import os
 for folder in os.listdir("."):
   os.chdir(f"{os.path.basename(folder)}")
   for file in os.listdir("."):
-    if "_aligned.pdb" in file:
+    if "_aligned" in file:
       os.remove(file)
   os.chdir("..")
