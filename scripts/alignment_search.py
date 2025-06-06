@@ -1,5 +1,6 @@
 # script generated in ChatGPT and adapted.
 # iterates through each gpcr directory and creates .csv files of common residues within a specified distance (in angstroms)
+# example usage: python ../scripts/alignment_search.py 2.0
 
 import sys
 import os
