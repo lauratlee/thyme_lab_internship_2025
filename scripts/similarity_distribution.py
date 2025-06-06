@@ -1,9 +1,7 @@
-# plots the % similarities of a given csv alignment summary file
+# plots the % similarities of a given csv alignment summary file and saves it as an image
 
 import sys
 import pandas as pd
-import matplotlib
-matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 
 csv_file = sys.argv[1]
@@ -26,5 +24,7 @@ plt.xlabel("Index")
 plt.ylabel("% Similarity")
 plt.grid(True)
 
-# Show the plot in a separate window
-plt.show()
+# Save the plot as an image file
+output_path = "similarity_plot.png"
+plt.savefig(output_path)
+print(f"Plot saved as '{output_path}'")
