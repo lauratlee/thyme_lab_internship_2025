@@ -3,28 +3,38 @@
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.colors as mcolors
 
+# Load CSV
 csv_file = sys.argv[1]
-
-# Read the CSV file
 df = pd.read_csv(csv_file)
 
-# Check if the column exists
 if "% similarity" not in df.columns:
     raise ValueError("Column '% similarity' not found in the CSV file.")
 
-# Extract the values from the column
 similarities = df["% similarity"]
 
-# Plot the values
+# Create histogram data
+counts, bins = np.histogram(similarities, bins=20, range=(0, 100))
+bin_centers = 0.5 * (bins[1:] + bins[:-1])
+
+# Create a colormap from blue (low) to red (high)
+norm = mcolors.Normalize(vmin=0, vmax=100)
+cmap = plt.cm.viridis
+
+# Plot bars with color gradient
 plt.figure(figsize=(10, 5))
-plt.plot(similarities, marker='o', linestyle='-', color='blue')
-plt.title("Percent Similarity")
-plt.xlabel("Index")
-plt.ylabel("% Similarity")
+for i in range(len(counts)):
+    plt.bar(bin_centers[i], counts[i], width=(bins[1] - bins[0]),
+            color=cmap(norm(bin_centers[i])))
+
+plt.xlabel('% Similarity')
+plt.ylabel('Frequency')
+plt.title('Distribution of % Similarity')
 plt.grid(True)
 
-# Save the plot as an image file
-output_path = "similarity_plot.png"
+# Save and open
+output_path = "similarity_gradient_hist.png"
 plt.savefig(output_path)
-print(f"Plot saved as '{output_path}'")
+print(f"Saved gradient histogram to {output_path}")
