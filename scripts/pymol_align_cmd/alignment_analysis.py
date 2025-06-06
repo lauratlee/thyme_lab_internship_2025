@@ -67,16 +67,22 @@ threshold = sys.argv[1]
 results = []
 
 for gpcr in os.listdir("."):
-    os.chdir(gpcr)
+    cmd_align_path = os.path.join(gpcr, "cmd_align")
+    if not os.path.isdir(cmd_align_path):
+        print(f"Skipping {gpcr}: no cmd_align folder.")
+        continue
+
+    os.chdir(cmd_align_path)
+    
     for f in os.listdir("."):
         if f.endswith(".csv") and f != f.lower() and threshold in f:
             csv_path = f
             results.append(alignment_summary(csv_path))
-    os.chdir("..")
+    os.chdir("../..")
     print(f"{gpcr} done")
     
 #write output file
-output_path = f"../human_zebrafish_alignment_summary_{threshold}.csv"
+output_path = f"../align_outputs/human_zebrafish_alignment_summary_{threshold}.csv"
 
 with open(output_path, "w", newline='') as out_f:
     writer = csv.writer(out_f)
