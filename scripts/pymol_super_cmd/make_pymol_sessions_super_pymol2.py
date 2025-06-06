@@ -64,12 +64,12 @@ def pymol_runner(gpcr_dir):
                 pymol.cmd.super("target", "ref")
                 print("structures aligned.")
                 
-                '''
+                
                 # ----- TEMPORARY DEBUG -------
                 
                 # Create a combined selection of the aligned reference and target structures
                 combined_name = f"{name}_aligned"
-                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir))
+                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir), "debug_files")
                 os.makedirs(output_dir, exist_ok=True)
                 aligned_output_path = os.path.join(output_dir, f"{combined_name}.pdb")
 
@@ -78,7 +78,7 @@ def pymol_runner(gpcr_dir):
                 print(f"Saved aligned structure to: {aligned_output_path}")
                 
                 # ------ END OF DEBUG ----------
-                '''
+                
 
                 #select reference ligand
                 pymol.cmd.select("ligand", "resn suv")
