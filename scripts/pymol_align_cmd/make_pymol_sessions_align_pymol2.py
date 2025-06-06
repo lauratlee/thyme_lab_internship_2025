@@ -74,7 +74,7 @@ def pymol_runner(gpcr_dir):
                 
                 # Create a combined selection of the aligned reference and target structures
                 combined_name = f"{name}_aligned"
-                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir))
+                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir), "cmd_align/debug_files")
                 os.makedirs(output_dir, exist_ok=True)
                 aligned_output_path = os.path.join(output_dir, f"{combined_name}.pdb")
 
