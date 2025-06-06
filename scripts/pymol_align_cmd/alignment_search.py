@@ -37,6 +37,7 @@ def process_subfolder(threshold):
     folder = os.path.basename(".")
     if not os.path.exists("cmd_align"):
         print(f"[{folder}] Skipping: 'cmd_align' folder not found.")
+        os.chdir("..")
         return
     
     os.chdir("cmd_align")
@@ -45,7 +46,7 @@ def process_subfolder(threshold):
 
     if len(center_files) < 2:
         print(f"[{folder}] Skipping: fewer than 2 *_centers.txt files.")
-        os.chdir("..")
+        os.chdir("../..")
         return
 
     for i in range(len(center_files)):
