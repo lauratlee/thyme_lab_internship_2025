@@ -1,6 +1,6 @@
 # plots the % similarities of a given csv alignment summary file and saves it as an image
 
-import sys
+import sys, re
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -8,6 +8,22 @@ import matplotlib.colors as mcolors
 
 # Load CSV
 csv_file = sys.argv[1]
+
+if "super_outputs" in csv_file:
+    method = "super"
+else if "align_outputs" in csv_file:
+    method = "align"
+else:
+    method = "unknown"
+
+match = re.search(r"_([0-9.]+)\.csv$", filename)
+if match:
+    threshold = float(match.group(1))  # or keep as string with match.group(1)
+else:
+    print("Pattern not found.")
+    threshold = 0.0
+
+    
 df = pd.read_csv(csv_file)
 
 if "% similarity" not in df.columns:
