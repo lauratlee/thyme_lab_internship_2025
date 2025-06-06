@@ -1,5 +1,6 @@
 # initially generated using ChatGPT and then adjusted accordingly.
 # parses alignment data and outputs a single csv file containing summary data for all relevant comparisons (human to zebrafish)
+# example usage: python ../scripts/alignment_analysis.py 2.0
 
 import csv, os, sys, re
 
