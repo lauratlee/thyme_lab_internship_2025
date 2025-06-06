@@ -34,7 +34,13 @@ def distance(c1, c2):
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
 
 def process_subfolder(folder, threshold):
-    os.chdir(folder)
+    align_path = os.path.join(folder, "cmd_align")
+    if not os.path.exists(align_path):
+        print(f"[{folder}] Skipping: 'cmd_align' folder not found.")
+        return
+    
+    os.chdir(align_path)
+
     center_files = sorted(glob("*_centers.txt"))
 
     if len(center_files) < 2:
@@ -81,7 +87,7 @@ def process_subfolder(folder, threshold):
                     writer.writerow([res_a_str, res_b_str])
 
             print(f"[{folder}] Wrote: {output_csv}")
-    os.chdir("..")
+    os.chdir("../..")
 
 def main():
     try:
