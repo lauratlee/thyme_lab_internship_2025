@@ -91,7 +91,7 @@ def pymol_runner(gpcr_dir):
                 print(f"Atom count in pocket: {pymol.cmd.count_atoms('pocket')}")
 
                 #save pocket
-                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir))
+                output_dir = os.path.join("../../gpcr_pocket_dir/cmd_align", os.path.basename(gpcr_dir))
                 os.makedirs(output_dir, exist_ok=True)
                 output_path = os.path.join(output_dir, f"{name}_pocket(align).pdb")
                 pymol.cmd.save(output_path, "pocket")
