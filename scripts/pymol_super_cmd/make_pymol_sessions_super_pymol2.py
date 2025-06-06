@@ -105,5 +105,5 @@ def pymol_runner(gpcr_dir):
 
 #walk through gpcr directory and run pymol_runner on each gpcr subdir
 for sub in os.listdir("."):
-    print(f"Calling pymol_runner on: {sub_path}")
-    pymol_runner(sub_path)
+    print(f"Calling pymol_runner on: {sub}")
+    pymol_runner(sub)
