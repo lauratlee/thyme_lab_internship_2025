@@ -59,10 +59,14 @@ def pymol_runner(gpcr_dir):
                 if target_atoms == 0:
                     print(f"[WARNING] Failed to load target structure: {gene}")
 
-                #use the "super" command to align by structure
-                pymol.cmd.align("target", "ref")
-                print("structures aligned.")
-                
+                #use the "align" command to align by structure
+                try:
+                    pymol.cmd.align("target", "ref")
+                    print("structures aligned.")
+                except Exception as e:
+                    print(f"[ERROR] Alignment failed for {gene}: {e}")
+                    continue
+                    
                 '''
                 # ----- TEMPORARY DEBUG -------
                 
