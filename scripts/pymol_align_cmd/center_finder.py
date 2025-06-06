@@ -5,6 +5,7 @@ from collections import defaultdict
 
 for gpcr_dir in os.listdir("."):
     os.chdir(gpcr_dir)
+    os.chdir("cmd_align")
     for gene in os.listdir("."):
         if not gene.endswith(".pdb"):
             continue
@@ -53,4 +54,4 @@ for gpcr_dir in os.listdir("."):
                 out.write(line)
                 
         print(f"{pdb_file} done")
-    os.chdir("..")
+    os.chdir("../..")
