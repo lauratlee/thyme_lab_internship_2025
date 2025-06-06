@@ -105,8 +105,6 @@ def pymol_runner(gpcr_dir):
 #walk through gpcr directory and run pymol_runner on each gpcr subdir
 print("Scanning for subdirectories...")
 for sub in os.listdir("."):
-    sub_path = os.path.join(directory, sub)
-    print(f"Found: {sub_path}")
-    if os.path.isdir(sub_path):
-        print(f"Calling pymol_runner on: {sub_path}")
-        pymol_runner(sub_path)
+    print(f"Found: {sub}")
+    print(f"Calling pymol_runner on: {sub}")
+    pymol_runner(f"./{sub}")
