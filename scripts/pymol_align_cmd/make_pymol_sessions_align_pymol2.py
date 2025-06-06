@@ -51,10 +51,10 @@ def pymol_runner(gpcr_dir):
 
                 #load in reference (4S0V)
                 pymol.cmd.fetch("4S0V", "ref")
-                print("loaded 4S0V")
                 
                 #load in target gene
                 pymol.cmd.load(gene, "target")
+                print(f"loaded {gene}")
                 target_atoms = pymol.cmd.count_atoms("target")
                 if target_atoms == 0:
                     print(f"[WARNING] Failed to load target structure: {gene}")
@@ -107,8 +107,5 @@ def pymol_runner(gpcr_dir):
 
 
 #walk through gpcr directory and run pymol_runner on each gpcr subdir
-print("Scanning for subdirectories...")
 for sub in os.listdir("."):
-    print(f"Found: {sub}")
-    print(f"Calling pymol_runner on: {sub}")
     pymol_runner(f"./{sub}")
