@@ -1,17 +1,13 @@
 import csv, sys, os
 
-file_name = sys.argv[1]
-
-def parse_residue_label(label):
-    """Extract residue name and number from a label like 'GLY 53 (chain A)'"""
+def parse_residue_identity(label):
+    """Extract residue identity (e.g., 'GLY') from 'GLY 53 (chain A)'."""
     if label == "NO ALIGNED RESIDUE":
         return None
-    parts = label.split()
-    if len(parts) < 2:
+    parts = label.strip().split()
+    if len(parts) == 0:
         return None
-    resn = parts[0]
-    resi = parts[1]
-    return (resn, resi)
+    return parts[0]  # return just the residue identity
 
 def load_alignments(csv_path):
     with open(csv_path, newline='') as f:
@@ -19,18 +15,18 @@ def load_alignments(csv_path):
         next(reader)  # skip header
         return list(reader)
 
-def count_matches(data):
+def count_matches_by_identity(data):
     matched = 0
     mismatched = 0
     failed = 0
 
     for row in data:
-        ref = parse_residue_label(row[0])
-        aligned = parse_residue_label(row[1])
+        ref_id = parse_residue_identity(row[0])
+        aligned_id = parse_residue_identity(row[1])
 
-        if aligned is None:
+        if aligned_id is None:
             failed += 1
-        elif ref == aligned:
+        elif ref_id == aligned_id:
             matched += 1
         else:
             mismatched += 1
@@ -39,13 +35,11 @@ def count_matches(data):
 
 def calculate_percent_similarity(matched, mismatched):
     total = matched + mismatched
-    if total == 0:
-        return 0.0
-    return (matched / total) * 100
+    return (matched / total * 100) if total > 0 else 0.0
 
 def analyze_alignment(csv_path):
     data = load_alignments(csv_path)
-    matched, mismatched, failed = count_matches(data)
+    matched, mismatched, failed = count_matches_by_identity(data)
     similarity = calculate_percent_similarity(matched, mismatched)
 
     print(f"Results for {csv_path}:\n")
@@ -54,5 +48,6 @@ def analyze_alignment(csv_path):
     print(f"Failed alignments    : {failed}")
     print(f"Percent similarity   : {similarity:.2f}%")
 
-# Example usage
-analyze_alignment(file_name)
+csv_path = sys.argv[1]
+
+analyze_alignment(csv_path)
