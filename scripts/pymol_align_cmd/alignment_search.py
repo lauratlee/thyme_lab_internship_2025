@@ -34,7 +34,7 @@ def distance(c1, c2):
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
 
 def process_subfolder(threshold):
-    if not os.path.exists("cmd_align):
+    if not os.path.exists("cmd_align"):
         print(f"[{os.path.basename(".")}] Skipping: 'cmd_align' folder not found.")
         return
     
