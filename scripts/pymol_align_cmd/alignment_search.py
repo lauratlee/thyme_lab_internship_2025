@@ -2,10 +2,7 @@
 # iterates through each gpcr directory and creates .csv files of common residues within a specified distance (in angstroms)
 # example usage: python ../scripts/alignment_search.py 2.0
 
-import sys
-import os
-import math
-import csv
+import sys, os, math, csv, re
 from glob import glob
 
 def parse_centers(filename):
@@ -57,8 +54,8 @@ def process_subfolder(threshold):
             residues_a = parse_centers(file_a)
             residues_b = parse_centers(file_b)
 
-            gene_a = os.path.splitext(file_a)[0].replace("_pocket_centers", "")
-            gene_b = os.path.splitext(file_b)[0].replace("_pocket_centers", "")
+            gene_a = os.path.splitext(file_a)[0].replace("_pocket(align)_centers", "")
+            gene_b = os.path.splitext(file_b)[0].replace("_pocket(align)_centers", "")
             output_csv = f"{gene_a}-{gene_b}_{threshold:.1f}.csv"
 
             with open(output_csv, "w", newline='') as csvfile:
