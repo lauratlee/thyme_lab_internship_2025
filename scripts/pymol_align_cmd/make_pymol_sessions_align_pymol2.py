@@ -67,7 +67,7 @@ def pymol_runner(gpcr_dir):
                     print(f"[ERROR] Alignment failed for {gene}: {e}")
                     continue
                     
-                '''
+                
                 # ----- TEMPORARY DEBUG -------
                 
                 # Create a combined selection of the aligned reference and target structures
@@ -81,7 +81,7 @@ def pymol_runner(gpcr_dir):
                 print(f"Saved aligned structure to: {aligned_output_path}")
                 
                 # ------ END OF DEBUG ----------
-                '''
+                
 
                 #select reference ligand
                 pymol.cmd.select("ligand", "resn suv")
