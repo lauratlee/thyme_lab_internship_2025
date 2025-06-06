@@ -1,7 +1,7 @@
 # initially generated using ChatGPT and then adjusted accordingly.
 # parses alignment data and outputs a single csv file containing summary data for all relevant comparisons (human to zebrafish)
 
-import csv, os, sys
+import csv, os, sys, re
 
 def parse_residue_identity(label):
     """Extract residue identity (e.g., 'GLY') from 'GLY 53 (chain A)'."""
@@ -41,12 +41,18 @@ def calculate_percent_similarity(matched, mismatched):
     return (matched / total * 100) if total > 0 else 0.0
 
 def extract_genes_from_filename(filename):
-    # Extracts "A", "B" from "A-B_threshold.csv"
+    # Remove extension and threshold
     base = filename.rsplit(".", 1)[0]
-    parts = base.split("_")[0]  # Take the A-B part
-    if "-" in parts:
-        return parts.split("-")
-    return ["Unknown", "Unknown"]
+    name_part = base.rsplit("_", 1)[0]  # remove _threshold part
+
+    # Use regex to match gene-name-like patterns (e.g., hcar1-1, cxcr5, etc.)
+    # This assumes gene names are separated by hyphens and can contain digits
+    pattern = r'[a-zA-Z0-9]+(?:-[0-9]+)?'
+    genes = re.findall(pattern, name_part)
+
+    if len(genes) >= 2:
+        return genes[0], genes[1]
+    return "Unknown", "Unknown"
 
 def alignment_summary(csv_path):
     data = load_alignments(csv_path)
