@@ -1,6 +1,6 @@
 #note, this script was initially written by ChatGPT to write most of the pymol logic, and further modified by me (Laura) to enhance use of inputs
 
-#python make_pymol_sessions_of_alignments_pymol2.py path/to/gpcr_dir
+#python make_pymol_sessions_super_pymol2.py path/to/gpcr_dir
 
 #breakdown of steps:
 #load in 4S0V (which includes ligand suv)
