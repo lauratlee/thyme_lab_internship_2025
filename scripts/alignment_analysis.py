@@ -1,4 +1,7 @@
-import csv, sys, os
+# initially generated using ChatGPT and then adjusted accordingly.
+# parses alignment data and outputs a single csv file containing summary data for all relevant comparisons (human to zebrafish)
+
+import csv, os, sys
 
 def parse_residue_identity(label):
     """Extract residue identity (e.g., 'GLY') from 'GLY 53 (chain A)'."""
@@ -37,17 +40,41 @@ def calculate_percent_similarity(matched, mismatched):
     total = matched + mismatched
     return (matched / total * 100) if total > 0 else 0.0
 
-def analyze_alignment(csv_path):
+def extract_genes_from_filename(filename):
+    # Extracts "A", "B" from "A-B_threshold.csv"
+    base = filename.rsplit(".", 1)[0]
+    parts = base.split("_")[0]  # Take the A-B part
+    if "-" in parts:
+        return parts.split("-")
+    return ["Unknown", "Unknown"]
+
+def alignment_summary(csv_path):
     data = load_alignments(csv_path)
     matched, mismatched, failed = count_matches_by_identity(data)
     similarity = calculate_percent_similarity(matched, mismatched)
+    A, B = extract_genes_from_filename(csv_path)
+    return [A, B, matched, mismatched, failed, round(similarity, 2)]
 
-    print(f"Results for {csv_path}:\n")
-    print(f"Matched residues     : {matched}")
-    print(f"Mismatched residues  : {mismatched}")
-    print(f"Failed alignments    : {failed}")
-    print(f"Percent similarity   : {similarity:.2f}%")
+threshold = sys.argv[1]
 
-csv_path = sys.argv[1]
+results = []
 
-analyze_alignment(csv_path)
+for gpcr in os.listdir("."):
+    os.chdir(gpcr)
+    for f in os.listdir("."):
+        if f.endswith(".csv") and f != f.lower() and threshold in f:
+            csv_path = f
+            results.append(alignment_summary(csv_path))
+    os.chdir("..")
+    print(f"{gpcr} done")
+    
+#write output file
+output_path = f"../human_zebrafish_alignment_summary_{threshold}.csv"
+
+with open(output_path, "w", newline='') as out_f:
+    writer = csv.writer(out_f)
+    writer.writerow(["human gene", "zebrafish gene", "matched", "mismatched", "failed alignments", "% similarity"])
+    writer.writerows(results)
+
+print("alignment summary done")
+
