@@ -3,7 +3,7 @@
 import os
 
 for folder in os.listdir("."):
-  os.chdir("./cmd_align")
+  os.chdir(f"{os.path.basename(folder)}/cmd_align")
   for file in os.listdir("."):
     if file.endswith(".csv"):
       os.remove(file)
