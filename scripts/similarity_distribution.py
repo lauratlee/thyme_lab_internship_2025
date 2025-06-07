@@ -10,11 +10,11 @@ import matplotlib.colors as mcolors
 csv_file = sys.argv[1]
 
 if "super_outputs" in csv_file:
-    method = "super"
+    folder = "super_outputs"
 else if "align_outputs" in csv_file:
-    method = "align"
+    folder = "align_outputs"
 else:
-    method = "unknown"
+    folder = "unknown"
 
 match = re.search(r"_([0-9.]+)\.csv$", filename)
 if match:
@@ -51,6 +51,6 @@ plt.title('Distribution of % Similarity')
 plt.grid(True)
 
 # Save and open
-output_path = "similarity_gradient_hist.png"
+output_path = os.join("..", folder, f"plot_{threshold}.png")
 plt.savefig(output_path)
 print(f"Saved gradient histogram to {output_path}")
