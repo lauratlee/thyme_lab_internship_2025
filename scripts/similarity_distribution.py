@@ -1,6 +1,6 @@
 # plots the % similarities of a given csv alignment summary file and saves it as an image
 
-import sys, re
+import sys, re, os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,12 +11,12 @@ csv_file = sys.argv[1]
 
 if "super_outputs" in csv_file:
     folder = "super_outputs"
-else if "align_outputs" in csv_file:
+elif "align_outputs" in csv_file:
     folder = "align_outputs"
 else:
     folder = "unknown"
 
-match = re.search(r"_([0-9.]+)\.csv$", filename)
+match = re.search(r"_([0-9.]+)\.csv$", csv_file)
 if match:
     threshold = float(match.group(1))  # or keep as string with match.group(1)
 else:
@@ -51,6 +51,7 @@ plt.title('Distribution of % Similarity')
 plt.grid(True)
 
 # Save and open
-output_path = os.join("..", folder, f"plot_{threshold}.png")
+output_dir = os.dirname(csv_file)
+output_path = os.path.join(output_dir, f"plot_{threshold}.png")
 plt.savefig(output_path)
 print(f"Saved gradient histogram to {output_path}")
