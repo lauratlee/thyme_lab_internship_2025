@@ -1,4 +1,5 @@
 # plots the % similarities of a given csv alignment summary file and saves it as an image
+# run from scripts folder
 
 import sys, re, os
 import pandas as pd
