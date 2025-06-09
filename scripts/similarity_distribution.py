@@ -52,7 +52,7 @@ plt.title('Distribution of % Similarity')
 plt.grid(True)
 
 # Save and open
-output_dir = os.dirname(csv_file)
+output_dir = os.path.dirname(csv_file)
 output_path = os.path.join(output_dir, f"plot_{threshold}.png")
 plt.savefig(output_path)
 print(f"Saved gradient histogram to {output_path}")
