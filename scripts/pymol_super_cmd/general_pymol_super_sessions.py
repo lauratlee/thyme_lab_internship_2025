@@ -19,6 +19,17 @@ import pymol2
 
 #-----------------UPDATE------------------------
 
+gpcr_options = [("A", "2RH1", "CAU"), ("B1", "4K5Y", "1Q5"), ("C", "7M3G", "H43"), ("F", "4JKV", "1KS")]
+
+idx = sys.argv[1]
+choice = gpcr_options[idx]
+gpcr_class, gpcr_name, ligand_name = choice[0], choice[1], choice[2]
+
+
+
+
+
+
 
 directory = sys.argv[1]
 print(f"Directory provided: {directory}")
