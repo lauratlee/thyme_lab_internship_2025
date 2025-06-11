@@ -60,7 +60,7 @@ with open(output_name, "w", newline = '') as output_file:
 
   for key, value_list in data_dict.items():
     # Find best % similarity
-    best_similarity = max(float(x[5]) for x in value_list)
+    best_similarity = max(float(x[3]) for x in value_list)
     # Check if there are multiple outputs that produced the best similarity
     best_similarities = [t for t in value_list if float(t[1]) == best_similarity]
 
