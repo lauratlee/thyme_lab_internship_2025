@@ -43,15 +43,17 @@ def calculate_percent_similarity(matched, mismatched):
     return (matched / total * 100) if total > 0 else 0.0
 
 def extract_genes_from_filename(filename):
-    # Remove extension and threshold
-    base = filename.rsplit(".", 1)[0]
-    name_part = base.rsplit("_", 1)[0]  # remove _threshold part
-
-    # Use regex to match gene-name-like patterns (e.g., hcar1-1, cxcr5, etc.)
-    # This assumes gene names are separated by hyphens and can contain digits
+    # Step 1: Remove extension and prefix
+    base = os.path.splitext(filename)[0]           # "[align]ACKR3-ackr3a_2.0"
+    name_part = base.replace("[align]", "")        # "ACKR3-ackr3a_2.0"
+    
+    # Step 2: Remove the trailing threshold (e.g., _2.0)
+    name_part = re.sub(r'_\d+(\.\d+)?$', '', name_part)  # "ACKR3-ackr3a"
+    
+    # Step 3: Extract gene names using regex
     pattern = r'[a-zA-Z0-9]+(?:-[0-9]+)?'
     genes = re.findall(pattern, name_part)
-
+    
     if len(genes) >= 2:
         return genes[0], genes[1]
     return "Unknown", "Unknown"
