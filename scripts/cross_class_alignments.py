@@ -15,7 +15,7 @@ data_dict = {}
 
 # takes a .csv file along with the file data's method (super/align), and adds the file's data to the data_dict dictionary
 def parse_summary(file, gpcr_class, method):
-  with open(file, , newline = '') as f:
+  with open(file, newline = '') as f:
     reader_f = csv.reader(f)
     next(reader_f)
     for row in reader_f:
