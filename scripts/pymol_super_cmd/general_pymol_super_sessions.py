@@ -123,7 +123,7 @@ def pymol_runner(gpcr_dir):
 
 
 
-def main()
+def main():
     #walk through gpcr directory and run pymol_runner on each gpcr subdir
     for sub in os.listdir("."):
         print(f"Calling pymol_runner on: {sub}")
