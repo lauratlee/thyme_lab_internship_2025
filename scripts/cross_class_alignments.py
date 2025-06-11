@@ -56,7 +56,7 @@ output_name = f"best_alignments_{threshold}.csv"
 
 with open(output_name, "w", newline = '') as output_file:
   writer = csv.writer(output_file)
-  writer.writerow["human gene", "zebrafish gene", "matched", "mismatched", "failed alignments", "% similarity", "best class alignment", "best method"]
+  writer.writerow(["human gene", "zebrafish gene", "matched", "mismatched", "failed alignments", "% similarity", "best class alignment", "best method"])
 
   for key, value_list in data_dict.items():
     # Find best % similarity
@@ -67,6 +67,8 @@ with open(output_name, "w", newline = '') as output_file:
     # write entries to csv file
     for entry in best_similarities:
       writer.writerow([*key, *entry])
+
+print(f"data saved to {output_name}")
 
 
 
