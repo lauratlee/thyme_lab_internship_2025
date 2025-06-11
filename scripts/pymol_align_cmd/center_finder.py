@@ -15,8 +15,9 @@ for gpcr_dir in os.listdir("."):
             continue
 
         pdb_file = gene
-            
-        output_file = os.path.join("[align]", os.path.splitext(pdb_file)[0] + "_centers.txt")
+        print(pdb_file)
+        
+        output_file =  os.path.splitext(pdb_file)[0] + "_centers.txt"
         
         # Dictionary to hold coordinates per residue
         # Key = (chain, resi, resn), Value = list of (x, y, z) tuples
