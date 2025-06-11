@@ -102,48 +102,48 @@ def process_subfolder_general(folder, threshold):
             os.chdir("..")
             return
     
-        for i in range(len(center_files)):
-            for j in range(i + 1, len(center_files)):
-                file_a = center_files[i]
-                file_b = center_files[j]
-    
-                residues_a = parse_centers(file_a)
-                residues_b = parse_centers(file_b)
-                
-                # Remove extension, then strip prefix and suffix
-                gene_a = file_a.split("_pocket_centers")[0]
-    
-                gene_b = file_b.split("_pocket_centers")[0]
-    
-                output_csv = f"{gene_a}-{gene_b}_{threshold:.1f}.csv"
-    
-                with open(output_csv, "w", newline='') as csvfile:
-                    writer = csv.writer(csvfile)
-                    writer.writerow([
-                        f"{gene_a}_pocket_residue",
-                        f"closest {gene_b}_pocket_residue within {threshold:.1f} angstroms"
-                    ])
-    
-                    for res_a in residues_a:
-                        closest_residue = None
-                        min_dist = float('inf')
-    
-                        for res_b in residues_b:
-                            dist = distance(res_a["coords"], res_b["coords"])
-                            if dist < min_dist:
-                                min_dist = dist
-                                closest_residue = res_b
-    
-                        res_a_str = f"{res_a['resn']} {res_a['resi']} (chain {res_a['chain']})"
-    
-                        if min_dist <= threshold:
-                            res_b_str = f"{closest_residue['resn']} {closest_residue['resi']} (chain {closest_residue['chain']})"
-                        else:
-                            res_b_str = "NO ALIGNED RESIDUE"
-    
-                        writer.writerow([res_a_str, res_b_str])
-    
-                print(f"[{folder}] Wrote: {output_csv}")
+    for i in range(len(center_files)):
+        for j in range(i + 1, len(center_files)):
+            file_a = center_files[i]
+            file_b = center_files[j]
+
+            residues_a = parse_centers(file_a)
+            residues_b = parse_centers(file_b)
+            
+            # Remove extension, then strip prefix and suffix
+            gene_a = file_a.split("_pocket_centers")[0]
+
+            gene_b = file_b.split("_pocket_centers")[0]
+
+            output_csv = f"{gene_a}-{gene_b}_{threshold:.1f}.csv"
+
+            with open(output_csv, "w", newline='') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow([
+                    f"{gene_a}_pocket_residue",
+                    f"closest {gene_b}_pocket_residue within {threshold:.1f} angstroms"
+                ])
+
+                for res_a in residues_a:
+                    closest_residue = None
+                    min_dist = float('inf')
+
+                    for res_b in residues_b:
+                        dist = distance(res_a["coords"], res_b["coords"])
+                        if dist < min_dist:
+                            min_dist = dist
+                            closest_residue = res_b
+
+                    res_a_str = f"{res_a['resn']} {res_a['resi']} (chain {res_a['chain']})"
+
+                    if min_dist <= threshold:
+                        res_b_str = f"{closest_residue['resn']} {closest_residue['resi']} (chain {closest_residue['chain']})"
+                    else:
+                        res_b_str = "NO ALIGNED RESIDUE"
+
+                    writer.writerow([res_a_str, res_b_str])
+
+            print(f"[{folder}] Wrote: {output_csv}")
     os.chdir("..")
 
     
