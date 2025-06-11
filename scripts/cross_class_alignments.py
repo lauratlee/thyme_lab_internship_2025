@@ -6,7 +6,7 @@
 # python scripts/cross_class_alignments.py 2.0
 
 # a temporary dictionary is created where the key is a tuple of (human gene, zebrafish gene), and the value is a list of tuples with the corresponding alignment data.
-  # value tuple format is (match, mismatch, % similarity, class, method). The classes are A, B1, C, or F, or "A (4s0V)" (referring to the initial alignments done with 4s0v, a class A GPCR, as the reference)
+  # value tuple format is (match, mismatch, failed alignments, % similarity, class, method). The classes are A, B1, C, or F, or "A (4s0V)" (referring to the initial alignments done with 4s0v, a class A GPCR, as the reference)
 
 import os, sys, csv, re, pprint
 
@@ -51,6 +51,9 @@ for summary in os.listdir("."):
     gpcr_class = get_class(summary)
     parse_summary(summary, gpcr_class, method)
 os.chdir("..")
+
+# for debugging
+pprint.pprint(data_dict)
 
 output_name = f"best_alignments_{threshold}.csv"
 
