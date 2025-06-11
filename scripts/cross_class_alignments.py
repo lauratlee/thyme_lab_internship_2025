@@ -20,7 +20,7 @@ def parse_summary(file, gpcr_class, method):
     next(reader_f)
     for row in reader_f:
       key = (row[0], row[1])
-      value = tuple(row[2:] + gpcr_class + method)
+      value = tuple(row[2:] + [gpcr_class, method])
       if key in data_dict:
         data_dict[key].append(value)
       else:
