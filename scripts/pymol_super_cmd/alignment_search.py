@@ -62,7 +62,7 @@ def process_subfolder(folder, threshold):
             gene_b = os.path.splitext(file_b)[0]  # -> "[super]ACKR3_pocket_centers"
             gene_b = gene_b.replace("[super]", "").replace("_pocket_centers", "")
 
-            output_csv = f"[{class_name}]{gene_a}-{gene_b}_{threshold:.1f}.csv"
+            output_csv = f"[super]{gene_a}-{gene_b}_{threshold:.1f}.csv"
 
             with open(output_csv, "w", newline='') as csvfile:
                 writer = csv.writer(csvfile)
