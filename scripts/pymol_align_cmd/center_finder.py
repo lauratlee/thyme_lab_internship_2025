@@ -11,7 +11,7 @@ for gpcr_dir in os.listdir("."):
     os.chdir(folder_name)
     for gene in os.listdir("."):
         # filter out all files that were not made from the align cmd and are not pockets
-        if not gene.endswith("_pocket.pdb") and "[align]" not in gene:
+        if not gene.endswith("_pocket.pdb") or "[align]" not in gene or "aligned" in gene:
             continue
 
         pdb_file = gene
