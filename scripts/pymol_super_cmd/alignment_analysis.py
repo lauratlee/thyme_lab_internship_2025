@@ -1,6 +1,7 @@
 # initially generated using ChatGPT and then adjusted accordingly.
 # parses alignment data and outputs a single csv file containing summary data for all relevant comparisons (human to zebrafish)
-# example usage: python ../scripts/alignment_analysis.py 2.0
+# example usage: python ../scripts/alignment_analysis.py Class_A 2.0
+# this script should be run from gpcr_pocket_dir/
 
 import csv, os, sys, re
 
@@ -62,21 +63,23 @@ def alignment_summary(csv_path):
     A, B = extract_genes_from_filename(csv_path)
     return [A, B, matched, mismatched, failed, round(similarity, 2)]
 
-threshold = sys.argv[1]
+class_name = sys.argv[1]
+threshold = sys.argv[2]
 
 results = []
 
 for gpcr in os.listdir("."):
     os.chdir(gpcr)
+    os.chdir(class_name)
     for f in os.listdir("."):
-        if f.endswith(".csv") and f != f.lower() and threshold in f:
+        if f.endswith(".csv") and f != f.lower() and threshold in f and "[super]" in f:
             csv_path = f
             results.append(alignment_summary(csv_path))
-    os.chdir("..")
+    os.chdir("../..")
     print(f"{gpcr} done")
     
 #write output file
-output_path = f"../super_outputs/human_zebrafish_alignment_summary_{threshold}.csv"
+output_path = f"../super_outputs/[{class_name}]human_zebrafish_alignment_summary_{threshold}.csv"
 
 with open(output_path, "w", newline='') as out_f:
     writer = csv.writer(out_f)
