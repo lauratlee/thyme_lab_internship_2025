@@ -1,7 +1,7 @@
 #note, this script was initially written by ChatGPT to write most of the pymol logic, and further modified by me (Laura) to enhance use of inputs
 
-#python (path to script) (REFERENCE)
-#this is different than the 4S0V-only script, which was one from the scripts folder. this should be fun from the gpcr_dir folder
+#python (path to script) (REFERENCE FILE)
+#this is different than the 4S0V-only script, which was one from the scripts folder. this should be run from the gpcr_dir folder
 
 #breakdown of steps:
 #load in reference (with ligand)
@@ -19,22 +19,25 @@ import pymol2
 
 #-----------------UPDATE------------------------
 
-gpcr_options = [("A", "2RH1", "CAU"), ("B1", "4K5Y", "1Q5"), ("C", "7M3G", "H43"), ("F", "4JKV", "1KS")]
+ref_map = {
+    "2rh1_chainA": ("Class_A", "cau"),
+    "4k5y_chainA": ("Class_B1", "1q5"),
+    "7m3g_chainA": ("Class_C", "h43"),
+    "4jkv_chainA": ("Class_F", "1ks")
+}
 
-idx = sys.argv[1]
-choice = gpcr_options[idx]
-gpcr_class, gpcr_name, ligand_name = choice[0], choice[1], choice[2]
+ref_file = os.path.basename(sys.argv[1])
 
-
-
-
-
-
-
-directory = sys.argv[1]
-print(f"Directory provided: {directory}")
-os.chdir(directory)
-print(f"Now in: {os.getcwd()}")
+if ref_file in ref_map:
+    gpcr_class, ligand_name = ref_map[ref_file]
+    print(f"""
+    CLASS: {gpcr_class}
+    LIGAND: {ligand_name}
+    """)
+else:
+    print("ERROR: Please provide a reference file that is within the gpcr_class_reps directory.")
+    sys.exit(1)
+    
 
 #have the directory end with a backslash if it doesn't from the input
 if directory.endswith("/") == False:
@@ -64,9 +67,13 @@ def pymol_runner(gpcr_dir):
                 #set the internal gui width
                 pymol.cmd.set('internal_gui_width', 600)
 
-                #load in reference (4S0V)
-                pymol.cmd.fetch("4S0V", "ref")
-                
+                #load in reference
+                pymol.cmd.load(os.path.join("../../gpcr_class_reps", ref_file), "ref")
+                if pymol.cmd.count_atoms("ref") != 0:
+                    print("ref loaded")
+                else:
+                    print("[WARNING] Failed to load ref structure")
+               
                 
                 #load in target gene
                 pymol.cmd.load(gene, "target")
@@ -82,8 +89,8 @@ def pymol_runner(gpcr_dir):
                 # ----- TEMPORARY DEBUG -------
                 
                 # Create a combined selection of the aligned reference and target structures
-                combined_name = f"{name}_aligned"
-                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir), "debug_files")
+                combined_name = f"[super]{name}_aligned"
+                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir), gpcr_class)
                 os.makedirs(output_dir, exist_ok=True)
                 aligned_output_path = os.path.join(output_dir, f"{combined_name}.pdb")
 
@@ -95,7 +102,7 @@ def pymol_runner(gpcr_dir):
                 
 
                 #select reference ligand
-                pymol.cmd.select("ligand", "resn suv")
+                pymol.cmd.select("ligand", f"resn {ligand_name}")
                 ligand_atoms = pymol.cmd.count_atoms("ligand")
                 if ligand_atoms == 0:
                     print(f"[WARNING] No atoms found for ligand in {gene}")
@@ -106,9 +113,9 @@ def pymol_runner(gpcr_dir):
                 print(f"Atom count in pocket: {pymol.cmd.count_atoms('pocket')}")
 
                 #save pocket
-                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir))
+                output_dir = os.path.join("../../gpcr_pocket_dir", os.path.basename(gpcr_dir), gpcr_class)
                 os.makedirs(output_dir, exist_ok=True)
-                output_path = os.path.join(output_dir, f"{name}_pocket.pdb")
+                output_path = os.path.join(output_dir, f"[super]{name}_pocket.pdb")
                 pymol.cmd.save(output_path, "pocket")
                 print(f"saved ... {gpcr_dir} complete")
     os.chdir("..")
@@ -116,8 +123,20 @@ def pymol_runner(gpcr_dir):
 
 
 
+def main()
+    #walk through gpcr directory and run pymol_runner on each gpcr subdir
+    for sub in os.listdir("."):
+        print(f"Calling pymol_runner on: {sub}")
+        pymol_runner(sub)
 
-#walk through gpcr directory and run pymol_runner on each gpcr subdir
-for sub in os.listdir("."):
-    print(f"Calling pymol_runner on: {sub}")
-    pymol_runner(sub)
+while True:
+    answer = input("Continue with alignments? [y/n]").strip().lower()
+    if answer == "y":
+        main()
+        break
+    elif answer == "n":
+        print("Exiting program.")
+        sys.exit(0)
+    else:
+        print("Invalid input, please answer y/n")
+
