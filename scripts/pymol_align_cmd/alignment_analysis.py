@@ -43,12 +43,17 @@ def calculate_percent_similarity(matched, mismatched):
     return (matched / total * 100) if total > 0 else 0.0
 
 def extract_genes_from_filename(filename):
-    # Step 1: Remove extension and prefix
-    base = os.path.splitext(filename)[0]           # "[align]ACKR3-ackr3a_2.0"
-    name_part = base.replace("[align]", "")        # "ACKR3-ackr3a_2.0"
+    # remove extension
+    base = os.path.splitext(filename)[0]  
     
-    # Step 2: Remove the trailing threshold (e.g., _2.0)
-    name_part = re.sub(r'_\d+(\.\d+)?$', '', name_part)  # "ACKR3-ackr3a"
+    if class_name == "none":
+        name_part = re.sub(r'_\d+(\.\d+)?$', '', base)
+    else:
+        # Step 1: Remove prefix
+        name_part = base.replace("[align]", "")        # "ACKR3-ackr3a_2.0"
+        
+        # Step 2: Remove the trailing threshold (e.g., _2.0)
+        name_part = re.sub(r'_\d+(\.\d+)?$', '', name_part)  # "ACKR3-ackr3a"
     
     # Step 3: Extract gene names using regex
     pattern = r'[a-zA-Z0-9]+(?:-[0-9]+)?'
@@ -72,17 +77,28 @@ results = []
 
 for gpcr in os.listdir("."):
     os.chdir(gpcr)
-    os.chdir(class_name)
     
-    for f in os.listdir("."):
+    if class_name == "none":
+        os.chdir("cmd_align")
+        for f in os.listdir("."):
+        if f.endswith(".csv") and f != f.lower() and threshold in f:
+            csv_path = f
+            results.append(alignment_summary(csv_path))
+    else:
+        os.chdir(class_name)
+        for f in os.listdir("."):
         if f.endswith(".csv") and f != f.lower() and threshold in f and "[align]" in f:
             csv_path = f
             results.append(alignment_summary(csv_path))
+    
     os.chdir("../..")
     print(f"{gpcr} done")
-    
+
 #write output file
-output_path = f"../align_outputs/[{class_name}]human_zebrafish_alignment_summary_{threshold}.csv"
+if class_name == "none":
+    output_path = f"../align_outputs/human_zebrafish_alignment_summary_{threshold}.csv"
+else:
+    output_path = f"../align_outputs/[{class_name}]human_zebrafish_alignment_summary_{threshold}.csv"
 
 with open(output_path, "w", newline='') as out_f:
     writer = csv.writer(out_f)
