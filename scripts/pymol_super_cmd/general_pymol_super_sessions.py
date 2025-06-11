@@ -35,6 +35,7 @@ if ref_file in ref_map:
     LIGAND: {ligand_name}
     """)
 else:
+    print(ref_file)
     print("ERROR: Please provide a reference file that is within the gpcr_class_reps directory.")
     sys.exit(1)
     
