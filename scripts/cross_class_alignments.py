@@ -30,7 +30,7 @@ def parse_summary(file, gpcr_class, method):
 def get_class(file):
   match = re.search(r'\[(.*?)\]', file)
   if match:
-    return match.group[1]
+    return match.group(1)
   else:
     return "Class_A (4S0V)"
 
