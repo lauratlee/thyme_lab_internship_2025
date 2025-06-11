@@ -1,12 +1,14 @@
 # script generated in ChatGPT and adapted.
 # iterates through each gpcr directory and creates .csv files of common residues within a specified distance (in angstroms)
-# example usage: python ../scripts/alignment_search.py 2.0
+# example usage: python ../scripts/alignment_search.py Class_A 2.0
 
 import sys
 import os
 import math
 import csv
 from glob import glob
+
+class_name = sys.argv[1]
 
 def parse_centers(filename):
     residues = []
@@ -35,11 +37,14 @@ def distance(c1, c2):
 
 def process_subfolder(folder, threshold):
     os.chdir(folder)
-    center_files = sorted(glob("*_centers.txt"))
+    #remove this line if not doing class-specific search
+    os.chdir(class_name)
+    
+    center_files = sorted([f for f in glob("*_centers.txt") if "[super]" in f])
 
     if len(center_files) < 2:
         print(f"[{folder}] Skipping: fewer than 2 *_centers.txt files.")
-        os.chdir("..")
+        os.chdir("../..")
         return
 
     for i in range(len(center_files)):
@@ -49,10 +54,15 @@ def process_subfolder(folder, threshold):
 
             residues_a = parse_centers(file_a)
             residues_b = parse_centers(file_b)
+            
+            # Remove extension, then strip prefix and suffix
+            gene_a = os.path.splitext(file_a)[0]  # -> "[super]ACKR3_pocket_centers"
+            gene_a = gene_a.replace("[super]", "").replace("_pocket_centers", "")
 
-            gene_a = os.path.splitext(file_a)[0].replace("_pocket_centers", "")
-            gene_b = os.path.splitext(file_b)[0].replace("_pocket_centers", "")
-            output_csv = f"{gene_a}-{gene_b}_{threshold:.1f}.csv"
+            gene_b = os.path.splitext(file_b)[0]  # -> "[super]ACKR3_pocket_centers"
+            gene_b = gene_b.replace("[super]", "").replace("_pocket_centers", "")
+
+            output_csv = f"[{class_name}]{gene_a}-{gene_b}_{threshold:.1f}.csv"
 
             with open(output_csv, "w", newline='') as csvfile:
                 writer = csv.writer(csvfile)
@@ -81,11 +91,11 @@ def process_subfolder(folder, threshold):
                     writer.writerow([res_a_str, res_b_str])
 
             print(f"[{folder}] Wrote: {output_csv}")
-    os.chdir("..")
+    os.chdir("../..")
 
 def main():
     try:
-        threshold = float(sys.argv[1])
+        threshold = float(sys.argv[2])
     except (IndexError, ValueError):
         print("Warning: Invalid or missing threshold argument. Using default threshold = 2.0 Å.")
         threshold = 2.0
