@@ -81,15 +81,15 @@ for gpcr in os.listdir("."):
     if class_name == "none":
         os.chdir("cmd_align")
         for f in os.listdir("."):
-        if f.endswith(".csv") and f != f.lower() and threshold in f:
-            csv_path = f
-            results.append(alignment_summary(csv_path))
+            if f.endswith(".csv") and f != f.lower() and threshold in f:
+                csv_path = f
+                results.append(alignment_summary(csv_path))
     else:
         os.chdir(class_name)
         for f in os.listdir("."):
-        if f.endswith(".csv") and f != f.lower() and threshold in f and "[align]" in f:
-            csv_path = f
-            results.append(alignment_summary(csv_path))
+            if f.endswith(".csv") and f != f.lower() and threshold in f and "[align]" in f:
+                csv_path = f
+                results.append(alignment_summary(csv_path))
     
     os.chdir("../..")
     print(f"{gpcr} done")
