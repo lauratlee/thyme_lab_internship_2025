@@ -35,11 +35,7 @@ def parse_centers(filename):
 def distance(c1, c2):
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
 
-def process_subfolder(folder, threshold):
-    os.chdir(folder)
-    #remove this line if not doing class-specific search
-    os.chdir(class_name)
-    
+def process_subfolder(folder, threshold):    
     center_files = sorted([f for f in glob("*_centers.txt") if "[super]" in f])
 
     if len(center_files) < 2:
@@ -91,7 +87,6 @@ def process_subfolder(folder, threshold):
                     writer.writerow([res_a_str, res_b_str])
 
             print(f"[{folder}] Wrote: {output_csv}")
-    os.chdir("../..")
 
 def main():
     try:
@@ -106,7 +101,15 @@ def main():
         return
 
     for folder in sorted(subfolders):
-        process_subfolder(folder, threshold)
+        if class_name == "none":
+            os.chdir(folder)
+            process_subfolder(folder, threshold)
+            os.chdir("..")
+        else:
+            os.chdir(folder)
+            os.chdir(class_name)
+            process_subfolder(folder, threshold)
+            os.chdir("../..")
 
 if __name__ == "__main__":
     main()
