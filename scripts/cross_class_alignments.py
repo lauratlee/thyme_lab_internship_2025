@@ -34,11 +34,23 @@ def get_class(file):
   else:
     return "Class_A (4S0V)"
 
+# parse align_outputs/
+os.chdir("align_outputs")
+method = "align"
 for summary in os.listdir("."):
   if summary.endswith(f"{threshold}.csv"):
-    method = "super"
     gpcr_class = get_class(summary)
     parse_summary(summary, gpcr_class, method)
+os.chdir("..")
+
+# parse super_outputs/
+os.chdir("super_outputs")
+method = "super"
+for summary in os.listdir("."):
+  if summary.endswith(f"{threshold}.csv"):
+    gpcr_class = get_class(summary)
+    parse_summary(summary, gpcr_class, method)
+os.chdir("..")
 
 pprint.pprint(data_dict)
 
