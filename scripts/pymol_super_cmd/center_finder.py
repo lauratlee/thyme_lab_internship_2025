@@ -3,13 +3,19 @@
 import sys, os
 from collections import defaultdict
 
+#folder containing pocket files
+folder_name = sys.argv[1]
+
 for gpcr_dir in os.listdir("."):
     os.chdir(gpcr_dir)
+    os.chdir(folder_name)
     for gene in os.listdir("."):
-        if not gene.endswith(".pdb"):
+        # filter out all files that were not made from the align cmd and are not pockets
+        if not gene.endswith("_pocket.pdb") or "[super]" not in gene or "aligned" in gene:
             continue
 
         pdb_file = gene
+        print(pdb_file)
             
         output_file = os.path.splitext(pdb_file)[0] + "_centers.txt"
         
