@@ -59,4 +59,4 @@ for gpcr_dir in os.listdir("."):
                 out.write(line)
                 
         print(f"{pdb_file} done")
-    os.chdir("..")
+    os.chdir("../..")
