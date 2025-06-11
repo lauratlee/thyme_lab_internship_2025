@@ -1,7 +1,7 @@
 #note, this script was initially written by ChatGPT to write most of the pymol logic, and further modified by me (Laura) to enhance use of inputs
 
 #python (path to script) (REFERENCE FILE)
-#this is different than the 4S0V-only script, which was one from the scripts folder. this should be run from the gpcr_dir folder
+#this is different than the 4S0V-only script, which was run from the scripts folder. this should be run from the gpcr_dir folder
 
 #breakdown of steps:
 #load in reference (with ligand)
