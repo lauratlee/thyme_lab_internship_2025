@@ -3,18 +3,19 @@
 import sys, os
 from collections import defaultdict
 
+# folder containing pocket files
 folder_name = sys.argv[1]
 
 for gpcr_dir in os.listdir("."):
     os.chdir(gpcr_dir)
     os.chdir(folder_name)
     for gene in os.listdir("."):
-        if not gene.endswith(".pdb"):
+        if not gene.endswith("_pocket.pdb") and not gene.isin("[align]"):
             continue
 
         pdb_file = gene
             
-        output_file = os.path.splitext(pdb_file)[0] + "_centers.txt"
+        output_file = os.path.join("[align]", os.path.splitext(pdb_file)[0] + "_centers.txt")
         
         # Dictionary to hold coordinates per residue
         # Key = (chain, resi, resn), Value = list of (x, y, z) tuples
