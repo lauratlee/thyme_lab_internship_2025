@@ -65,7 +65,7 @@ with open(output_name, "w", newline = '') as output_file:
     # Find best % similarity
     best_similarity = max(float(x[3]) for x in value_list)
     # Check if there are multiple outputs that produced the best similarity
-    best_similarities = [t for t in value_list if float(t[1]) == best_similarity]
+    best_similarities = [t for t in value_list if float(t[3]) == best_similarity]
 
     # write entries to csv file
     for entry in best_similarities:
