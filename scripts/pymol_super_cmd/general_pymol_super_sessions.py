@@ -20,10 +20,10 @@ import pymol2
 #-----------------UPDATE------------------------
 
 ref_map = {
-    "2rh1_chainA": ("Class_A", "cau"),
-    "4k5y_chainA": ("Class_B1", "1q5"),
-    "7m3g_chainA": ("Class_C", "h43"),
-    "4jkv_chainA": ("Class_F", "1ks")
+    "2rh1_chainA.pdb": ("Class_A", "cau"),
+    "4k5y_chainA.pdb": ("Class_B1", "1q5"),
+    "7m3g_chainA.pdb": ("Class_C", "h43"),
+    "4jkv_chainA.pdb": ("Class_F", "1ks")
 }
 
 ref_file = os.path.basename(sys.argv[1])
@@ -35,7 +35,6 @@ if ref_file in ref_map:
     LIGAND: {ligand_name}
     """)
 else:
-    print(ref_file)
     print("ERROR: Please provide a reference file that is within the gpcr_class_reps directory.")
     sys.exit(1)
     
