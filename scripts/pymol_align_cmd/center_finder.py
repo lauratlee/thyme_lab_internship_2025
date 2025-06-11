@@ -3,9 +3,11 @@
 import sys, os
 from collections import defaultdict
 
+folder_name = sys.argv[1]
+
 for gpcr_dir in os.listdir("."):
     os.chdir(gpcr_dir)
-    os.chdir("cmd_align")
+    os.chdir(folder_name)
     for gene in os.listdir("."):
         if not gene.endswith(".pdb"):
             continue
