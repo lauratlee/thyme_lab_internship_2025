@@ -111,9 +111,9 @@ def process_subfolder_general(folder, threshold):
             residues_b = parse_centers(file_b)
             
             # Remove extension, then strip prefix and suffix
-            gene_a = file_a.split("_pocket_centers")[0]
+            gene_a = file_a.split("_pocket(align)_centers")[0]
 
-            gene_b = file_b.split("_pocket_centers")[0]
+            gene_b = file_b.split("_pocket(align)_centers")[0]
 
             output_csv = f"{gene_a}-{gene_b}_{threshold:.1f}.csv"
 
