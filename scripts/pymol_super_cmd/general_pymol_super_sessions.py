@@ -39,12 +39,6 @@ else:
     sys.exit(1)
     
 
-#have the directory end with a backslash if it doesn't from the input
-if directory.endswith("/") == False:
-    directory = directory + "/"
-
-
-
 #helper function that takes in a gpcr directory and runs necessary pymol commands
 def pymol_runner(gpcr_dir): 
     print(f"Entered pymol_runner for {gpcr_dir}")
