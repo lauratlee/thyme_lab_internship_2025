@@ -1,9 +1,11 @@
 # script generated in ChatGPT and adapted.
 # iterates through each gpcr directory and creates .csv files of common residues within a specified distance (in angstroms)
-# example usage: python ../scripts/alignment_search.py 2.0
+# example usage: python ../scripts/alignment_search.py Class_A 2.0
 
 import sys, os, math, csv, re
 from glob import glob
+
+class_name = sys.argv[1]
 
 def parse_centers(filename):
     residues = []
@@ -30,16 +32,11 @@ def parse_centers(filename):
 def distance(c1, c2):
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
 
-def process_subfolder(threshold):
-    folder = os.path.basename(".")
-    if not os.path.exists("cmd_align"):
-        print(f"[{folder}] Skipping: 'cmd_align' folder not found.")
-        os.chdir("..")
-        return
-    
-    os.chdir("cmd_align")
+def process_subfolder(folder, threshold):
+    os.chdir(folder) 
+    os.chdir(class_name)
 
-    center_files = sorted(glob("*_centers.txt"))
+    center_files = sorted([f for f in glob("*_centers.txt") if "[align]" in f])
 
     if len(center_files) < 2:
         print(f"[{folder}] Skipping: fewer than 2 *_centers.txt files.")
@@ -54,9 +51,14 @@ def process_subfolder(threshold):
             residues_a = parse_centers(file_a)
             residues_b = parse_centers(file_b)
 
-            gene_a = os.path.splitext(file_a)[0].replace("_pocket(align)_centers", "")
-            gene_b = os.path.splitext(file_b)[0].replace("_pocket(align)_centers", "")
-            output_csv = f"{gene_a}-{gene_b}_{threshold:.1f}.csv"
+            # Remove extension, then strip prefix and suffix
+            gene_a = os.path.splitext(file_a)[0]  # -> "[align]ACKR3_pocket_centers"
+            gene_a = gene_a.replace("[align]", "").replace("_pocket_centers", "")
+
+            gene_b = os.path.splitext(file_b)[0]  # -> "[align]ACKR3_pocket_centers"
+            gene_b = gene_b.replace("[align]", "").replace("_pocket_centers", "")
+
+            output_csv = f"[align]{gene_a}-{gene_b}_{threshold:.1f}.csv"
 
             with open(output_csv, "w", newline='') as csvfile:
                 writer = csv.writer(csvfile)
@@ -89,7 +91,7 @@ def process_subfolder(threshold):
 
 def main():
     try:
-        threshold = float(sys.argv[1])
+        threshold = float(sys.argv[2])
     except (IndexError, ValueError):
         print("Warning: Invalid or missing threshold argument. Using default threshold = 2.0 Å.")
         threshold = 2.0
@@ -100,8 +102,7 @@ def main():
         return
 
     for folder in sorted(subfolders):
-        os.chdir(folder)
-        process_subfolder(threshold)
+        process_subfolder(folder, threshold)
 
 if __name__ == "__main__":
     main()
