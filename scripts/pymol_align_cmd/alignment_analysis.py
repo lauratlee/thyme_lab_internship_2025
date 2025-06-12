@@ -56,7 +56,7 @@ def extract_genes_from_filename(filename):
         name_part = re.sub(r'_\d+(\.\d+)?$', '', name_part)  # "ACKR3-ackr3a"
     
     # Step 3: Extract gene names using regex
-    pattern = r'[a-zA-Z0-9]+(?:-[0-9]+)?'
+    pattern = r'[a-zA-Z0-9.]+(?:-[0-9]+)?'
     genes = re.findall(pattern, name_part)
     
     if len(genes) >= 2:
