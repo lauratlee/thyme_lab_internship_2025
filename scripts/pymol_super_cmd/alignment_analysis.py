@@ -87,7 +87,7 @@ for gpcr in os.listdir("."):
     else:
         os.chdir(class_name)
         for f in os.listdir("."):
-            if f.endswith(".csv") and f != f.lower() and threshold in f and "[align]" in f:
+            if f.endswith(".csv") and f != f.lower() and threshold in f and "[super]" in f:
                 csv_path = f
                 results.append(alignment_summary(csv_path))
         os.chdir("../..")
