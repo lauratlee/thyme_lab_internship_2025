@@ -23,9 +23,8 @@ n_points = df['% similarity'].dropna().shape[0]
 
 # Create the distribution plot
 plt.figure(figsize=(10, 6))
-min_bin = 60
-max_bin = df['% similarity'].max()
-sns.histplot(df['% similarity'], bins=8, color='skyblue', kde=False)
+bins = list(range(60, 105, 5)
+sns.histplot(df['% similarity'], bins=bins, color='skyblue', kde=False)
 plt.title('Distribution of % Similarity')
 plt.xlabel('% Similarity')
 plt.ylabel('Frequency')
