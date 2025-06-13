@@ -1,0 +1,515 @@
+human gene,zebrafish gene,matched,mismatched,failed alignments,% similarity,best class alignment,best method
+ACKR3,ackr3a,12,1,4,92.31,Class_A (4S0V),super
+ACKR3,ackr3b,11,4,2,73.33,Class_A (4S0V),super
+ACKR4,ackr4b,14,4,1,77.78,Class_A (4S0V),super
+ADCYAP1R1,adcyap1r1a,27,0,1,100.0,Class_B1,align
+ADGRA1,adgra1a,20,1,3,95.24,Class_A (4S0V),super
+ADGRA2,adgra2,14,2,2,87.5,Class_F,align
+ADGRA3,adgra3,14,1,2,93.33,Class_A,super
+ADGRB1,adgrb1a,26,0,1,100.0,Class_B1,super
+ADGRB1,adgrb1b,24,0,1,100.0,Class_B1,align
+ADGRB1,adgrb1b,25,0,2,100.0,Class_B1,super
+ADGRB2,adgrb2,15,0,3,100.0,Class_A,super
+ADGRB2,adgrb2,13,0,2,100.0,Class_C,super
+ADGRB3,adgrb3,23,0,2,100.0,Class_B1,align
+ADGRB3,adgrb3,15,0,5,100.0,Class_F,align
+ADGRB3,adgrb3,13,0,10,100.0,Class_A (4S0V),super
+ADGRD1,adgrd1,12,2,14,85.71,Class_B1,align
+ADGRD2,adgrd2,19,3,2,86.36,Class_B1,super
+ADGRE5,adgre5a,1,1,23,50.0,Class_B1,super
+ADGRE5,adgre5b.2,9,3,4,75.0,Class_A (4S0V),super
+ADGRE5,adgre5b.2,9,3,6,75.0,Class_A,super
+ADGRE5,adgre5b.3,10,2,4,83.33,Class_A (4S0V),super
+ADGRE5,adgre5b.3,5,1,12,83.33,Class_F,super
+ADGRF3,adgrf3a,1,0,0,100.0,Class_A,align
+ADGRF3,adgrf3b,1,0,0,100.0,Class_A,align
+ADGRG1,adgrg1,9,13,6,40.91,Class_B1,align
+ADGRG2,adgrg2a,12,0,3,100.0,Class_A (4S0V),super
+ADGRG2,adgrg2a,4,0,11,100.0,Class_A,super
+ADGRG4,adgrg4a,0,4,20,0.0,Class_A (4S0V),align
+ADGRG4,adgrg4b,0,6,18,0.0,Class_A (4S0V),align
+ADGRG6,adgrg6,12,1,2,92.31,Class_A (4S0V),super
+ADGRG7,adgrg7.2,5,1,21,83.33,Class_B1,super
+ADGRL1,adgrl1a,15,0,2,100.0,Class_A,align
+ADGRL1,adgrl1a,18,0,1,100.0,Class_A (4S0V),super
+ADGRL1,adgrl1a,17,0,2,100.0,Class_A,super
+ADGRL2,adgrl2a,8,0,9,100.0,Class_A,align
+ADGRL2,adgrl2a,16,0,1,100.0,Class_A (4S0V),super
+ADGRL2,adgrl2a,16,0,1,100.0,Class_A,super
+ADGRL2,adgrl2a,2,0,15,100.0,Class_C,super
+ADGRL2,adgrl2b.1,1,2,22,33.33,Class_B1,super
+ADGRL4,adgrl4,16,1,0,94.12,Class_A (4S0V),super
+ADGRL4,adgrl4,16,1,1,94.12,Class_A,super
+ADORA1,adora1b,19,0,0,100.0,Class_A,align
+ADORA1,adora1b,19,0,0,100.0,Class_A (4S0V),super
+ADORA1,adora1b,16,0,3,100.0,Class_A,super
+ADORA2A,adora2aa,21,1,2,95.45,Class_A (4S0V),super
+ADORA2A,adora2ab,20,0,4,100.0,Class_A (4S0V),super
+ADORA2B,adora2b,21,0,2,100.0,Class_A (4S0V),super
+ADRA1A,adra1aa,17,1,0,94.44,Class_A,align
+ADRA1A,adra1aa,17,1,0,94.44,Class_A,super
+ADRA1A,adra1ab,14,1,1,93.33,Class_A (4S0V),super
+ADRA1B,adra1ba,18,1,2,94.74,Class_A,align
+ADRA1B,adra1bb,15,1,4,93.75,Class_A (4S0V),super
+ADRA1D,adra1d,18,0,0,100.0,Class_A,align
+ADRA1D,adra1d,18,0,0,100.0,Class_A,super
+ADRA2A,adra2a,8,0,18,100.0,Class_A (4S0V),super
+ADRA2B,adra2b,19,0,0,100.0,Class_A (4S0V),super
+ADRA2C,adra2c,18,1,0,94.74,Class_A,align
+ADRB1,adrb1,17,1,2,94.44,Class_A,align
+ADRB1,adrb1,17,1,2,94.44,Class_A,super
+ADRB2,adrb2a,8,0,12,100.0,Class_A (4S0V),super
+ADRB2,adrb2b,19,0,1,100.0,Class_A,align
+ADRB2,adrb2b,6,0,14,100.0,Class_A (4S0V),super
+ADRB2,adrb2b,19,0,1,100.0,Class_A,super
+ADRB2,adrb2b,3,0,13,100.0,Class_C,super
+ADRB3,adrb3a,17,2,0,89.47,Class_A,align
+ADRB3,adrb3a,17,2,0,89.47,Class_A,super
+ADRB3,adrb3b,17,2,0,89.47,Class_A,align
+ADRB3,adrb3b,17,2,0,89.47,Class_A,super
+AGTR1,agtr1a,3,1,18,75.0,Class_C,align
+AGTR1,agtr1b,10,4,4,71.43,Class_A,align
+AGTR1,agtr1b,10,4,7,71.43,Class_A (4S0V),super
+AGTR2,agtr2,14,3,4,82.35,Class_A (4S0V),super
+APLNR,aplnra,14,5,3,73.68,Class_A (4S0V),super
+APLNR,aplnrb,12,4,1,75.0,Class_A,align
+APLNR,aplnrb,12,4,3,75.0,Class_A,super
+AVPR1A,avpr1aa,16,1,3,94.12,Class_A (4S0V),super
+AVPR1A,avpr1ab,1,0,23,100.0,Class_F,super
+AVPR2,avpr2aa,10,3,7,76.92,Class_A (4S0V),super
+AVPR2,avpr2ab,9,3,8,75.0,Class_A (4S0V),super
+BDKRB1,bdkrb1,12,5,3,70.59,Class_A (4S0V),super
+C5AR1,c5ar1,6,4,16,60.0,Class_B1,super
+CALCR,calcr,23,1,0,95.83,Class_B1,super
+CALCRL,calcrla,22,3,0,88.0,Class_B1,super
+CALCRL,calcrlb,7,1,1,87.5,Class_A,super
+CALCRL,calcrlb,21,3,1,87.5,Class_B1,super
+CASR,casr,20,2,0,90.91,Class_A (4S0V),super
+CASR,casr,20,2,3,90.91,Class_B1,super
+CCKAR,cckar,14,4,0,77.78,Class_A,align
+CCKBR,cckbra,14,2,4,87.5,Class_C,super
+CCR10,ccr10,4,2,19,66.67,Class_B1,align
+CCR2,ccr2,8,9,5,47.06,Class_A (4S0V),super
+CCR6,ccr6a,4,4,10,50.0,Class_C,align
+CCR6,ccr6b,10,5,9,66.67,Class_B1,super
+CCR7,ccr7,17,4,4,80.95,Class_B1,align
+CCR8,ccr8.1,12,4,6,75.0,Class_C,super
+CCR9,ccr9a,13,3,5,81.25,Class_A (4S0V),super
+CCR9,ccr9b,12,6,3,66.67,Class_A (4S0V),super
+CELSR1,celsr1a,2,7,15,22.22,Class_A (4S0V),align
+CELSR1,celsr1b,0,8,16,0.0,Class_A (4S0V),align
+CELSR1,celsr1b,0,0,0,0.0,Class_A,align
+CELSR1,celsr1b,0,0,1,0.0,Class_B1,align
+CELSR1,celsr1b,0,1,5,0.0,Class_C,align
+CELSR1,celsr1b,0,0,3,0.0,Class_F,align
+CELSR1,celsr1b,0,0,3,0.0,Class_A (4S0V),super
+CELSR1,celsr1b,0,3,7,0.0,Class_A,super
+CELSR1,celsr1b,0,0,0,0.0,Class_B1,super
+CELSR1,celsr1b,0,0,0,0.0,Class_C,super
+CELSR1,celsr1b,0,0,9,0.0,Class_F,super
+CELSR3,celsr3,1,0,3,100.0,Class_C,super
+CHRM1,chrm1a,18,0,0,100.0,Class_A,align
+CHRM1,chrm1a,19,0,1,100.0,Class_A (4S0V),super
+CHRM2,chrm2a,18,0,0,100.0,Class_A,align
+CHRM2,chrm2a,16,0,1,100.0,Class_A,super
+CHRM2,chrm2a,20,0,3,100.0,Class_C,super
+CHRM2,chrm2b,18,0,0,100.0,Class_A,align
+CHRM2,chrm2b,7,0,10,100.0,Class_A,super
+CHRM3,chrm3a,21,1,0,95.45,Class_A,align
+CHRM3,chrm3b,11,1,9,91.67,Class_A (4S0V),super
+CHRM4,chrm4a,18,0,0,100.0,Class_A,align
+CHRM4,chrm4b,17,1,0,94.44,Class_A,align
+CHRM5,chrm5a,17,1,0,94.44,Class_A,align
+CHRM5,chrm5b,16,1,1,94.12,Class_A,align
+CHRM5,chrm5b,16,1,2,94.12,Class_A,super
+CMKLR1,cmklr1,12,7,3,63.16,Class_A (4S0V),super
+CMKLR2,cmklr2,10,4,6,71.43,Class_A (4S0V),super
+CNR1,cnr1,21,0,1,100.0,Class_C,super
+CNR2,cnr2,17,2,1,89.47,Class_A (4S0V),super
+CRHR1,crhr1,21,0,8,100.0,Class_B1,align
+CRHR1,crhr1,12,0,4,100.0,Class_A (4S0V),super
+CRHR1,crhr1,9,0,3,100.0,Class_A,super
+CRHR1,crhr1,6,0,12,100.0,Class_C,super
+CXCR1,cxcr1,15,2,9,88.24,Class_B1,super
+CXCR2,cxcr2,8,3,8,72.73,Class_C,super
+CXCR3,cxcr3.1,7,2,4,77.78,Class_A,super
+CXCR3,cxcr3.2,17,7,2,70.83,Class_B1,super
+CXCR4,cxcr4a,20,1,2,95.24,Class_B1,super
+CXCR4,cxcr4b,19,2,2,90.48,Class_B1,super
+CXCR5,cxcr5,8,9,3,47.06,Class_A (4S0V),super
+CYSLTR1,cysltr1,13,1,5,92.86,Class_C,align
+CYSLTR1,cysltr1,13,1,4,92.86,Class_A (4S0V),super
+DRD1,drd1a,20,0,0,100.0,Class_A,align
+DRD1,drd1a,18,0,1,100.0,Class_A (4S0V),super
+DRD1,drd1a,20,0,0,100.0,Class_A,super
+DRD1,drd1a,25,0,2,100.0,Class_B1,super
+DRD1,drd1b,20,0,0,100.0,Class_A,align
+DRD1,drd1b,17,0,2,100.0,Class_A (4S0V),super
+DRD1,drd1b,20,0,0,100.0,Class_A,super
+DRD2,drd2a,19,0,0,100.0,Class_A,align
+DRD2,drd2a,21,0,1,100.0,Class_B1,align
+DRD2,drd2b,17,0,2,100.0,Class_A,align
+DRD3,drd3,18,0,1,100.0,Class_A,align
+DRD3,drd3,15,0,3,100.0,Class_A,super
+DRD4,drd4a,21,1,2,95.45,Class_B1,super
+DRD4,drd4b,20,0,0,100.0,Class_A,align
+EDNRA,ednraa,16,0,1,100.0,Class_A,align
+EDNRA,ednraa,15,0,1,100.0,Class_A,super
+EDNRA,ednraa,13,0,2,100.0,Class_F,super
+EDNRA,ednrab,11,0,4,100.0,Class_F,super
+EDNRB,ednrba,18,0,1,100.0,Class_A,align
+EDNRB,ednrba,20,0,2,100.0,Class_A (4S0V),super
+EDNRB,ednrbb,16,1,2,94.12,Class_A,align
+F2R,f2r,18,2,2,90.0,Class_A (4S0V),super
+F2RL1,f2rl1.1,17,3,1,85.0,Class_A (4S0V),super
+F2RL1,f2rl1.2,17,3,1,85.0,Class_A (4S0V),super
+F2RL2,f2rl2,5,1,18,83.33,Class_C,super
+FPR1,fpr1,8,6,12,57.14,Class_F,super
+FSHR,fshr,16,1,1,94.12,Class_A,align
+FZD1,fzd1,22,0,2,100.0,Class_A (4S0V),super
+FZD1,fzd1,19,0,3,100.0,Class_A,super
+FZD10,fzd10,25,1,2,96.15,Class_F,align
+FZD10,fzd10,25,1,1,96.15,Class_F,super
+FZD2,fzd2,21,0,2,100.0,Class_B1,align
+FZD3,fzd3a,23,1,2,95.83,Class_B1,align
+FZD3,fzd3b,22,0,3,100.0,Class_B1,super
+FZD4,fzd4,17,0,7,100.0,Class_A,super
+FZD4,fzd4,27,0,1,100.0,Class_B1,super
+FZD4,fzd4,18,0,2,100.0,Class_C,super
+FZD5,fzd5,23,2,3,92.0,Class_F,align
+FZD6,fzd6,22,1,3,95.65,Class_F,align
+FZD7,fzd7a,15,0,8,100.0,Class_B1,super
+FZD7,fzd7b,15,0,7,100.0,Class_A,super
+FZD7,fzd7b,15,0,8,100.0,Class_B1,super
+FZD8,fzd8a,20,2,0,90.91,Class_C,super
+FZD8,fzd8b,19,3,1,86.36,Class_A,super
+FZD9,fzd9a,18,0,2,100.0,Class_A (4S0V),super
+FZD9,fzd9a,15,0,3,100.0,Class_A,super
+FZD9,fzd9b,18,0,2,100.0,Class_A (4S0V),super
+FZD9,fzd9b,7,0,11,100.0,Class_A,super
+FZD9,fzd9b,8,0,15,100.0,Class_B1,super
+GABBR1,gabbr1a,17,0,3,100.0,Class_A (4S0V),super
+GABBR1,gabbr1b,16,0,4,100.0,Class_A (4S0V),super
+GABBR2,gabbr2,20,0,7,100.0,Class_C,align
+GABBR2,gabbr2,20,0,2,100.0,Class_B1,super
+GALR1,galr1a,18,0,0,100.0,Class_A,align
+GALR1,galr1a,20,0,0,100.0,Class_A (4S0V),super
+GALR1,galr1a,17,0,0,100.0,Class_A,super
+GALR1,galr1b,11,2,5,84.62,Class_F,super
+GALR2,galr2a,17,2,4,89.47,Class_A,super
+GALR2,galr2b,19,3,1,86.36,Class_A (4S0V),super
+GCGR,gcgra,1,0,4,100.0,Class_A,align
+GCGR,gcgrb,21,5,0,80.77,Class_B1,align
+GCGR,gcgrb,21,5,0,80.77,Class_B1,super
+GHRHR,ghrhra,16,8,1,66.67,Class_B1,super
+GHRHR,ghrhrb,15,6,3,71.43,Class_B1,align
+GHSR,ghsra,16,0,0,100.0,Class_A,align
+GHSR,ghsra,15,0,1,100.0,Class_A (4S0V),super
+GHSR,ghsra,15,0,0,100.0,Class_A,super
+GHSR,ghsrb,13,0,3,100.0,Class_A,align
+GHSR,ghsrb,15,0,1,100.0,Class_A (4S0V),super
+GHSR,ghsrb,13,0,2,100.0,Class_A,super
+GIPR,gipr,1,0,18,100.0,Class_C,align
+GIPR,gipr,8,0,3,100.0,Class_A,super
+GPBAR1,gpbar1,7,4,7,63.64,Class_A,super
+GPER1,gper1,17,3,2,85.0,Class_B1,super
+GPR101,gpr101,2,2,26,50.0,Class_C,align
+GPR12,gpr12,19,0,11,100.0,Class_B1,super
+GPR132,gpr132a,11,2,5,84.62,Class_A,super
+GPR132,gpr132b,12,2,4,85.71,Class_A,align
+GPR135,gpr135,8,6,7,57.14,Class_A,align
+GPR139,gpr139,3,0,17,100.0,Class_A,align
+GPR139,gpr139,16,0,4,100.0,Class_A,super
+GPR142,gpr142,9,2,2,81.82,Class_A,super
+GPR146,gpr146,1,0,18,100.0,Class_C,super
+GPR151,gpr151,5,2,14,71.43,Class_A,super
+GPR153,gpr153,15,1,1,93.75,Class_A,super
+GPR156,gpr156,6,8,2,42.86,Class_C,super
+GPR158,gpr158a,24,0,4,100.0,Class_B1,super
+GPR158,gpr158b,24,4,0,85.71,Class_B1,super
+GPR160,gpr160,2,1,22,66.67,Class_B1,align
+GPR161,gpr161b,6,1,20,85.71,Class_B1,align
+GPR17,gpr17,16,0,2,100.0,Class_A,super
+GPR171,gpr171,14,3,4,82.35,Class_A,align
+GPR173,gpr173,17,0,2,100.0,Class_A,align
+GPR173,gpr173,25,0,1,100.0,Class_A (4S0V),super
+GPR173,gpr173,18,0,1,100.0,Class_A,super
+GPR174,gpr174,13,0,3,100.0,Class_A,align
+GPR174,gpr174,15,0,4,100.0,Class_A (4S0V),super
+GPR174,gpr174,11,0,3,100.0,Class_A,super
+GPR176,gpr176,9,4,7,69.23,Class_A (4S0V),super
+GPR18,gpr18,14,3,13,82.35,Class_F,super
+GPR183,gpr183a,15,2,3,88.24,Class_A,super
+GPR183,gpr183b,13,1,6,92.86,Class_A,super
+GPR19,gpr19,16,6,0,72.73,Class_B1,super
+GPR20,gpr20,10,4,4,71.43,Class_A,align
+GPR22,gpr22a,17,0,4,100.0,Class_A,align
+GPR22,gpr22b,18,1,3,94.74,Class_A (4S0V),super
+GPR25,gpr25,13,2,5,86.67,Class_A (4S0V),super
+GPR26,gpr26,18,4,4,81.82,Class_B1,align
+GPR27,gpr27,12,5,4,70.59,Class_A (4S0V),super
+GPR3,gpr3,14,7,2,66.67,Class_B1,super
+GPR34,gpr34a,16,2,3,88.89,Class_A (4S0V),super
+GPR34,gpr34b,16,1,2,94.12,Class_A,align
+GPR34,gpr34b,16,1,4,94.12,Class_A (4S0V),super
+GPR35,gpr35.1,15,7,5,68.18,Class_B1,super
+GPR37,gpr37a,16,1,2,94.12,Class_A (4S0V),super
+GPR37,gpr37b,15,0,1,100.0,Class_A,align
+GPR37,gpr37b,16,0,3,100.0,Class_A (4S0V),super
+GPR37L1,gpr37l1a,11,3,2,78.57,Class_A,align
+GPR37L1,gpr37l1b,14,1,1,93.33,Class_A,align
+GPR37L1,gpr37l1b,14,1,3,93.33,Class_A,super
+GPR39,gpr39,12,1,5,92.31,Class_C,super
+GPR4,gpr4,14,0,3,100.0,Class_A,align
+GPR4,gpr4,21,0,1,100.0,Class_A (4S0V),super
+GPR4,gpr4,17,0,2,100.0,Class_A,super
+GPR45,gpr45,18,2,2,90.0,Class_A (4S0V),super
+GPR52,gpr52,3,0,20,100.0,Class_B1,super
+GPR55,gpr55a,8,5,7,61.54,Class_A (4S0V),super
+GPR6,gpr6,17,3,4,85.0,Class_B1,super
+GPR61,gpr61,16,2,5,88.89,Class_A (4S0V),super
+GPR63,gpr63,22,1,1,95.65,Class_A (4S0V),super
+GPR65,gpr65,8,4,8,66.67,Class_C,super
+GPR75,gpr75,20,1,2,95.24,Class_A (4S0V),super
+GPR78,gpr78a,14,5,1,73.68,Class_A,align
+GPR78,gpr78b,13,5,2,72.22,Class_A,align
+GPR84,gpr84,19,2,0,90.48,Class_A (4S0V),super
+GPR85,gpr85,18,0,0,100.0,Class_A,align
+GPR85,gpr85,16,0,3,100.0,Class_C,align
+GPR85,gpr85,23,0,2,100.0,Class_A (4S0V),super
+GPRC5B,gprc5ba,16,6,2,72.73,Class_A,super
+GPRC5B,gprc5bb,18,5,1,78.26,Class_A,super
+GPRC5C,gprc5c,19,2,3,90.48,Class_C,super
+GPRC6A,gprc6a,18,3,2,85.71,Class_A (4S0V),super
+GPRC6A,gprc6a,12,2,6,85.71,Class_C,super
+GRM1,grm1a,23,0,1,100.0,Class_C,align
+GRM1,grm1a,23,0,1,100.0,Class_C,super
+GRM1,grm1b,20,2,2,90.91,Class_C,align
+GRM1,grm1b,20,2,2,90.91,Class_C,super
+GRM2,grm2a,16,0,9,100.0,Class_B1,super
+GRM2,grm2b,24,1,0,96.0,Class_B1,super
+GRM3,grm3,23,0,1,100.0,Class_C,align
+GRM3,grm3,22,0,2,100.0,Class_C,super
+GRM3,grm3,24,0,2,100.0,Class_F,super
+GRM4,grm4,26,0,1,100.0,Class_A (4S0V),super
+GRM4,grm4,24,0,4,100.0,Class_B1,super
+GRM5,grm5a,19,0,3,100.0,Class_C,align
+GRM5,grm5a,24,0,3,100.0,Class_A (4S0V),super
+GRM5,grm5a,19,0,1,100.0,Class_A,super
+GRM5,grm5a,12,0,14,100.0,Class_B1,super
+GRM5,grm5a,20,0,4,100.0,Class_C,super
+GRM5,grm5a,25,0,1,100.0,Class_F,super
+GRM5,grm5b,19,0,3,100.0,Class_C,align
+GRM5,grm5b,23,0,4,100.0,Class_A (4S0V),super
+GRM5,grm5b,19,0,1,100.0,Class_A,super
+GRM5,grm5b,20,0,4,100.0,Class_C,super
+GRM6,grm6a,21,4,2,84.0,Class_B1,super
+GRM6,grm6b,19,1,1,95.0,Class_A,super
+GRM8,grm8a,26,0,0,100.0,Class_B1,super
+GRM8,grm8b,25,0,1,100.0,Class_B1,super
+HCAR1,hcar1-1,15,2,4,88.24,Class_A (4S0V),super
+HCAR1,hcar1-2,17,2,2,89.47,Class_A (4S0V),super
+HCRTR2,hcrtr2,17,2,3,89.47,Class_C,super
+HRH1,hrh1,1,3,8,25.0,Class_B1,align
+HRH2,hrh2a,13,3,4,81.25,Class_A (4S0V),super
+HRH2,hrh2b,13,5,2,72.22,Class_A (4S0V),super
+HRH3,hrh3,20,1,1,95.24,Class_A,align
+HTR1A,htr1aa,17,0,1,100.0,Class_A,align
+HTR1A,htr1aa,17,0,0,100.0,Class_A,super
+HTR1A,htr1ab,22,0,3,100.0,Class_B1,super
+HTR1B,htr1b,8,0,10,100.0,Class_C,super
+HTR1D,htr1d,19,1,0,95.0,Class_A,align
+HTR1F,htr1fa,17,0,3,100.0,Class_A,align
+HTR1F,htr1fb,18,1,1,94.74,Class_A,align
+HTR2A,htr2ab,17,1,2,94.44,Class_A,align
+HTR2B,htr2b,18,2,1,90.0,Class_A (4S0V),super
+HTR4,htr4,20,0,0,100.0,Class_A,align
+HTR4,htr4,18,0,2,100.0,Class_A (4S0V),super
+HTR4,htr4,20,0,0,100.0,Class_A,super
+HTR5A,htr5aa,18,0,1,100.0,Class_A (4S0V),super
+HTR5A,htr5aa,23,0,1,100.0,Class_B1,super
+HTR5A,htr5ab,18,0,1,100.0,Class_A (4S0V),super
+HTR5A,htr5ab,23,0,1,100.0,Class_B1,super
+HTR6,htr6,15,0,11,100.0,Class_B1,align
+HTR7,htr7a,21,0,0,100.0,Class_A,align
+HTR7,htr7a,21,0,0,100.0,Class_A (4S0V),super
+KISS1R,kiss1ra,15,3,5,83.33,Class_F,super
+KISS1R,kiss1rb,15,4,4,78.95,Class_A (4S0V),super
+LGR4,lgr4,16,0,2,100.0,Class_A,align
+LGR6,lgr6,12,5,7,70.59,Class_A (4S0V),super
+LHCGR,lhcgr,16,3,1,84.21,Class_B1,super
+LHCGR,lhcgr,16,3,0,84.21,Class_C,super
+LPAR1,lpar1,17,0,1,100.0,Class_A,align
+LPAR1,lpar1,17,0,2,100.0,Class_A (4S0V),super
+LPAR1,lpar1,15,0,3,100.0,Class_A,super
+LPAR1,lpar1,19,0,4,100.0,Class_C,super
+LPAR1,lpar1,24,0,3,100.0,Class_F,super
+LPAR2,lpar2a,19,4,2,82.61,Class_B1,super
+LPAR2,lpar2b,22,3,0,88.0,Class_B1,super
+LPAR3,lpar3,14,1,6,93.33,Class_A (4S0V),super
+LPAR4,lpar4,17,1,1,94.44,Class_A (4S0V),super
+LPAR5,lpar5a,5,4,7,55.56,Class_A,super
+LPAR5,lpar5b,3,4,15,42.86,Class_A (4S0V),super
+LPAR5,lpar5b,3,4,9,42.86,Class_A,super
+LPAR6,lpar6a,16,0,0,100.0,Class_A,align
+LPAR6,lpar6a,19,0,1,100.0,Class_A (4S0V),super
+LPAR6,lpar6b,15,2,3,88.24,Class_A (4S0V),super
+LTB4R,ltb4r,16,6,0,72.73,Class_A (4S0V),super
+LTB4R2,ltb4r2a,13,4,2,76.47,Class_A,align
+LTB4R2,ltb4r2b,12,5,2,70.59,Class_A,align
+MC1R,mc1r,9,1,7,90.0,Class_A,super
+MC2R,mc2r,11,4,9,73.33,Class_B1,super
+MC3R,mc3r,16,0,1,100.0,Class_A,super
+MC4R,mc4r,18,1,3,94.74,Class_B1,super
+MC5R,mc5ra,8,0,11,100.0,Class_C,align
+MC5R,mc5ra,18,0,0,100.0,Class_A (4S0V),super
+MC5R,mc5rb,16,1,1,94.12,Class_A (4S0V),super
+MCHR1,mchr1a,13,3,4,81.25,Class_A,align
+MCHR1,mchr1b,14,4,3,77.78,Class_A (4S0V),super
+MCHR2,mchr2a,15,4,1,78.95,Class_A (4S0V),super
+MCHR2,mchr2b,1,4,17,20.0,Class_B1,align
+MCHR2,mchr2b,1,4,15,20.0,Class_A (4S0V),super
+MLNR,mlnr,9,3,12,75.0,Class_B1,super
+MTNR1A,mtnr1aa,6,0,15,100.0,Class_C,super
+MTNR1A,mtnr1ab,20,0,5,100.0,Class_A (4S0V),super
+MTNR1A,mtnr1al,8,0,11,100.0,Class_A,super
+MTNR1B,mtnr1ba,15,2,1,88.24,Class_A,align
+MTNR1B,mtnr1bb,18,1,0,94.74,Class_C,super
+NMUR1,nmur1a,17,2,0,89.47,Class_A (4S0V),super
+NPBWR2,npbwr2a,14,0,5,100.0,Class_A,align
+NPBWR2,npbwr2b,14,0,5,100.0,Class_A,align
+NPBWR2,npbwr2b,8,0,14,100.0,Class_F,super
+NPFFR1,npffr1,1,0,18,100.0,Class_C,super
+NPFFR1,npffr1l1,15,2,2,88.24,Class_A (4S0V),super
+NPFFR1,npffr1l2,3,0,17,100.0,Class_C,align
+NPFFR1,npffr1l3,15,1,1,93.75,Class_A,align
+NPFFR1,npffr1l3,15,1,3,93.75,Class_A (4S0V),super
+NPFFR2,npffr2a,14,0,1,100.0,Class_A,align
+NPFFR2,npffr2a,15,0,0,100.0,Class_A,super
+NPFFR2,npffr2b,15,0,0,100.0,Class_A,align
+NPFFR2,npffr2b,14,0,1,100.0,Class_A,super
+NPY1R,npy1r,15,2,0,88.24,Class_F,super
+NPY2R,npy2r,17,3,0,85.0,Class_A (4S0V),super
+NPY2R,npy2rl,17,3,0,85.0,Class_A (4S0V),super
+NPY4R,npy4r,16,1,4,94.12,Class_A,super
+NTSR1,ntsr1,16,2,4,88.89,Class_A,super
+OPN1LW,opn1lw1,22,0,0,100.0,Class_A,align
+OPN1LW,opn1lw1,28,0,1,100.0,Class_A (4S0V),super
+OPN1LW,opn1lw1,23,0,0,100.0,Class_A,super
+OPN1SW,opn1sw1,18,5,1,78.26,Class_A,super
+OPN1SW,opn1sw1,18,5,2,78.26,Class_B1,super
+OPN3,opn3,17,7,1,70.83,Class_A (4S0V),super
+OPN4,opn4a,22,1,1,95.65,Class_A,align
+OPN4,opn4b,20,0,4,100.0,Class_A,align
+OPN4,opn4b,20,0,1,100.0,Class_A (4S0V),super
+OPN4,opn4b,22,0,1,100.0,Class_A,super
+OPN5,opn5,24,1,3,96.0,Class_B1,super
+OPRD1,oprd1a,13,3,4,81.25,Class_A (4S0V),super
+OPRD1,oprd1a,13,3,3,81.25,Class_A,super
+OPRD1,oprd1b,12,1,5,92.31,Class_A,align
+OPRK1,oprk1,12,0,10,100.0,Class_C,super
+OPRL1,oprl1,11,4,1,73.33,Class_A (4S0V),super
+OPRM1,oprm1,13,0,1,100.0,Class_A,align
+OPRM1,oprm1,13,0,0,100.0,Class_A,super
+OXGR1,oxgr1a.1,13,3,4,81.25,Class_A,align
+OXGR1,oxgr1a.2,13,4,3,76.47,Class_A,align
+OXGR1,oxgr1a.3,13,4,4,76.47,Class_C,align
+OXGR1,oxgr1b,6,1,13,85.71,Class_A,align
+OXTR,oxtra,4,0,13,100.0,Class_F,super
+OXTR,oxtrb,3,0,14,100.0,Class_F,super
+P2RY1,p2ry1,25,0,2,100.0,Class_A (4S0V),super
+P2RY10,p2ry10,14,0,4,100.0,Class_A,align
+P2RY11,p2ry11,10,5,1,66.67,Class_A,align
+P2RY12,p2ry12,15,0,2,100.0,Class_A,align
+P2RY12,p2ry12,18,0,2,100.0,Class_A,super
+P2RY13,p2ry13,13,1,4,92.86,Class_A,align
+P2RY2,p2ry2.1,16,1,2,94.12,Class_A,align
+P2RY2,p2ry2.2,18,0,2,100.0,Class_A,super
+P2RY2,p2ry2.3,18,1,1,94.74,Class_A,super
+P2RY8,p2ry8,17,2,1,89.47,Class_A,align
+PITPNM3,pitpnm3,15,2,1,88.24,Class_A,super
+PROKR1,prokr1a,16,1,1,94.12,Class_A,super
+PROKR1,prokr1b,15,2,2,88.24,Class_A (4S0V),super
+PTAFR,ptafr,12,1,5,92.31,Class_A,super
+PTGER1,ptger1a,12,3,2,80.0,Class_A,align
+PTGER1,ptger1b,2,6,13,25.0,Class_B1,super
+PTGER1,ptger1b,1,3,20,25.0,Class_C,super
+PTGER1,ptger1c,7,4,11,63.64,Class_A,super
+PTGER2,ptger2a,9,7,2,56.25,Class_A,super
+PTGER2,ptger2b,7,7,4,50.0,Class_A,super
+PTGER3,ptger3,20,2,1,90.91,Class_A (4S0V),super
+PTGER4,ptger4a,22,2,3,91.67,Class_C,super
+PTGER4,ptger4b,16,1,2,94.12,Class_A,align
+PTGER4,ptger4b,16,1,1,94.12,Class_A,super
+PTGER4,ptger4c,9,9,0,50.0,Class_A,super
+PTGFR,ptgfr,23,2,3,92.0,Class_B1,super
+PTGIR,ptgir,10,2,9,83.33,Class_A (4S0V),super
+PTH1R,pth1r,14,0,1,100.0,Class_A (4S0V),super
+PTH2R,pth2ra,9,0,7,100.0,Class_F,align
+PTH2R,pth2ra,8,0,11,100.0,Class_A (4S0V),super
+PTH2R,pth2ra,7,0,5,100.0,Class_A,super
+PTH2R,pth2rb,9,0,10,100.0,Class_A (4S0V),super
+PTH2R,pth2rb,7,0,5,100.0,Class_A,super
+PTH2R,pth2rb,12,0,11,100.0,Class_C,super
+QRFPR,qrfpra,11,4,5,73.33,Class_A (4S0V),super
+QRFPR,qrfprb,14,2,0,87.5,Class_A,super
+RGR,rgra,20,1,2,95.24,Class_A (4S0V),super
+RGR,rgrb,16,6,1,72.73,Class_A (4S0V),super
+RHO,rho,21,1,3,95.45,Class_A (4S0V),super
+RHO,rho,21,1,1,95.45,Class_A,super
+RRH,rrh,17,0,1,100.0,Class_A,align
+RRH,rrh,17,0,2,100.0,Class_C,align
+RRH,rrh,17,0,1,100.0,Class_A (4S0V),super
+RRH,rrh,18,0,0,100.0,Class_A,super
+RRH,rrh,16,0,3,100.0,Class_C,super
+RRH,rrh,22,0,2,100.0,Class_F,super
+RXFP1,rxfp1,20,1,1,95.24,Class_A,super
+RXFP2,rxfp2a,20,0,6,100.0,Class_B1,super
+RXFP2,rxfp2b,19,0,7,100.0,Class_B1,super
+RXFP3,rxfp3,11,0,3,100.0,Class_A,super
+S1PR1,s1pr1,15,0,1,100.0,Class_A,align
+S1PR1,s1pr1,16,0,5,100.0,Class_A (4S0V),super
+S1PR1,s1pr1,16,0,3,100.0,Class_A,super
+S1PR1,s1pr1,21,0,3,100.0,Class_C,super
+S1PR2,s1pr2,21,0,1,100.0,Class_B1,super
+S1PR3,s1pr3a,15,1,2,93.75,Class_A,super
+S1PR4,s1pr4,17,2,1,89.47,Class_A,super
+S1PR5,s1pr5a,19,1,2,95.0,Class_A (4S0V),super
+S1PR5,s1pr5b,16,2,2,88.89,Class_A,super
+SMO,smo,20,0,0,100.0,Class_A (4S0V),super
+SSTR1,sstr1a,16,1,4,94.12,Class_A (4S0V),super
+SSTR2,sstr2a,20,2,2,90.91,Class_B1,align
+SSTR2,sstr2b,20,3,0,86.96,Class_B1,super
+SSTR3,sstr3,8,1,17,88.89,Class_B1,align
+SSTR5,sstr5,15,3,0,83.33,Class_A,super
+TAAR1,taar1b,17,5,2,77.27,Class_A (4S0V),super
+TACR1,tacr1a,17,3,1,85.0,Class_A (4S0V),super
+TACR1,tacr1b,18,3,0,85.71,Class_A (4S0V),super
+TACR2,tacr2,18,0,1,100.0,Class_A (4S0V),super
+TACR3,tacr3a,13,4,2,76.47,Class_A,align
+TACR3,tacr3l,10,1,12,90.91,Class_B1,super
+TBXA2R,tbxa2r,19,2,4,90.48,Class_A (4S0V),super
+TRHR,trhra,20,0,0,100.0,Class_A (4S0V),super
+TRHR,trhrb,14,1,3,93.33,Class_A,align
+TRHR,trhrb,14,1,3,93.33,Class_A,super
+TSHR,tshr,16,1,3,94.12,Class_A (4S0V),super
+TSHR,tshr,16,1,0,94.12,Class_A,super
+VIPR1,vipr1a,12,1,4,92.31,Class_A (4S0V),super
+VIPR1,vipr1b,1,0,15,100.0,Class_F,align
+VIPR2,vipr2,22,1,2,95.65,Class_B1,align
+VIPR2,vipr2,22,1,4,95.65,Class_B1,super
+XCR1,xcr1a.1,10,8,2,55.56,Class_A,align
+XCR1,xcr1b.1,14,4,8,77.78,Class_B1,super
+XCR1,xcr1b.2,15,7,4,68.18,Class_B1,super
+ADGRL3,adgrl3.1,16,0,1,100.0,Class_A (4S0V),super
+ADGRL3,adgrl3.1,18,0,0,100.0,Class_A,super
+ADGRL3,adgrl3.1,20,0,4,100.0,Class_B1,super
+CRHR2,crhr2,0,0,12,0.0,Class_A,align
+CRHR2,crhr2,0,2,28,0.0,Class_B1,align
+CRHR2,crhr2,0,0,22,0.0,Class_C,align
+CRHR2,crhr2,0,2,5,0.0,Class_F,align
+CRHR2,crhr2,0,1,15,0.0,Class_A (4S0V),super
+CRHR2,crhr2,0,0,9,0.0,Class_A,super
+CRHR2,crhr2,0,5,26,0.0,Class_B1,super
+CRHR2,crhr2,0,4,13,0.0,Class_C,super
+CRHR2,crhr2,0,0,9,0.0,Class_F,super
