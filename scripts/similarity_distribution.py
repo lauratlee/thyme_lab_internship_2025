@@ -31,7 +31,7 @@ plt.grid(True)
 
 # Add number of data points text at top right
 plt.text(
-    x=0.95, y=0.95, 
+    x=0.95, y=1.05, 
     s=f'N = {n_points}', 
     ha='right', va='top', 
     transform=plt.gca().transAxes,
