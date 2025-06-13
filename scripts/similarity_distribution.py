@@ -1,58 +1,48 @@
 # plots the % similarities of a given csv alignment summary file and saves it as an image
-# run from scripts folder
+# run from directory that has the summaries
 
-import sys, re, os
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
-import matplotlib.colors as mcolors
+import seaborn as sns
+import sys, re
 
-# Load CSV
-csv_file = sys.argv[1]
+file_path = sys.argv[1]
 
-if "super_outputs" in csv_file:
-    folder = "super_outputs"
-elif "align_outputs" in csv_file:
-    folder = "align_outputs"
-else:
-    folder = "unknown"
-
-match = re.search(r"_([0-9.]+)\.csv$", csv_file)
+match = re.search(r'(\d+\.\d+)', file_path)
 if match:
-    threshold = float(match.group(1))  # or keep as string with match.group(1)
-else:
-    print("Pattern not found.")
-    threshold = 0.0
+    threshold = match.group(1)
 
-    
-df = pd.read_csv(csv_file)
+# Load the CSV file
+df = pd.read_csv(file_path)
 
-if "% similarity" not in df.columns:
-    raise ValueError("Column '% similarity' not found in the CSV file.")
+# Clean up column names (remove extra spaces)
+df.columns = df.columns.str.strip()
 
-similarities = df["% similarity"]
+# Number of data points
+n_points = df['% similarity'].dropna().shape[0]
 
-# Create histogram data
-counts, bins = np.histogram(similarities, bins=20, range=(0, 100))
-bin_centers = 0.5 * (bins[1:] + bins[:-1])
-
-# Create a colormap from blue (low) to red (high)
-norm = mcolors.Normalize(vmin=0, vmax=100)
-cmap = plt.cm.viridis
-
-# Plot bars with color gradient
-plt.figure(figsize=(10, 5))
-for i in range(len(counts)):
-    plt.bar(bin_centers[i], counts[i], width=(bins[1] - bins[0]),
-            color=cmap(norm(bin_centers[i])))
-
+# Create the distribution plot
+plt.figure(figsize=(10, 6))
+sns.histplot(df['% similarity'], bins=20, color='skyblue', kde=False)
+plt.title('Distribution of % Similarity')
 plt.xlabel('% Similarity')
 plt.ylabel('Frequency')
-plt.title('Distribution of % Similarity')
 plt.grid(True)
 
-# Save and open
-output_dir = os.path.dirname(csv_file)
-output_path = os.path.join(output_dir, f"plot_{threshold}.png")
-plt.savefig(output_path)
-print(f"Saved gradient histogram to {output_path}")
+# Add number of data points text at top right
+plt.text(
+    x=0.95, y=0.95, 
+    s=f'N = {n_points}', 
+    ha='right', va='top', 
+    transform=plt.gca().transAxes,
+    fontsize=12,
+    bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.7)
+)
+
+plt.tight_layout()
+
+# Save the plot to a file
+plt.savefig(f"similarity_distribution_{threshold}.png", dpi=300)  # High-quality PNG
+plt.close()  # Close the figure to free up memory
+print(f"saved to similarity_distribution_{threshold}.png")
+
