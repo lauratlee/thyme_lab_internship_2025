@@ -1,7 +1,7 @@
 # uses tm-align to create alignments against a given reference file.
 # example usage: (to be run from gpcr_dirs/) python ../scripts/make_alignments.py ../../gpcr_class_reps/2rh1_chainA.pdb
 
-import sys, os
+import sys, os, re
 
 
 # ensure that given reference file is valid
