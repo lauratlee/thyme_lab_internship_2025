@@ -27,7 +27,7 @@ else:
 
 # helper function that takes in a gpcr directory and runs necessary tm-align commands
 def tm_align_runner(gpcr_dir):
-    for _, _, genes in os.walk(gpcr_dir):
+    for root, _, genes in os.walk(gpcr_dir):
         for gene in genes:
             if not gene.endswith(".pdb"):
                 continue
@@ -43,7 +43,8 @@ def tm_align_runner(gpcr_dir):
             tm_align_bin = os.path.expanduser('~/TMalign')
             output_path = os.path.expanduser(f'~/thyme_lab_internship_2025/tm-align_alignments/gpcr_pocket_dir/{gpcr_dir}/{gpcr_class}/{name}.pdb')
 
-            cmd = f"'{tm_align_bin}' '{gene}' '{os.path.abspath(sys.argv[1])}' -o '{output_path}'"
+            gene_path = os.path.join(root, gene)
+            cmd = f"'{tm_align_bin}' '{gene_path}' '{os.path.abspath(sys.argv[1])}' -o '{output_path}'"
             print(f"Running command: {cmd}")
             os.system(cmd)
 
