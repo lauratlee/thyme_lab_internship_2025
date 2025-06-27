@@ -27,8 +27,7 @@ else:
 
 # helper function that takes in a gpcr directory and runs necessary tm-align commands
 def tm_align_runner(gpcr_dir):
-    os.chdir(gpcr_dir)
-    for _, _, genes in os.walk("."):
+    for _, _, genes in os.walk(gpcr_dir):
         for gene in genes:
             if not gene.endswith(".pdb"):
                 continue
@@ -52,7 +51,6 @@ def tm_align_runner(gpcr_dir):
 
             print(f"saved ... {gene} complete")
 
-    os.chdir("..")
 
 
 def main():
