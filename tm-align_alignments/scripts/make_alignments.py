@@ -17,6 +17,7 @@ ref_file = os.path.basename(sys.argv[1])
 if ref_file in ref_map:
     gpcr_class, ligand_name = ref_map[ref_file]
     print(f"""
+    FILE: {ref_file}
     CLASS: {gpcr_class}
     LIGAND: {ligand_name}
     """)
