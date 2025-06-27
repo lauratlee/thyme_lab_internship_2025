@@ -41,7 +41,14 @@ def tm_align_runner(gpcr_dir):
 
             print(f"NAME: {name}")
 
-            os.system(f"~/TMalign '{gene}' '{os.path.abspath(sys.argv[1])}' -o ~/thyme_lab_internship_2025/tm-align_alignments/gpcr_pocket_dir/{gpcr_dir}/{gpcr_class}/{name}.pdb")
+            tm_align_bin = os.path.expanduser('~/TMalign')
+            output_path = os.path.expanduser(f'~/thyme_lab_internship_2025/tm-align_alignments/gpcr_pocket_dir/{gpcr_dir}/{gpcr_class}/{name}.pdb')
+
+            cmd = f"'{tm_align_bin}' '{gene}' '{os.path.abspath(sys.argv[1])}' -o '{output_path}'"
+            print(f"Running command: {cmd}")
+            os.system(cmd)
+
+            #os.system(f"~/TMalign '{gene}' '{os.path.abspath(sys.argv[1])}' -o ~/thyme_lab_internship_2025/tm-align_alignments/gpcr_pocket_dir/{gpcr_dir}/{gpcr_class}/{name}.pdb")
 
             print(f"saved ... {gene} complete")
 
