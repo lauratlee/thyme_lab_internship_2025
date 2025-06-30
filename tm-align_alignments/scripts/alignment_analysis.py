@@ -66,10 +66,7 @@ def extract_genes_from_filename(filename, class_name):
 def alignment_summary(csv_path):
     data = load_alignments(csv_path)
     A, B = extract_genes_from_filename(csv_path, class_name)
-    print(f"
-            human gene: {A}\n
-            zebrafish gene: {B}")
-    
+    print(f"human gene: {A}\nzebrafish gene: {B}")
     matched, mismatched, failed = count_matches_by_identity(data)
     similarity = calculate_percent_similarity(matched, mismatched)
     return [A, B, matched, mismatched, failed, round(similarity, 2)]
