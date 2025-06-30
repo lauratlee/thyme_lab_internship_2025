@@ -75,6 +75,7 @@ def alignment_summary(csv_path):
     matched, mismatched, failed = count_matches_by_identity(data)
     similarity = calculate_percent_similarity(matched, mismatched)
     A, B = extract_genes_from_filename(csv_path, class_name)
+    print(A, B)
     return [A, B, matched, mismatched, failed, round(similarity, 2)]
 
 class_name = sys.argv[1]
