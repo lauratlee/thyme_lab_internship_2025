@@ -12,7 +12,7 @@ def get_center(gpcr_dir):
     for file in files:
       if not file.endswith("_pocket.pdb"):
         continue
-      name = file.removesuffix("_pocket.pdb")
+      name = file[:-len("_pocket.pdb")]
       print(f"GENE NAME: {name}")
 
       output_path = os.path.join(f"{gpcr_dir}", name + "_centers.txt")
