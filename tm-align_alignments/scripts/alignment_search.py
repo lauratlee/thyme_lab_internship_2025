@@ -98,16 +98,17 @@ while True:
         print("Warning: Invalid or missing threshold argument. Using default threshold = 2.0 Å.")
         threshold = 2.0
         
-  answer = input(f"Run alignments for {class_name}, threshold = {threshold}? [y/n]").strip().lower()
-  if answer == "y":
-    main()
-    break
-  elif answer == "n":
-    print("Exiting program.")
-    sys.exit(0)
-  else:
-    print("Invalid input, please answer y/n")
-
+    answer = input(f"Run alignments for {class_name}, threshold = {threshold}? [y/n]").strip().lower()
+    
+    if answer == "y":
+        main()
+        break
+    elif answer == "n":
+        print("Exiting program.")
+        sys.exit(0)
+    else:
+        print("Invalid input, please answer y/n")
+    
 
 
 
