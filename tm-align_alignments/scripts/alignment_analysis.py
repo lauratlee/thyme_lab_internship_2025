@@ -26,6 +26,11 @@ def count_matches_by_identity(data):
     failed = 0
 
     for row in data:
+        # debug check to make sure each row has enough columns
+        if len(row) < 2:
+            print(f"[WARNING] Row does not have enough columns: {row}")
+            sys.exit(1)
+        
         ref_id = parse_residue_identity(row[0])
         aligned_id = parse_residue_identity(row[1])
 
