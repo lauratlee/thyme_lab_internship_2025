@@ -85,8 +85,9 @@ results = []
 
 for gpcr in os.listdir("."):
     for file in os.listdir(os.path.join(gpcr, class_name)):
-        csv_path = os.path.join(gpcr, class_name, file)
-        results.append(alignment_summary(csv_path))
+        if file.endswith(f"_{threshold}.csv"):
+            csv_path = os.path.join(gpcr, class_name, file)
+            results.append(alignment_summary(csv_path))
     print(f"{gpcr} done")
     
     
