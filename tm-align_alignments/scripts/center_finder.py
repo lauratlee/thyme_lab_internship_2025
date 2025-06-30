@@ -64,7 +64,7 @@ def main():
   #walk through gpcr directory and run get_center on each gpcr subdir
   for sub in os.listdir("."):
       print(f"Calling get_center on: {sub}")
-      get_center(os.path.join(sub, f"{gpcr_class"))
+      get_center(os.path.join(sub, f"{gpcr_class}"))
 
 while True:
   answer = input(f"Find centers for {gpcr_class} alignments? [y/n]").strip().lower()
