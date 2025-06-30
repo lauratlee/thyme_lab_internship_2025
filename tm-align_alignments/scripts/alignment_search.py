@@ -36,7 +36,7 @@ def distance(c1, c2):
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
 
 def process_subfolder(folder, threshold): 
-    center_files = sorted(glob("*_centers.txt"))
+    center_files = sorted(glob(os.path.jion(folder, "*_centers.txt")))
 
     if len(center_files) < 2:
         print(f"[{folder}] Skipping: fewer than 2 *_centers.txt files.")
