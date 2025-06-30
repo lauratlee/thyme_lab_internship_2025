@@ -51,18 +51,11 @@ def extract_genes_from_filename(filename, class_name):
     # remove extension
     base = os.path.splitext(filename)[0]  
     
-    if class_name == "none":
-        name_part = re.sub(r'_\d+(\.\d+)?$', '', base)
-    else:
-        # Step 1: Remove prefix
-        name_part = base.replace("[super]", "")        # "ACKR3-ackr3a_2.0"
-        
-        # Step 2: Remove the trailing threshold (e.g., _2.0)
-        name_part = re.sub(r'_\d+(\.\d+)?$', '', name_part)  # "ACKR3-ackr3a"
+    # Step 1: Remove the trailing threshold (e.g., _2.0)
+    name_part = re.sub(r'_\d+(\.\d+)?$', '', base)  # "ACKR3-ackr3a"
     
-    # Step 3: Extract gene names using regex
-    pattern = r'[a-zA-Z0-9.]+(?:-[0-9]+)?'
-    genes = re.findall(pattern, name_part)
+    # Step 2: Extract gene names using regex
+    genes = name_part.split("-")  # ['ACKR3', 'ackr3a']
 
     if len(genes) >= 2:
         return genes[0], genes[1]
