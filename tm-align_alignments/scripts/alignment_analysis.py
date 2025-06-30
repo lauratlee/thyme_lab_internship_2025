@@ -49,7 +49,7 @@ def calculate_percent_similarity(matched, mismatched):
 
 def extract_genes_from_filename(filename, class_name):
     # remove extension
-    base = os.path.splitext(filename)[0]  
+    base = os.path.splitext(os.path.basename(filename))[0]  
     
     # Step 1: Remove the trailing threshold (e.g., _2.0)
     name_part = re.sub(r'_\d+(\.\d+)?$', '', base)  # "ACKR3-ackr3a"
