@@ -50,8 +50,12 @@ def process_subfolder(folder, threshold):
             residues_a = parse_centers(file_a)
             residues_b = parse_centers(file_b)
 
-            gene_a = file_a[:-len("_centers.txt")]
-            gene_b = file_b[:-len("_centers.txt")]
+            gene_a = os.path.basename(file_a)[:-len("_centers.txt")]
+            gene_b = os.path.basename(file_b)[:-len("_centers.txt")]
+
+            if gene_a == gene_b:
+                print("[WARNING] Comparing same files. Exiting program.")
+                sys.exit(1)
 
             output_csv = f"{gene_a}-{gene_b}_{threshold:.1f}.csv"
             output_path = os.path.join(folder, output_csv)
