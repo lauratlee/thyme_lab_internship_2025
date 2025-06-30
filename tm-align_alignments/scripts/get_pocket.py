@@ -73,5 +73,18 @@ def main():
       print(f"Calling find_pocket on: {sub}")
       find_pocket(sub, ref_file, ligand_name)
 
+while True:
+  answer = input(f"Find pockets using {gpcr_class} reference? [y/n]").strip().lower()
+  if answer == "y":
+    main()
+    break
+  elif answer == "n":
+    print("Exiting program.")
+    sys.exit(0)
+  else:
+    print("Invalid input, please answer y/n")
+
+
+
 
 
