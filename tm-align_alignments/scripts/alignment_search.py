@@ -36,7 +36,7 @@ def distance(c1, c2):
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(c1, c2)))
 
 def process_subfolder(folder, threshold): 
-    center_files = sorted(glob.glob("*_centers.txt"))
+    center_files = sorted(glob("*_centers.txt"))
 
     if len(center_files) < 2:
         print(f"[{folder}] Skipping: fewer than 2 *_centers.txt files.")
@@ -85,20 +85,20 @@ def process_subfolder(folder, threshold):
             print(f"[{folder}] Wrote: {output_csv}")    
 
 def main():
-    gpcr_class_list = ["Class_A", "Class_B1", "Class_C", "Class_F"]
-    try:
-        threshold = float(sys.argv[2])
-    except (IndexError, ValueError):
-        print("Warning: Invalid or missing threshold argument. Using default threshold = 2.0 Å.")
-        threshold = 2.0
-
     for sub in os.listdir("."):
       print(f"Running process_subfolder on {sub}/{class_name}")
       process_subfolder(os.path.join(sub, class_name), threshold)
 
 
 while True:
-  answer = input(f"Run alignments for {class_name}? [y/n]").strip().lower()
+    gpcr_class_list = ["Class_A", "Class_B1", "Class_C", "Class_F"]
+    try:
+        threshold = float(sys.argv[2])
+    except (IndexError, ValueError):
+        print("Warning: Invalid or missing threshold argument. Using default threshold = 2.0 Å.")
+        threshold = 2.0
+        
+  answer = input(f"Run alignments for {class_name}, threshold = {threshold}? [y/n]").strip().lower()
   if answer == "y":
     main()
     break
