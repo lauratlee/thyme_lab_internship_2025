@@ -15,13 +15,14 @@ def get_center(gpcr_dir):
       name = file[:-len("_pocket.pdb")]
       print(f"GENE NAME: {name}")
 
-      output_path = os.path.join(f"{gpcr_dir}", name + "_centers.txt")
+      output_file = os.path.join(f"{gpcr_dir}", name + "_centers.txt")
 
       # Dictionary to hold coordinates per residue
       # Key = (chain, resi, resn), Value = list of (x, y, z) tuples
       residue_coords = defaultdict(list)
-      
-      with open(file, "r") as f:
+
+      file_path = os.path.join(gpcr_dir, file)
+      with open(file_path, "r") as f:
           for line in f:
               if line.startswith(("ATOM", "HETATM")):
                   atom_name = line[12:16].strip()
