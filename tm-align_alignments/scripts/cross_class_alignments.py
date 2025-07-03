@@ -20,7 +20,7 @@ def parse_summary(file, gpcr_class):
     next(reader_f)
     for row in reader_f:
       key = (row[0], row[1])
-      value = tuple(row[2:6] + [gpcr_class])
+      value = tuple(row[2:7] + [gpcr_class])
       if key in data_dict:
         data_dict[key].append(value)
       else:
@@ -34,7 +34,7 @@ def get_class(file):
 
 # get class_name and summary data from a an alignment summary file
 for summary in os.listdir("."):
-  if summary.endswith(f"{threshold}.csv"): # makes sure that file is a human-zebrafish comparison
+  if summary.endswith(f"{threshold}.csv") and "[" in summary: 
     gpcr_class = get_class(summary)
     parse_summary(summary, gpcr_class)
 
