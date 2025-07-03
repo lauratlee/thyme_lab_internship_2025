@@ -26,7 +26,8 @@ def parse_summary(file, gpcr_class):
     reader_f = csv.reader(f)
     next(reader_f)
     for row in reader_f:
-      key = parse_genes_from_filename(file)[0], parse_genes_from_filename(file)[1]
+      genes = parse_genes_from_filename(file)
+      key = (genes[0], genes[1])
       value = tuple(row[2:] + [gpcr_class])
       if key in data_dict:
         data_dict[key].append(value)
