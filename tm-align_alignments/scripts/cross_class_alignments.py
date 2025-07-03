@@ -20,7 +20,7 @@ def parse_summary(file, gpcr_class):
     next(reader_f)
     for row in reader_f:
       key = (row[0], row[1])
-      value = tuple(row[2:7] + [gpcr_class])
+      value = tuple(row[2:6] + [gpcr_class])
       if key in data_dict:
         data_dict[key].append(value)
       else:
@@ -56,10 +56,5 @@ with open(output_name, "w", newline = '') as output_file:
     # write entries to csv file
     for entry in best_similarities:
       writer.writerow([*key, *entry])
-
-for key, value_list in data_dict.items():
-    for val in value_list:
-        if len(val) != 5:
-            print(f"Warning: unexpected tuple length {len(val)} for key {key}: {val}")
 
 print(f"data saved to {output_name}")
