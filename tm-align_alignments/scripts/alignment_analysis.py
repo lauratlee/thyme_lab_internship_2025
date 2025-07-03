@@ -55,7 +55,7 @@ def extract_genes_from_filename(filename, class_name):
     name_part = re.sub(r'_\d+(\.\d+)?$', '', base)  # "ACKR3-ackr3a"
     
     # Step 2: Extract gene names using regex
-    genes = name_part.split("-")  # ['ACKR3', 'ackr3a']
+    genes = name_part.split("-", 1)  # ['HCAR1', 'hcar1-2']
 
     if len(genes) >= 2:
         return genes[0], genes[1]
