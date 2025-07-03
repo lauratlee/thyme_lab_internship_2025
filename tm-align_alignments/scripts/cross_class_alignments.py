@@ -6,7 +6,7 @@
 # python ../scripts/cross_class_alignments.py 2.0
 
 # a temporary dictionary is created where the key is a tuple of (human gene, zebrafish gene), and the value is a list of tuples with the corresponding alignment data.
-  # value tuple format is (match, mismatch, failed alignments, % similarity, class, method). The classes are A, B1, C, or F
+  # value tuple format is (match, mismatch, failed alignments, % similarity, class). The classes are A, B1, C, or F
 
 import os, sys, csv, re, pprint
 
@@ -56,5 +56,10 @@ with open(output_name, "w", newline = '') as output_file:
     # write entries to csv file
     for entry in best_similarities:
       writer.writerow([*key, *entry])
+
+for key, value_list in data_dict.items():
+    for val in value_list:
+        if len(val) != 5:
+            print(f"Warning: unexpected tuple length {len(val)} for key {key}: {val}")
 
 print(f"data saved to {output_name}")
