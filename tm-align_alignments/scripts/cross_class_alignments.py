@@ -22,8 +22,6 @@ def parse_summary(file, gpcr_class):
       key = (row[0], row[1])
       value = tuple(row[2:] + [gpcr_class])
       if key in data_dict:
-        if value in data_dict.get(key, []):
-          print(f"Duplicate found in file {file}: {key} -> {value}")
         data_dict[key].append(value)
       else:
         data_dict[key] = [value]
