@@ -13,13 +13,6 @@ import os, sys, csv, re, pprint
 threshold = sys.argv[1]
 data_dict = {}
 
-def parse_genes_from_filename(filename):
-    base = os.path.splitext(filename)[0]  # remove .csv
-    name_part = re.sub(r'_\d+(\.\d+)?$', '', base)  # remove _2.0
-    gene_a, gene_b = name_part.split("-", 1)  # split only on first hyphen
-    return [gene_a, gene_b]
-    
-
 # takes a .csv file and adds the file's data to the data_dict dictionary
 def parse_summary(file, gpcr_class):
   with open(file, newline = '') as f:
@@ -27,7 +20,7 @@ def parse_summary(file, gpcr_class):
     next(reader_f)
     for row in reader_f:
       genes = parse_genes_from_filename(file)
-      key = (genes[0], genes[1])
+      key = (row[0], row[1])
       value = tuple(row[2:] + [gpcr_class])
       if key in data_dict:
         data_dict[key].append(value)
@@ -42,7 +35,7 @@ def get_class(file):
 
 # get class_name and summary data from a an alignment summary file
 for summary in os.listdir("."):
-  if summary.endswith(f"{threshold}.csv") and summary[0].isupper(): # makes sure that file is a human-zebrafish comparison
+  if summary.endswith(f"{threshold}.csv"): # makes sure that file is a human-zebrafish comparison
     gpcr_class = get_class(summary)
     parse_summary(summary, gpcr_class)
 
