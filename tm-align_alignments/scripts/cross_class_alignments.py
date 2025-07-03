@@ -17,7 +17,8 @@ def parse_genes_from_filename(filename):
     base = os.path.splitext(filename)[0]  # remove .csv
     name_part = re.sub(r'_\d+(\.\d+)?$', '', base)  # remove _2.0
     gene_a, gene_b = name_part.split("-", 1)  # split only on first hyphen
-    return gene_a, gene_b
+    return [gene_a, gene_b]
+    
 
 # takes a .csv file and adds the file's data to the data_dict dictionary
 def parse_summary(file, gpcr_class):
@@ -25,7 +26,7 @@ def parse_summary(file, gpcr_class):
     reader_f = csv.reader(f)
     next(reader_f)
     for row in reader_f:
-      key = parse_genes_from_filename(file)
+      key = parse_genes_from_filename(file)[0], parse_genes_from_filename(file)[1]
       value = tuple(row[2:] + [gpcr_class])
       if key in data_dict:
         data_dict[key].append(value)
