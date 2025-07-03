@@ -40,7 +40,7 @@ def get_class(file):
 
 # get class_name and summary data from a an alignment summary file
 for summary in os.listdir("."):
-  if summary.endswith(f"{threshold}.csv"):
+  if summary.endswith(f"{threshold}.csv") and summary[0].isupper(): # makes sure that file is a human-zebrafish comparison
     gpcr_class = get_class(summary)
     parse_summary(summary, gpcr_class)
 
