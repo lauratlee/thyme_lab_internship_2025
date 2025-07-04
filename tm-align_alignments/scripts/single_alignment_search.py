@@ -7,6 +7,7 @@ from collections import defaultdict
 # --------------------------- GETTING CENTER COORDINATES ----------------------------------- #
 
 zf_center_file = sys.argv[4]
+threshold = sys.argv[3]
 human_center_file = sys.argv[2]
 
 # Dictionary to hold coordinates per residue
