@@ -1,5 +1,5 @@
 # takes a zf pocket file, a human centers file, and a threshold and generates a center coordinates file that is then used to search for similar residues
-# example usage (run from desired output folder, e.g. /outputs/blast/2.0): python ../../scripts/single_alignment_search.py [zf pocket file] [human center file] [threshold] [output file name]
+# example usage (run from desired output folder, e.g. /outputs/blast/2.0): python ../../scripts/single_alignment_search.py [zf pocket file] [human center file] [threshold] [center output file name]
 
 import sys, os, csv, math
 from collections import defaultdict
