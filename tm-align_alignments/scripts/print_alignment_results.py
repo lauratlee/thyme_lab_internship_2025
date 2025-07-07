@@ -5,6 +5,15 @@ import csv, sys
 
 csv_file = sys.argv[1]
 
+def parse_residue_identity(label):
+  """Extract residue identity (e.g., 'GLY') from 'GLY 53 (chain A)'."""
+  if label == "NO ALIGNED RESIDUE":
+    return None
+  parts = label.strip().split()
+  if len(parts) == 0:
+    return None
+  return parts[0]  # return just the residue identity
+
 with open(csv_file, newline='') as f:
   reader = csv.reader(f)
   next(reader)  # skip header
