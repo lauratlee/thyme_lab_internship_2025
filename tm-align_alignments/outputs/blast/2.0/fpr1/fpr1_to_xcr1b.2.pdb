@@ -1,0 +1,49 @@
+load inline
+select *A
+wireframe .45
+select *B
+wireframe .20
+select all
+color white
+select  123:A, 249:B
+color red
+select  126:A, 252:B
+color red
+select  127:A, 253:B
+color red
+select  130:A, 256:B
+color red
+select  260:A, 280:B
+color red
+select  264:A, 284:B
+color red
+select all
+exit
+REMARK TM-align
+REMARK Chain 1:../../../../gpcr_pocket_dir/FPR1/Class_B1/fpr1_pocket.pdb Size= 25
+REMARK Chain 2:../../../../gpcr_pocket_dir/XCR1/Class_A/xcr1b.2_pocket.pdb Size= 17 (TM-score is normalized by   17, d0=  0.50)
+REMARK Aligned length=   6, RMSD=  1.15, TM-score=0.18773, ID=0.167
+ATOM      2  CA  VAL A 123     -29.969  16.068  13.857
+ATOM      4  CA  LEU A 126     -29.082  11.491  15.686
+ATOM      5  CA  VAL A 127     -25.543  11.604  14.161
+ATOM      6  CA  SER A 130     -25.749   6.555  14.648
+ATOM     17  CA  VAL A 260     -36.610   8.211  13.958
+ATOM     21  CA  PHE A 264     -36.310  13.302  10.507
+TER
+CONECT    2    4
+CONECT    4    5
+CONECT    5    6
+CONECT    6   17
+CONECT   17   21
+ATOM     37  CA  TRP B 249     -29.909  16.399  13.841
+ATOM     38  CA  TYR B 252     -29.218  11.407  15.728
+ATOM     39  CA  HIS B 253     -25.749  11.496  14.091
+ATOM     40  CA  VAL B 256     -25.467   6.416  14.692
+ATOM     41  CA  ARG B 280     -34.709  10.404  14.762
+ATOM     42  CA  PHE B 284     -37.441  14.786  11.519
+TER
+CONECT   37   38
+CONECT   38   39
+CONECT   39   40
+CONECT   40   41
+CONECT   41   42

@@ -1,0 +1,59 @@
+load inline
+select *A
+wireframe .45
+select *B
+wireframe .20
+select all
+color white
+select  196:A, 150:B
+color red
+select  369:A, 243:B
+color red
+select  370:A, 244:B
+color red
+select  373:A, 247:B
+color red
+select  374:A, 248:B
+color red
+select  376:A, 250:B
+color red
+select  377:A, 251:B
+color red
+select all
+exit
+REMARK TM-align
+REMARK Chain 1:../../../../gpcr_pocket_dir/PITPNM3/Class_A/pitpnm3_pocket.pdb Size= 18
+REMARK Chain 2:../../../../gpcr_pocket_dir/EDNRB/Class_B1/ednrbb_pocket.pdb Size= 25 (TM-score is normalized by   25, d0=  0.87)
+REMARK Aligned length=   8, RMSD=  1.78, TM-score=0.23170, ID=0.250
+ATOM      3  CA  PRO A 196     -38.294 -16.635  35.790
+ATOM      5  CA  ILE A 200     -35.738 -21.440  38.804
+ATOM     13  CA  PRO A 369     -42.246 -18.429  30.201
+ATOM     14  CA  LEU A 370     -41.616 -22.238  30.101
+ATOM     15  CA  VAL A 373     -36.829 -21.690  30.973
+ATOM     16  CA  LEU A 374     -36.294 -24.834  28.845
+ATOM     17  CA  MET A 376     -31.857 -21.772  29.316
+ATOM     18  CA  ARG A 377     -31.717 -25.369  30.708
+TER
+CONECT    3    5
+CONECT    5   13
+CONECT   13   14
+CONECT   14   15
+CONECT   15   16
+CONECT   16   17
+CONECT   17   18
+ATOM     21  CA  LEU B 150     -38.373 -16.413  36.021
+ATOM     23  CA  SER B 154     -32.997 -18.527  33.940
+ATOM     25  CA  PRO B 243     -41.776 -18.582  30.495
+ATOM     26  CA  LEU B 244     -41.713 -22.363  29.856
+ATOM     28  CA  THR B 247     -36.713 -21.856  30.822
+ATOM     29  CA  ALA B 248     -36.543 -24.978  28.591
+ATOM     30  CA  PHE B 250     -31.761 -21.787  29.016
+ATOM     31  CA  TYR B 251     -31.974 -24.986  31.132
+TER
+CONECT   21   23
+CONECT   23   25
+CONECT   25   26
+CONECT   26   28
+CONECT   28   29
+CONECT   29   30
+CONECT   30   31
