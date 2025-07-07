@@ -33,11 +33,12 @@ for row in data:
 total = matched + mismatched
 similarity = (matched / total * 100) if total > 0 else 0.0
 
-print(f"
+print(f"""
         MATCHED: {matched}\n
         MISMATCHED: {mismatched}\n
         FAILED: {failed}\n
-        % SIMILARITY: {similarity}")
+        % SIMILARITY: {similarity}
+        """)
 
 
 
