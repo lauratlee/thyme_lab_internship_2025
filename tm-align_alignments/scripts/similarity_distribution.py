@@ -43,7 +43,8 @@ plt.text(
 plt.tight_layout()
 
 # Save the plot to a file
-plt.savefig(f"similarity_distribution_{threshold}.png", dpi=300)  # High-quality PNG
+save_name = input("Enter output file name, ex. output.png:")
+plt.savefig(save_name, dpi=300)  # High-quality PNG
 plt.close()  # Close the figure to free up memory
-print(f"saved to similarity_distribution_{threshold}.png")
+print(f"saved to {save_name}")
 
