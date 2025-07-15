@@ -1,0 +1,53 @@
+load inline
+select *A
+wireframe .45
+select *B
+wireframe .20
+select all
+color white
+select  748:A, 103:B
+color red
+select  762:A, 123:B
+color red
+select  764:A, 126:B
+color red
+select  765:A, 127:B
+color red
+select  767:A, 130:B
+color red
+select  770:A, 292:B
+color red
+select all
+exit
+REMARK TM-align
+REMARK Chain 1:../../../../gpcr_pocket_dir/PITPNM3/Class_F/pitpnm3_pocket.pdb Size= 36
+REMARK Chain 2:../../../../gpcr_pocket_dir/QRFPR/Class_A/qrfprb_pocket.pdb Size= 16 (TM-score is normalized by   16, d0=  0.50)
+REMARK Aligned length=   7, RMSD=  2.95, TM-score=0.06526, ID=0.000
+ATOM     25  CA  TYR A 748     -40.012   6.929  10.108
+ATOM     28  CA  SER A 762     -32.701  10.585  -0.773
+ATOM     30  CA  LEU A 764     -34.069  12.385   4.317
+ATOM     31  CA  SER A 765     -30.334  12.024   3.466
+ATOM     32  CA  HIS A 767     -31.647  17.130   4.776
+ATOM     33  CA  PHE A 769     -32.114  13.362   9.006
+ATOM     34  CA  PRO A 770     -30.648  10.917  11.563
+TER
+CONECT   25   28
+CONECT   28   30
+CONECT   30   31
+CONECT   31   32
+CONECT   32   33
+CONECT   33   34
+ATOM     37  CA  THR B 103     -41.151   6.221   7.831
+ATOM     38  CA  PRO B 123     -33.996   7.555   1.537
+ATOM     39  CA  GLN B 126     -34.514  12.267   2.796
+ATOM     40  CA  THR B 127     -30.750  12.564   2.124
+ATOM     41  CA  ILE B 130     -31.387  17.202   4.729
+ATOM     47  CA  TRP B 289     -30.548  15.731  13.567
+ATOM     48  CA  PHE B 292     -30.047  10.422  14.473
+TER
+CONECT   37   38
+CONECT   38   39
+CONECT   39   40
+CONECT   40   41
+CONECT   41   47
+CONECT   47   48

@@ -1,0 +1,43 @@
+load inline
+select *A
+wireframe .45
+select *B
+wireframe .20
+select all
+color white
+select  526:A, 996:B
+color red
+select  527:A,1000:B
+color red
+select  528:A,1001:B
+color red
+select  529:A,1002:B
+color red
+select  735:A,1056:B
+color red
+select all
+exit
+REMARK TM-align
+REMARK Chain 1:../../../../gpcr_pocket_dir/ADGRF3/Class_F/adgrf3b_pocket.pdb Size= 13
+REMARK Chain 2:../../../../gpcr_pocket_dir/ADGRL1/Class_A/adgrl1a_pocket.pdb Size= 18 (TM-score is normalized by   18, d0=  0.50)
+REMARK Aligned length=   5, RMSD=  1.04, TM-score=0.11891, ID=0.000
+ATOM      1  CA  GLU A 526     -24.807   3.986   5.239
+ATOM      2  CA  GLY A 527     -23.687   7.078   7.249
+ATOM      3  CA  ILE A 528     -21.109   9.059   5.159
+ATOM      4  CA  ASN A 529     -22.162  12.206   3.185
+ATOM     10  CA  TYR A 735     -29.466  10.877  14.031
+TER
+CONECT    1    2
+CONECT    2    3
+CONECT    3    4
+CONECT    4   10
+ATOM     20  CA  ILE B 996     -25.371   1.693   5.221
+ATOM     23  CA  ILE B1000     -24.001   7.710   7.023
+ATOM     24  CA  GLY B1001     -20.745   8.995   5.392
+ATOM     25  CA  PRO B1002     -22.424  11.805   3.335
+ATOM     29  CA  TRP B1056     -29.254  10.711  13.873
+TER
+CONECT   20   23
+CONECT   23   24
+CONECT   24   25
+CONECT   25   29

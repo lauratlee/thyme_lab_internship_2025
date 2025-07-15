@@ -1,0 +1,127 @@
+load inline
+select *A
+wireframe .45
+select *B
+wireframe .20
+select all
+color white
+select  136:A, 948:B
+color red
+select  139:A, 951:B
+color red
+select  140:A, 952:B
+color red
+select  142:A, 954:B
+color red
+select  143:A, 955:B
+color red
+select  212:A,1024:B
+color red
+select  213:A,1025:B
+color red
+select  216:A,1028:B
+color red
+select  217:A,1029:B
+color red
+select  219:A,1031:B
+color red
+select  220:A,1032:B
+color red
+select  246:A,1063:B
+color red
+select  249:A,1066:B
+color red
+select  250:A,1067:B
+color red
+select  251:A,1068:B
+color red
+select  252:A,1069:B
+color red
+select  253:A,1070:B
+color red
+select  254:A,1071:B
+color red
+select  255:A,1074:B
+color red
+select all
+exit
+REMARK TM-align
+REMARK Chain 1:../../../../gpcr_pocket_dir/CELSR1/Class_B1/celsr1b_pocket.pdb Size= 23
+REMARK Chain 2:../../../../gpcr_pocket_dir/ADGRL3/Class_B1/adgrl3.1_pocket.pdb Size= 20 (TM-score is normalized by   20, d0=  0.50)
+REMARK Aligned length=  19, RMSD=  1.36, TM-score=0.47726, ID=0.526
+ATOM      1  CA  PHE A 136     -43.560 -14.774  35.024
+ATOM      2  CA  MET A 139     -38.917 -15.800  36.505
+ATOM      3  CA  PHE A 140     -37.824 -15.524  32.821
+ATOM      4  CA  GLU A 142     -33.975 -15.385  36.484
+ATOM      5  CA  GLY A 143     -33.791 -18.255  33.901
+ATOM      6  CA  VAL A 212     -42.708 -17.173  28.631
+ATOM      7  CA  VAL A 213     -42.918 -20.701  30.199
+ATOM      8  CA  ASN A 216     -37.844 -20.579  30.118
+ATOM      9  CA  ILE A 217     -37.962 -24.413  29.569
+ATOM     10  CA  LEU A 219     -33.259 -21.705  28.509
+ATOM     11  CA  ILE A 220     -33.099 -24.384  31.291
+ATOM     13  CA  ALA A 246     -35.295 -23.004  38.833
+ATOM     16  CA  LEU A 249     -40.079 -23.215  40.882
+ATOM     17  CA  LEU A 250     -41.105 -22.679  37.196
+ATOM     18  CA  LEU A 251     -43.395 -25.767  37.372
+ATOM     19  CA  LEU A 252     -44.844 -24.867  40.833
+ATOM     20  CA  ILE A 253     -45.637 -21.198  39.966
+ATOM     21  CA  SER A 254     -47.098 -22.202  36.539
+ATOM     22  CA  ALA A 255     -49.298 -24.902  38.165
+TER
+CONECT    1    2
+CONECT    2    3
+CONECT    3    4
+CONECT    4    5
+CONECT    5    6
+CONECT    6    7
+CONECT    7    8
+CONECT    8    9
+CONECT    9   10
+CONECT   10   11
+CONECT   11   13
+CONECT   13   16
+CONECT   16   17
+CONECT   17   18
+CONECT   18   19
+CONECT   19   20
+CONECT   20   21
+CONECT   21   22
+ATOM     24  CA  PHE B 948     -43.677 -14.435  34.691
+ATOM     25  CA  MET B 951     -38.982 -15.706  36.387
+ATOM     26  CA  PHE B 952     -37.855 -15.399  32.704
+ATOM     27  CA  GLU B 954     -34.054 -15.738  36.427
+ATOM     28  CA  GLY B 955     -33.681 -18.233  33.506
+ATOM     29  CA  ILE B1024     -42.643 -17.122  28.814
+ATOM     30  CA  ILE B1025     -42.990 -20.731  30.165
+ATOM     31  CA  ASN B1028     -37.894 -20.689  30.453
+ATOM     32  CA  VAL B1029     -37.979 -24.425  29.447
+ATOM     33  CA  PHE B1031     -33.119 -21.492  28.834
+ATOM     34  CA  LEU B1032     -33.238 -24.130  31.634
+ATOM     35  CA  ALA B1063     -34.960 -23.201  39.045
+ATOM     36  CA  LEU B1066     -39.932 -23.310  40.427
+ATOM     37  CA  LEU B1067     -40.463 -24.003  36.668
+ATOM     38  CA  CYS B1068     -42.178 -27.385  37.337
+ATOM     39  CA  LEU B1069     -44.543 -25.751  39.894
+ATOM     40  CA  LEU B1070     -45.410 -22.796  37.586
+ATOM     41  CA  GLY B1071     -45.763 -25.091  34.513
+ATOM     42  CA  TRP B1074     -50.848 -23.201  34.423
+TER
+CONECT   24   25
+CONECT   25   26
+CONECT   26   27
+CONECT   27   28
+CONECT   28   29
+CONECT   29   30
+CONECT   30   31
+CONECT   31   32
+CONECT   32   33
+CONECT   33   34
+CONECT   34   35
+CONECT   35   36
+CONECT   36   37
+CONECT   37   38
+CONECT   38   39
+CONECT   39   40
+CONECT   40   41
+CONECT   41   42
