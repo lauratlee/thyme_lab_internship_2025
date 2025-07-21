@@ -3,11 +3,12 @@
 
 import os
 
-for _, system, _ in os.walk(os.getcwd()):
-  os.chdir(f"{system}/test_params/")
-  os.system("touch patches.txt")
-  os.system("touch exclude_pdb_component_list.txt")
-  os.chdir("../..")
+for _, dirs, _ in os.walk(os.getcwd()):
+  for dir in dirs:
+    os.chdir(f"{dir}/test_params/")
+    os.system("touch patches.txt")
+    os.system("touch exclude_pdb_component_list.txt")
+    os.chdir("../..")
 
 
 print("test_params_prep done")
