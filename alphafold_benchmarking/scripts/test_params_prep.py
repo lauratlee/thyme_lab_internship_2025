@@ -3,7 +3,7 @@
 
 import os
 
-for _, system, _ in os.getcwd():
+for _, system, _ in os.walk(os.getcwd()):
   os.chdir(f"{system}/test_params/")
   os.system("touch patches.txt")
   os.system("touch exclude_pdb_component_list.txt")
