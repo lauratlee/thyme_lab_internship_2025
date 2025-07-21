@@ -1,0 +1,31 @@
+#keep seed constant
+-constant_seed
+
+#input empty receptor protein
+#CHANGE
+-s 4s0v_receptor_only.pdb
+
+#directory of ligand(s) to attempt to dock
+#POINT TO test_params DIRECTORY
+-params_directory_path test_params/
+
+#ligand motifs library
+#this is the motifs file you will use
+-motif_filename /pi/summer.thyme-umw/2024_intern_lab_space/FINAL_motifs_list_filtered_2_3_2023.motifs
+
+#index of residue(s) to dock ligands against
+#change for each system
+-protein_discovery_locus 423,424,425
+
+#minimum cutoffs for fa_atr, fa_rep, and combined fa_atr_rep to be under
+#keep constant
+-fa_atr_cutoff = -2
+-fa_rep_cutoff = 150
+-ddg_cutoff = -9
+
+#constrain coordinates
+#keep
+-constrain_relax_to_start_coords
+
+#keep all placements
+-best_pdbs_to_keep 0
