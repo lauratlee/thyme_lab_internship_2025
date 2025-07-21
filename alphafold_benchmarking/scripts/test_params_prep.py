@@ -5,6 +5,7 @@ import os
 
 for _, dirs, _ in os.walk(os.getcwd()):
   for dir in dirs:
+    print(dir)
     os.chdir(f"{dir}/test_params/")
     os.system("touch patches.txt")
     os.system("touch exclude_pdb_component_list.txt")
