@@ -2,7 +2,7 @@
 -constant_seed
 
 #input empty receptor protein
--s chain_A.pdb
+-s test_params/chain_A.pdb
 
 #directory of ligand(s) to attempt to dock
 #POINT TO test_params DIRECTORY
@@ -15,14 +15,14 @@
 #index of residue(s) to dock ligands against
 #change for each system
 #-protein_discovery_locus 196,213,214,217,218,221,266
-#-protein_discovery_locus 1,2,3,4,5,6,7,8,9,10
--protein_discovery_locus 277,218,213,216,214,266,165,221,212,215,217,196
+-protein_discovery_locus 1,2,3,4,5,6,7,8,9,10
+#-protein_discovery_locus 277,218,213,216,214,266,165,221,212,215,217,196
 
 #minimum cutoffs for fa_atr, fa_rep, and combined fa_atr_rep to be under
 #keep constant
-#-fa_atr_cutoff = -2
-#-fa_rep_cutoff = 150
-#-ddg_cutoff = -9
+-fa_atr_cutoff = -2
+-fa_rep_cutoff = 150
+-ddg_cutoff = -9
 
 #constrain coordinates
 #keep
