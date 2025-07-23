@@ -38,16 +38,16 @@ def get_centers(pdb_file):
         
         # Compute center of each residue
           for (chain, resi, resn), coords in residue_coords.items():
-              n = len(coords)
-              if n == 0:
-                  continue
+                n = len(coords)
+                if n == 0:
+                    continue
                   
-              x_avg = sum(x for x, _, _ in coords) / n
-              y_avg = sum(y for _, y, _ in coords) / n
-              z_avg = sum(z for _, _, z in coords) / n
+                x_avg = sum(x for x, _, _ in coords) / n
+                y_avg = sum(y for _, y, _ in coords) / n
+                z_avg = sum(z for _, _, z in coords) / n
 
-              res_id = (resi, resn)
-              center_dict[res_id].append((x_avg:.3f, y_avg:.3f, z_avg:.3f))
+                res_id = (resi, resn)
+                center_dict[res_id].append((x_avg:.3f, y_avg:.3f, z_avg:.3f))
 
     return center_dict
 
