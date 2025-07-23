@@ -41,13 +41,13 @@ def get_centers(pdb_file):
               n = len(coords)
               if n == 0:
                   continue
-    
-            x_avg = sum(x for x, _, _ in coords) / n
-            y_avg = sum(y for _, y, _ in coords) / n
-            z_avg = sum(z for _, _, z in coords) / n
+                  
+              x_avg = sum(x for x, _, _ in coords) / n
+              y_avg = sum(y for _, y, _ in coords) / n
+              z_avg = sum(z for _, _, z in coords) / n
 
-            res_id = (resi, resn)
-            center_dict[res_id].append((x_avg:.3f, y_avg:.3f, z_avg:.3f))
+              res_id = (resi, resn)
+              center_dict[res_id].append((x_avg:.3f, y_avg:.3f, z_avg:.3f))
 
     return center_dict
 
@@ -58,9 +58,9 @@ rosetta_centers = get_centers(rosetta_file)
 rosetta_idxs = []
 
 for (a_resi, a_resn), a_coords in anchor_centers.items():
-  for (r_resi, r_resn), r_coords in rosetta_centers.items():
-    if (a_resi == r_resi) and (a_coords) == (r_coords):
-        rosetta_idxs.append(r_resn)
+      for (r_resi, r_resn), r_coords in rosetta_centers.items():
+          if (a_resi == r_resi) and (a_coords) == (r_coords):
+              rosetta_idxs.append(r_resn)
 
 
 print(rosetta_idxs)
