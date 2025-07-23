@@ -55,7 +55,7 @@ anchor_centers = get_centers(anchor_file)
 rosetta_centers = get_centers(rosetta_file)
 
 print(anchor_centers)
-print(rosetta_centers
+print(rosetta_centers)
 
 rosetta_idxs = []
 
