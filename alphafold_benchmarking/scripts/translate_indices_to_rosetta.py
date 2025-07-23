@@ -54,15 +54,12 @@ def get_centers(pdb_file):
 anchor_centers = get_centers(anchor_file)
 rosetta_centers = get_centers(rosetta_file)
 
-print(anchor_centers)
-print(rosetta_centers)
-
 rosetta_idxs = []
 
 for (a_resi, a_resn), a_coords in anchor_centers.items():
     for (r_resi, r_resn), r_coords in rosetta_centers.items():
-        if (a_resi == r_resi) and (a_coords == r_coords):
-            rosetta_idxs.append(r_resn)
+        if (a_resn == r_resn) and (a_coords == r_coords):
+            rosetta_idxs.append(r_resi)
 
 print(rosetta_idxs)
 
