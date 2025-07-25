@@ -4,9 +4,12 @@
 
 import sys, os
 from collections import defaultdict
+import math
 
 anchor_file = sys.argv[1]
 rosetta_file = sys.argv[2]
+
+THRESHOLD = 0.5
 
 def get_centers(pdb_file):
     # Dictionary to hold coordinates per residue
@@ -46,20 +49,26 @@ def get_centers(pdb_file):
         z_avg = sum(z for _, _, z in coords) / n
 
         res_id = (resi, resn)
-        center_dict[res_id].append((round(x_avg, 3), round(y_avg, 3), round(z_avg, 3)))
+        center_dict[res_id].append((x_avg, y_avg, z_avg))
 
     return center_dict
 
+def euclidean_distance(coord1, coord2):
+    return math.sqrt(sum((a - b) ** 2 for a, b in zip(coord1, coord2)))
 
 anchor_centers = get_centers(anchor_file)
 rosetta_centers = get_centers(rosetta_file)
 
 rosetta_idxs = []
 
-for (a_resi, a_resn), a_coords in anchor_centers.items():
-    for (r_resi, r_resn), r_coords in rosetta_centers.items():
-        if (a_resn == r_resn) and (a_coords == r_coords):
-            rosetta_idxs.append(r_resi)
+for (a_resi, a_resn), a_coords_list in anchor_centers.items():
+    for a_coord in a_coords_list:
+        for (r_resi, r_resn), r_coords_list in rosetta_centers.items():
+            if a_resn != r_resn:
+                continue
+            for r_coord in r_coords_list:
+                if euclidean_distance(a_coord, r_coord) <= THRESHOLD:
+                    rosetta_idxs.append(r_resi)
 
 print(rosetta_idxs)
 
