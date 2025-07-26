@@ -49,7 +49,7 @@ def get_centers(pdb_file):
         z_avg = sum(z for _, _, z in coords) / n
 
         res_id = (resi, resn)
-        center_dict[res_id].append((x_avg, y_avg, z_avg))
+        center_dict[res_id].append((round(x_avg, 3), round(y_avg, 3), round(z_avg, 3)))
 
     return center_dict
 
