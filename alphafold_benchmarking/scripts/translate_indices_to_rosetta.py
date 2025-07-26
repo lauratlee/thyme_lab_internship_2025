@@ -42,8 +42,6 @@ def get_centers(pdb_file):
     answer = input("print coords?")
     if answer == "y":
         print(residue_coords)
-    else:
-        continue
     
     # Compute center of each residue
     for (chain, resi, resn), coords in residue_coords.items():
