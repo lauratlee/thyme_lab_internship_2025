@@ -37,11 +37,12 @@ def get_centers(pdb_file):
 
                 key = (chain, resi, resn)
                 residue_coords[key].append((x, y, z))
+                print(key, (x, y, z))
 
 
-    answer = input("print coords?")
+   ''' answer = input("print coords?")
     if answer == "y":
-        print(residue_coords)
+        print(residue_coords)'''
     
     # Compute center of each residue
     for (chain, resi, resn), coords in residue_coords.items():
@@ -64,7 +65,7 @@ def euclidean_distance(coord1, coord2):
 anchor_centers = get_centers(anchor_file)
 rosetta_centers = get_centers(rosetta_file)
 
-print(f"ANCHOR CENTERS: {anchor_centers}")
+#print(f"ANCHOR CENTERS: {anchor_centers}")
 #print(f"ROSETTA CENTERS: {rosetta_centers}")
 
 rosetta_idxs = []
