@@ -38,6 +38,12 @@ def get_centers(pdb_file):
                 key = (chain, resi, resn)
                 residue_coords[key].append((x, y, z))
 
+
+    answer = input("print coords?")
+    if answer == "y":
+        print(residue_coords)
+    else continue
+    
     # Compute center of each residue
     for (chain, resi, resn), coords in residue_coords.items():
         n = len(coords)
@@ -60,7 +66,7 @@ anchor_centers = get_centers(anchor_file)
 rosetta_centers = get_centers(rosetta_file)
 
 print(f"ANCHOR CENTERS: {anchor_centers}")
-print(f"ROSETTA CENTERS: {rosetta_centers}")
+#print(f"ROSETTA CENTERS: {rosetta_centers}")
 
 rosetta_idxs = []
 
