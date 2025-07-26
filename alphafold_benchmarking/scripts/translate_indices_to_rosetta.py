@@ -9,7 +9,7 @@ import math
 anchor_file = sys.argv[1]
 rosetta_file = sys.argv[2]
 
-THRESHOLD = 5.0
+THRESHOLD = 0.75
 
 def get_centers(pdb_file):
     # Dictionary to hold coordinates per residue
