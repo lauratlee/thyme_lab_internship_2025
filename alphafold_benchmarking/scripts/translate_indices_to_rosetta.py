@@ -59,6 +59,9 @@ def euclidean_distance(coord1, coord2):
 anchor_centers = get_centers(anchor_file)
 rosetta_centers = get_centers(rosetta_file)
 
+print(f"ANCHOR CENTERS: {anchor_centers}")
+print(f"ROSETTA CENTERS: {rosetta_centers}")
+
 rosetta_idxs = []
 
 for (a_resi, a_resn), a_coords_list in anchor_centers.items():
