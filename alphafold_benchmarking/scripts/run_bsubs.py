@@ -2,7 +2,7 @@
 
 import os, sys
 
-base = os.path.basename(".")
+base = os.path.basename(os.getcwd())
 
 for dir in os.listdir("."):
   if dir.startswith("res_"):
