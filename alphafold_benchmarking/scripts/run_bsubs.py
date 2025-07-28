@@ -9,6 +9,7 @@ for dir in os.listdir("."):
     num = dir.split("_")[1]
     os.chdir(dir)
     job_name = f"{base}_{num}.slurm"
+    print(job_name)
     if not os.path.exists(job_name):
       print("[WARNING] file does not exist")
       sys.exit(1)
