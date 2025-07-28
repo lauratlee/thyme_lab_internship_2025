@@ -3,7 +3,7 @@
 
 import os
 
-for dir in os.listdir(os.getcwd):
+for dir in os.listdir(os.getcwd()):
   name = os.path.basename(dir)
-  os.system(f"cp ../system_dir_h_bonds/{dir}/test_params/ligand.params {dir}/test_params/ligand.params"
+  os.system(f"cp ../system_dir_h_bonds/{dir}/test_params/ligand.params {dir}/test_params/ligand.params")
   
