@@ -5,5 +5,6 @@ import os
 
 for dir in os.listdir(os.getcwd()):
   name = os.path.basename(dir)
-  os.system(f"cp ../system_dir_h_bonds/{dir}/test_params/ligand.params {dir}/test_params/ligand.params")
+  if name != "9LE4":
+    os.system(f"cp ../system_dir_h_bonds/{dir}/test_params/ligand.params {dir}/test_params/ligand.params")
   
