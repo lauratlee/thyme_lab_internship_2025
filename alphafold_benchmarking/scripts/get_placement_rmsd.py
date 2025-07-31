@@ -1,6 +1,7 @@
-#the purpose of this script is to derive the rmsd of the alphafold placement rmsd from native
-#this will create csv files that note the closest placement to native for the closest of all placements, the closest of the top 10 by confidence, and the closeness of the most confident placement. These files will note the placement as well. A summary csv for the top rmsd will also be made for porting for figure making
-#Since the placements are not aligned with the dude library (due to being made by alphafold), we need to align them. The ligand atom indices also do not match, so we will use a heuristic method from rdkit to get rmsd.
+#the purpose of this script is to derive the rmsd of the rosetta placement rmsd from native
+#this will create csv files that note the closest placement to native for the closest of all placements
+#Since the placements are not aligned with the dude library (due to being made by rosetta), we need to align them. The ligand atom indices also do not match, so we will use a heuristic method from rdkit to get rmsd.
+#run from system_dir_h_bonds/ (or system_dir_close_res/)
 
 #import os,sys
 import os,sys
@@ -13,60 +14,185 @@ from openbabel import pybel
 import re
 from rdkit.Chem import SanitizeFlags
 
-#this script acts locally, and looks for placement files from alphafold and the native files from DUD-E
-this_script_path = os.path.dirname(os.path.abspath(__file__))
-
 #begin a pymol session
 with pymol2.PyMOL() as pymol:
 	cmd = pymol.cmd
 
-	#write csv files for the different metrics and write a header line for the system, the placement file, confidence, and the rmsd
-	best_all = open("best_placements_all.csv", "w")
-	best_all.write("system,placement,confidence,rmsd\n")
-
-	best_10 = open("best_placements_10.csv", "w")
-	best_10.write("system,placement,confidence,rmsd\n")
-
+	#write csv file for best csvs and write a header line for the system, the placement file, and the rmsd
 	best_1 = open("best_placements_1.csv", "w")
-	best_1.write("system,placement,confidence,rmsd\n")
+	best_1.write("system,placement,rmsd\n")
 
-	best_summary = open("best_placements_summary.csv", "w")
-	best_summary.write("system,all,10,1\n")
 
-	#iterate over each system in the dude library
-	for r,d,f in os.walk(this_script_path + "/../../dude_library_simple"):
+	#iterate over each system in the library
+	for r,d,f in os.walk(os.getcwd()):
 		for dire in d:
 			print(dire)
 
-			#temporary filter so we only test this on aa2ar until it is time to run on the full set
+			#temporary filter so we only test this on 9HZ0 until it is time to run on the full set
 			#comment/delete when done testing!
-			#if dire != "aa2ar":
-			#	continue
+			if dire != "9HZ0":
+				continue
 
-			#open a file to write pairings of the files with confidence values and rmsd
+			#skip 9LE4, which had 2 identical ligands and was not ideal for rosetta docking
+			if dire == "9LE4":
+				continue
+
+			#enter system directory
+			os.chdir(dire)
+
+			#open a file to write pairings of the files with rmsd
 			#open it in the respective folder in the alphafold section of the repository
-			system_file = open("../../alphafold3/" + dire + "/" + dire + "_placements_summary.csv", "w")
-			system_file.write("file,confidence,rmsd\n")
+			system_file = open(f"{dire}_placements_summary.csv", "w")
+			system_file.write("residue,file,rmsd\n")
 
-			#declare placeholder variables to hold the best placements for each group
-			blank_list = ["X","X","X"]
-			best_rmsd_all = ["X","X","X"]
-			best_rmsd_10 = ["X","X","X"]
+			#declare placeholder variables to hold the best placement
 			best_rmsd_1 = ["X","X","X"]
 			
-			#get the original placement from the dude library and open it in pymol, the file we want is the "name"_orig.pdb
-			cmd.load(r + "/" + dire + "/" + dire + "_orig.pdb", "reference")
+			#get the original placement from the dude library and open it in pymol
+			cmd.load(f"{dire}.pdb", "reference")
 
 			#create a dictionary the holds the placement files and the corresponding confidence and rmsd values
 			#the file is the key and the value is a 2 entry list of confidence then rmsd
 			placements_data = {}
 
-			#create another dictionary for the placement confidence values for accession
-			#the key is a 2 value list for the seed (1-10) and sample (0-4), and the value is the corresponding confidence
-			#this will be used for deriving the confidence values for given placements after iterating over all files
-			confidences = {}
 
-			#now, iterate over the placements
+			#iterate over the placements by residue folder by creating a list of folders to look at per system
+			residue_list = []
+			for folder in os.listdir(os.getcwd()):
+				if "res_" in folder:
+					residue_list.append(folder)
+
+			for residue in residue_list:
+				for file in os.listdir(residue):
+					if ".pdb" in file:
+						#load placement into pymol
+						cmd.load(f"{residue}/{file}", "placement")
+
+						#align placement to reference
+						cmd.align("placement, reference")
+
+						#select the aligned ligand and save as .pdb 
+						cmd.select("aligned_lig", "placement and not polymer.protein")
+			
+						#derive save name for ligand and save
+						file_basename = file.split(".")[0]
+						cmd.save(f"{residue}/{file_basename}_aligned_lig.pdb", "aligned_lig")
+
+						#clear the aligned ligand and placement from session but keep reference
+						cmd.delete("aligned_lig")
+						cmd.delete("placement")
+
+						#make a fixed version of the reference from the original so that the element is recognized
+						old_ref_file = open("ligand.mol2", "r")
+						fixed_ref_file = open("ligand_fixed.mol2", "w")
+
+						#isolate section with atoms into a list 
+						atom_section = []
+						inside_atom_block = False
+			
+						for line in old_ref_file.readlines():
+							if line.strip() == "@<TRIPOS>ATOM":
+								inside_atom_block = True
+								continue
+							elif line.strip() == "@<TRIPOS>BOND":
+								break
+							elif inside_atom_block:
+								atom_section.append(line.strip())
+
+						for atom_line in atom_section:
+							#check for and remove waters
+							if "HOH" in atom_line:
+								continue
+
+							#get atom name
+							atom_name = atom_line.split()[1]
+
+							#derive element
+							element = re.match(r"[A-Za-z]+", atom_name.strip()).group(0).capitalize()
+
+							#skip hydrogens
+							if element == "H":
+								continue
+
+							stripped_line = line.rstrip("\n")
+
+							fixed_line = stripped_line[:76].ljust(76) + element.rjust(2) 
+
+							fixed_reference_file.write(fixed_line + "\n")
+
+						#close streams
+						old_ref_file.close()
+						fixed_ref_file.close()
+
+						ref_ligand = Chem.MolFromMol2File("ligand_fixed.mol2", removeHs=True, sanitize=False)
+
+						placement_ligand = Chem.MolFromPDBFile(f"{residue}/{file_basename}_aligned_lig.pdb", removeHs=True, sanitize=False)
+			
+
+
+							
+								
+							
+							
+
+
+reference_ligand = Chem.MolFromPDBFile(r + "/" + dire + "/" + dire + "-lig_fixed.pdb", removeHs=True, sanitize=False)
+						#reference_ligand = Chem.MolFromMol2File(r + "/" + dire + "/" + dire + "-lig.mol2", removeHs=True)
+						#reference_ligand = Chem.MolFromMol2File(r + "/" + dire + "/crystal_ligand.mol2", removeHs=True)
+						
+
+						#sanitize the reference in case there are waters in it
+						#frags = Chem.GetMolFrags(reference_ligand, asMols=True)
+						#ligand = max(frags, key=lambda m: m.GetNumAtoms())
+						#reference_ligand = ligand
+
+
+						placement_ligand = Chem.MolFromPDBFile(r2 + "/" + file_basename + "_aligned_lig.pdb", removeHs=True, sanitize=False)
+
+						try:
+							Chem.SanitizeMol(mol, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
+						except Exception as e:
+							print("Sanitization failed:", e)
+
+						ref_smiles = Chem.MolToSmiles(reference_ligand)
+						pla_smiles = Chem.MolToSmiles(placement_ligand)
+
+						print("reference",ref_smiles,"placement",pla_smiles)
+
+						rmsd = "X"
+
+						#use the get best RMS function to derive the rmsd
+						if reference_ligand and placement_ligand:
+							try:
+								rmsd = rdMolAlign.GetBestRMS(reference_ligand, placement_ligand)
+								print(r2 + "/" + file_basename + "_aligned_lig.pdb", rmsd)
+							except RuntimeError as e:
+								print("Alignment failed:", e)
+
+
+						#if the rmsd is X, don't add it
+						if str(rmsd) == "X":
+							continue
+
+						#store the rmsd in the dictionary by the file name
+						placements_data[file] = ["X",rmsd]
+
+						#we are now done with the placement, and can move to the next
+
+
+
+		
+
+
+
+
+
+
+						  
+
+
+
+			
 			for r2,d2,f2 in os.walk(this_script_path + "/../../alphafold3"):
 				for file in f2:
 					#if it is the confidence file
@@ -254,11 +380,8 @@ with pymol2.PyMOL() as pymol:
 				counter = counter + 1
 
 			#now that we have iterated over all systems, write the best of each category to the other csv files
-			best_all.write(dire + "," + best_rmsd_all[0] + "," + str(best_rmsd_all[1]) + "," + str(best_rmsd_all[2]) + "\n")
-			best_10.write(dire + "," + best_rmsd_10[0] + "," + str(best_rmsd_10[1]) + "," + str(best_rmsd_10[2]) + "\n")
 			best_1.write(dire + "," + best_rmsd_1[0] + "," + str(best_rmsd_1[1]) + "," + str(best_rmsd_1[2]) + "\n")
 
-			best_summary.write(dire + "," + str(best_rmsd_all[2]) + "," + str(best_rmsd_10[2]) + "," + str(best_rmsd_1[2]) + "\n")
 
 			#clear the reference from the pymol session:
 			cmd.delete("reference")
