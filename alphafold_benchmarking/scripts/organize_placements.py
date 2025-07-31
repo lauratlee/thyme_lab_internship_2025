@@ -3,19 +3,19 @@
 
 import os
 
-for dir in os.listdir(os.getcwd()):
+for r1,d1,f1 in os.walk(os.getcwd()):
   #filter for residue placement folders
-  if "res_" in dir:
-    os.chdir(f"{dir}/")
+  if "res_" in d1:
+    os.chdir(d1)
 
     #iterate thru files in residue folder to count total number of placements
     count = 0
-    for r,d,f in os.walk(os.getcwd()):
-      for file in f:
+    for r2,d2,f2 in os.walk(os.getcwd()):
+      for file in f2:
         if ".pdb" in file:
           count += 1
 
-    print(f"{count} placements in {dir}")
+    print(f"{count} placements in {d1}")
   os.chdir("..")
 
 
