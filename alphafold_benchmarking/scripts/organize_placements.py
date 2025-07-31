@@ -12,7 +12,7 @@ for dir1 in os.listdir(root_dir):
         res_path = os.path.join(root_dir, dir1)
 
         #get .pdb placement files
-        pdb_files = [f for f in os.listdir(res_path) if f.endswith(".pdb")]
+        pdb_files = [f for f in os.listdir(res_path) if f.endswith(".pdb") and "minipose" not in f]
 
         count = len(pdb_files)
         print(f"{count} placements in {dir1}")
