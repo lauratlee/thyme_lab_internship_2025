@@ -69,7 +69,7 @@ with pymol2.PyMOL() as pymol:
 						cmd.load(f"{residue}/{file}", "placement")
 
 						#align placement to reference
-						cmd.align("placement, reference")
+						cmd.align("placement", "reference")
 
 						#select the aligned ligand and save as .pdb 
 						cmd.select("aligned_lig", "placement and not polymer.protein")
