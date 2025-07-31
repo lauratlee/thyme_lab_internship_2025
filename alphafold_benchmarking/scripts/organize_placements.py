@@ -1,7 +1,7 @@
 #organizes residue folder placements into groups of 1000 by making folders named in multiples (0, 1, 2, ...n(x1000)) and moving files into these new folders
 #run from a system directory, e.g. system_dir_h_bonds/
 
-import os
+import os, math
 
 for r1,d1,f1 in os.walk(os.getcwd()):
   for dir in d1:
@@ -18,6 +18,16 @@ for r1,d1,f1 in os.walk(os.getcwd()):
             count += 1
   
       print(f"{count} placements in {dir}")
+
+      groups = math.ceil(count / 1000) * 1000
+      print(f"{groups} groups")
+
+
+
+
+
+
+      
       os.chdir("..")
 
 
