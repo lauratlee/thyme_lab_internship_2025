@@ -1,60 +1,40 @@
-#organizes residue folder placements into groups of 1000 by making folders named in multiples (0, 1, 2, ...n(x1000)) and moving files into these new folders
-#run from a system directory, e.g. system_dir_h_bonds/
+#organizes placement files into groups of 1000
+#run from a system folder, e.g. 9HZ0/
 
-import os, math
+import os
+import math
 
-for r1,d1,f1 in os.walk(os.getcwd()):
-  for dir1 in d1:
-    #filter for residue placement folders
-    if "res_" in dir1:
-      os.chdir(dir1)
-  
-      #iterate thru files in residue folder to count total number of placements
-      count = 0
-      for r2,d2,f2 in os.walk(os.getcwd()):
-        for file2 in f2:
-          if ".pdb" in file2:
-            count += 1
-  
-      print(f"{count} placements in {dir1}")
+root_dir = os.getcwd()
 
-      #calculate total # of groups of 1000
-      groups = math.ceil(count / 1000)
+for dir1 in os.listdir(root_dir):
+    #filter for residue folders only
+    if "res_" in dir1 and os.path.isdir(os.path.join(root_dir, dir1)):
+        res_path = os.path.join(root_dir, dir1)
 
-      #create directories to sort placements into
-      for i in range(0, groups):
-        os.system(f"mkdir {i}")
+        #get .pdb placement files
+        pdb_files = [f for f in os.listdir(res_path) if f.endswith(".pdb")]
 
-      #iterate through files again to sort them into their respective folders
-      for r3,d3,f3 in os.walk(os.getcwd()):
-        for file3 in f3:
-          if ".pdb" not in file3:
-            continue
+        count = len(pdb_files)
+        print(f"{count} placements in {dir1}")
 
-          #split a file name like "chain_A_ligand_0.pdb" to extract "0.pdb", then split again to extract the placement index (in this case 0)
-          index = file3.split("_")[-1].split(".")[0]
-          group_id = index // 1000
+        #calculate number of 1000-size groups
+        groups = math.ceil(count / 1000)
 
-          os.system(f"mv {file3} {group_id}/{file_3}")
-    
+        # create group folders
+        for i in range(groups):
+            os.makedirs(os.path.join(res_path, str(i)), exist_ok=True)
 
+        # move files into correct folders
+        for file in pdb_files:
+            try:
+                index = int(file.split("_")[-1].split(".")[0])
+                group_id = index // 1000
+                src = os.path.join(res_path, file)
+                dst = os.path.join(res_path, str(group_id), file)
+                os.rename(src, dst)
+            except Exception as e:
+                print(f"Error processing {file} in {dir1}: {e}")
 
-      #let user know that residue is done
-      print(f"{dir1} DONE")
+        print(f"{dir1} DONE")
 
-    os.chdir("..")
-
-  #when entire system is done, let user know
-  print("all residues in system done")
-
-
-
-
-
-
-
-
-
-
-
-
+print("All residues in system done")
