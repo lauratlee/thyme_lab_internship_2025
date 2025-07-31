@@ -150,7 +150,7 @@ with pymol2.PyMOL() as pymol:
 
 							#build formatted lines and add to formatted_atom_section
 							formatted_line = "{:<7}{:<7}{:>10}{:>10}{:>10} {:<6}{:<4}{:<10}{:>7}".format(parts[0], parts[1], x, y, z, atom_type, parts[6], parts[7], parts[8])
-							formatted_atom_section.append(formatted_line + "\n"
+							formatted_atom_section.append(formatted_line + "\n")
 
 						#combine everything
 						output_lines = mol_section + ["\n"] + formatted_atom_section + ["\n"] + bond_section
