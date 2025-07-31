@@ -120,11 +120,11 @@ with pymol2.PyMOL() as pymol:
 							parts = line.strip().split()
 							if len(parts) < 6:
 								continue #skip incomplete lines
-
+								
 							atom_id = parts[0]
 							atom_name = parts[1]
-						        x, y, z = parts[2:5]
-						        atom_type = parts[5]
+							x, y, z = parts[2:5]
+							atom_type = parts[5]						        
 
 							#fix atom_type if needed
 							#if type is just 'C', 'N', 'O' etc., try to guess common type
