@@ -156,7 +156,7 @@ with pymol2.PyMOL() as pymol:
 						output_lines = mol_section + ["\n"] + formatted_atom_section + ["\n"] + bond_section
 
 						#write to fixed_ref_file
-						fixed_ref_file.write(output_lines)
+						fixed_ref_file.writelines(output_lines)
 
 						#close streams
 						old_ref_file.close()
