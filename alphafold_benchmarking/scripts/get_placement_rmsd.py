@@ -130,17 +130,17 @@ with pymol2.PyMOL() as pymol:
 							#if type is just 'C', 'N', 'O' etc., try to guess common type
 
 							if "." not in atom_type:
-						    		element = re.match(r"[A-Za-z]+", atom_name).group(0)
-						    		element = element.capitalize()
-						    		if element == "C":
+								element = re.match(r"[A-Za-z]+", atom_name).group(0)
+								element = element.capitalize()
+								if element == "C":
 									atom_type = "C.3"
 								elif element == "N":
 									atom_type = "N.am"
-						   		elif element == "O":
+								elif element == "O":
 									atom_type = "O.3"
-						   		elif element == "S":
+								elif element == "S":
 									atom_type = "S.3"
-						  		else:
+								else:
 									atom_type = f"{element}.3"
 
 							#fill out missing values
