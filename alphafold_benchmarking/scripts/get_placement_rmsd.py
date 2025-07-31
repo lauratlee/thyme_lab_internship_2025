@@ -63,6 +63,7 @@ with pymol2.PyMOL() as pymol:
 					residue_list.append(folder)
 
 			for residue in residue_list:
+				print(residue)
 				for file in os.listdir(residue):
 					if ".pdb" in file:
 						#load placement into pymol
