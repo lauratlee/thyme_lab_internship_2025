@@ -6,7 +6,7 @@ import os
 for dir in os.listdir(os.getcwd()):
   #filter for residue placement folders
   if "res_" in dir:
-    os.chdir(dir)
+    os.chdir(f"{dir}/")
 
     #iterate thru files in residue folder to count total number of placements
     count = 0
