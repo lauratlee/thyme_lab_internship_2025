@@ -114,11 +114,11 @@ with pymol2.PyMOL() as pymol:
 							if element == "H":
 								continue
 
-							stripped_line = line.rstrip("\n")
+							stripped_line = atom_line.rstrip("\n")
 
 							fixed_line = stripped_line[:76].ljust(76) + element.rjust(2) 
 
-							fixed_reference_file.write(fixed_line + "\n")
+							fixed_ref_file.write(fixed_line + "\n")
 
 						#close streams
 						old_ref_file.close()
@@ -129,12 +129,12 @@ with pymol2.PyMOL() as pymol:
 						placement_ligand = Chem.MolFromPDBFile(f"{residue}/{file_basename}_aligned_lig.pdb", removeHs=True, sanitize=False)
 
 						try:
-							Chem.SanitizeMol(mol, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
+							Chem.SanitizeMol(placement_ligand, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
 						except Exception as e:
 							print("Sanitization failed:", e)
 
 
-						ref_smiles = Chem.MolToSmiles(reference_ligand)
+						ref_smiles = Chem.MolToSmiles(ref_ligand)
 						pla_smiles = Chem.MolToSmiles(placement_ligand)
 
 						rmsd = "X"
@@ -158,279 +158,42 @@ with pymol2.PyMOL() as pymol:
 						#we are now done with the placement, and can move to the next
 
 			#done with all placements for the system, correlate rmsd and confidence and update dictionaries and finish the system-specific csv
-			
-			
-			
-
-
-							
-								
-
 
 			placements_list = []
 
-			for system in placements_data.keys():
-				#remember, the keys are file names, so we can derive the placement seed and sample
+			for entry in placements_data.keys():
+				placement_residue = entry[0]
+				placement_file = entry[1]
 
-				#now, derive the seed and sample of the file, so we can note and write it and correlate to confidence
-				placement_seed = system.split("-")[1].split("_")[0]
-				placement_sample = system.split("-")[2].split("_")[0]
-
-				#obtain the corresponding confidence from the dictionary
-				system_confidence = confidences[(placement_seed,placement_sample)]
-
-				#add the confidence to the placements_data dictionary
-				placements_data[system][0] = float(system_confidence)
-
-				placements_list.append([system,float(system_confidence),float(placements_data[system][1])])
-
-			#now, sort placements_list by confidence score in descending order
-			sorted_list = sorted(placements_list, key=lambda x: x[1], reverse=True)
-
-			#iterate down the sorted list to derive the best values and write the the system file
-
-			#have a counter for the number of systems seen so we can cut off looking for the top 1 and top 10
-			counter = 1
-
-			for system in sorted_list:
-
-				#for top 1
-				if counter == 1:
-					best_rmsd_1 = system
-
-				#for top 10
-				if counter <= 10:
-					#if first encounter, a blank list, write current
-					if best_rmsd_10 == blank_list:
-						best_rmsd_10 = system
-					else:
-						#otherwise, see if the rmsd is better and overwrite
-						if best_rmsd_10[2] > system[2]:
-							best_rmsd_10 = system
-
-				#for all
-				if best_rmsd_all == blank_list:
-					best_rmsd_all = system
-
-				if best_rmsd_all[2] > system[2]:
-					best_rmsd_all = system
-
-				#write the system to the system file
-				system_file.write(system[0] + "," + str(system[1]) + "," + str(system[2]) + "\n")
-
-				counter = counter + 1
-
-			#now that we have iterated over all systems, write the best of each category to the other csv files
-			best_1.write(dire + "," + best_rmsd_1[0] + "," + str(best_rmsd_1[1]) + "," + str(best_rmsd_1[2]) + "\n")
+				#add placements to a list
+				placements_list.append([placement_residue, placement_file, float(placements_data[entry][1])])
 
 
-			#clear the reference from the pymol session:
+			#sort placements_list by rmsd in ascending order
+			sorted_list = sorted(placements_list, key=lambda x: x[2])
+
+			#get the best (lowest) rmsd entry
+			best_rmsd_1_entry = sorted_list[0]
+			best_rmsd_1 = [best_rmsd_1_entry[0], best_rmsd_1_entry[1], best_rmsd_1_entry[2]]
+
+			#write result to system file
+			system_file.write(f"{best_rmsd_1[0]},{best_rmsd_1[1]},{best_rmsd_1[2]:.3f}\n")
+
+			#exit system directory so we can write the best rmsd to the general best rmsds file
+			os.chdir("..")
+
+			best_1.write(f"{dire},{best_rmsd_1[0]},{best_rmsd_1[1]},{best_rmsd_1[2]:.3f}\n")
+
+			#clear reference from pymol session
 			cmd.delete("reference")
+
+			#print message to let us know that analysis of current system is done
+			print(f"{dire} DONE")
+			
+			
+
 
 							
 
 
 		
-
-
-
-
-
-
-						  
-
-
-
-			
-			for r2,d2,f2 in os.walk(this_script_path + "/../../alphafold3"):
-				for file in f2:
-					#if it is the confidence file
-					if file == (dire + "_ranking_scores.csv"):
-						#read the file
-						confidences_file = open(r2 + "/" + dire + "_ranking_scores.csv", "r")
-
-						for line in confidences_file:
-							#skip the header
-							if "seed,sample" in line:
-								continue
-							#get the values line by line
-							seed = line.split(",")[0]
-							sample = line.split(",")[1]
-							conf = line.split(",")[2].strip()
-							#assign
-							confidences[(seed,sample)] = conf
-
-					#if it is a placement file for the system
-					if file.startswith(dire + "_") and file.endswith("_model.cif") and "seed" in file and "sample" in file:
-						#load it into pymol
-						cmd.load(r2 + "/" + file, "placement")
-
-						#align the placement to the reference
-						cmd.align("placement", "reference")
-
-						#select the ligand one aligned and save it as a pdb
-						cmd.select("aligned_lig", "placement and not polymer.protein")
-
-						#derive a name to save the aligned ligand as
-						file_basename = file.split(".")[0]
-
-						cmd.save(r2 + "/" + file_basename + "_aligned_lig.pdb", "aligned_lig")
-
-						#clear the aligned ligand and the placement from the session, but keep the reference
-						cmd.delete("aligned_lig")
-						cmd.delete("placement")
-
-						#next, work on getting the rmsd
-						#remove hydrogens
-
-						#write new ligand pdb to mol2 for easier readability
-						#mol = next(pybel.readfile("pdb", r + "/" + dire + "/" + dire + "-lig.pdb"))
-						#mol.addh()  
-						#mol.write("mol2", r + "/" + dire + "/" + dire + "-lig.mol2", overwrite=True)
-						#mol = next(pybel.readfile("pdb", r + "/" + dire + "/" + dire + "-lig.pdb"))
-						#mol.addh()  
-						#mol.write("pdb", r + "/" + dire + "/" + dire + "-lig_fixed.pdb", overwrite=True)
-
-						#os.system("cat " + r + "/" + dire + "/" + dire + "-lig.mol2")
-
-						#make a fixed version of the reference from the original so that the element is regognized
-						old_reference_file = open(r + "/" + dire + "/" + dire + "-lig.pdb", "r")
-						fixed_reference_file = open(r + "/" + dire + "/" + dire + "-lig_fixed.pdb", "w")
-
-						for line in old_reference_file.readlines():
-							#remove waters
-							if " HOH " in line:
-								continue
-
-							if line.startswith(('ATOM', 'HETATM')):
-								atom_name = line[12:16]
-
-								#derive element
-								element = re.match(r"[A-Za-z]+", atom_name.strip()).group(0).capitalize()
-								#print(element)
-
-								#skip hydrogens
-								if element == "H":
-									continue
-
-								stripped_line = line.rstrip("\n")
-
-								fixed_line = stripped_line[:76].ljust(76) + element.rjust(2) 
-								#fixed_line = stripped_line[:76].ljust(76) + element.rjust(2) + stripped_line[78:]
-
-								fixed_reference_file.write(fixed_line + "\n")
-
-						#close streams
-						old_reference_file.close()
-						fixed_reference_file.close()
-
-
-
-
-						#reference_ligand = Chem.MolFromPDBFile(r + "/" + dire + "/" + dire + "-lig.pdb", removeHs=True)
-						reference_ligand = Chem.MolFromPDBFile(r + "/" + dire + "/" + dire + "-lig_fixed.pdb", removeHs=True, sanitize=False)
-						#reference_ligand = Chem.MolFromMol2File(r + "/" + dire + "/" + dire + "-lig.mol2", removeHs=True)
-						#reference_ligand = Chem.MolFromMol2File(r + "/" + dire + "/crystal_ligand.mol2", removeHs=True)
-						
-
-						#sanitize the reference in case there are waters in it
-						#frags = Chem.GetMolFrags(reference_ligand, asMols=True)
-						#ligand = max(frags, key=lambda m: m.GetNumAtoms())
-						#reference_ligand = ligand
-
-
-						placement_ligand = Chem.MolFromPDBFile(r2 + "/" + file_basename + "_aligned_lig.pdb", removeHs=True, sanitize=False)
-
-						try:
-							Chem.SanitizeMol(mol, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
-						except Exception as e:
-							print("Sanitization failed:", e)
-
-						ref_smiles = Chem.MolToSmiles(reference_ligand)
-						pla_smiles = Chem.MolToSmiles(placement_ligand)
-
-						print("reference",ref_smiles,"placement",pla_smiles)
-
-						rmsd = "X"
-
-						#use the get best RMS function to derive the rmsd
-						if reference_ligand and placement_ligand:
-							try:
-								rmsd = rdMolAlign.GetBestRMS(reference_ligand, placement_ligand)
-								print(r2 + "/" + file_basename + "_aligned_lig.pdb", rmsd)
-							except RuntimeError as e:
-								print("Alignment failed:", e)
-
-
-						#if the rmsd is X, don't add it
-						if str(rmsd) == "X":
-							continue
-
-						#store the rmsd in the dictionary by the file name
-						placements_data[file] = ["X",rmsd]
-
-						#we are now done with the placement, and can move to the next
-
-			#done with all placements for the system, correlate rmsd and confidence and update dictionaries and finish the system-specific csv
-
-			#make a list that we can sort by confidence so we can derive the top rmsd from the single best, top 10, and all, and we will use it to write
-			#format is file,confidence,rmsd
-			placements_list = []
-
-			for system in placements_data.keys():
-				#remember, the keys are file names, so we can derive the placement seed and sample
-
-				#now, derive the seed and sample of the file, so we can note and write it and correlate to confidence
-				placement_seed = system.split("-")[1].split("_")[0]
-				placement_sample = system.split("-")[2].split("_")[0]
-
-				#obtain the corresponding confidence from the dictionary
-				system_confidence = confidences[(placement_seed,placement_sample)]
-
-				#add the confidence to the placements_data dictionary
-				placements_data[system][0] = float(system_confidence)
-
-				placements_list.append([system,float(system_confidence),float(placements_data[system][1])])
-
-			#now, sort placements_list by confidence score in descending order
-			sorted_list = sorted(placements_list, key=lambda x: x[1], reverse=True)
-
-			#iterate down the sorted list to derive the best values and write the the system file
-
-			#have a counter for the number of systems seen so we can cut off looking for the top 1 and top 10
-			counter = 1
-
-			for system in sorted_list:
-
-				#for top 1
-				if counter == 1:
-					best_rmsd_1 = system
-
-				#for top 10
-				if counter <= 10:
-					#if first encounter, a blank list, write current
-					if best_rmsd_10 == blank_list:
-						best_rmsd_10 = system
-					else:
-						#otherwise, see if the rmsd is better and overwrite
-						if best_rmsd_10[2] > system[2]:
-							best_rmsd_10 = system
-
-				#for all
-				if best_rmsd_all == blank_list:
-					best_rmsd_all = system
-
-				if best_rmsd_all[2] > system[2]:
-					best_rmsd_all = system
-
-				#write the system to the system file
-				system_file.write(system[0] + "," + str(system[1]) + "," + str(system[2]) + "\n")
-
-				counter = counter + 1
-
-			#now that we have iterated over all systems, write the best of each category to the other csv files
-			best_1.write(dire + "," + best_rmsd_1[0] + "," + str(best_rmsd_1[1]) + "," + str(best_rmsd_1[2]) + "\n")
-
-
-			#clear the reference from the pymol session:
-			cmd.delete("reference")
