@@ -82,7 +82,7 @@ with pymol2.PyMOL() as pymol:
 						cmd.delete("aligned_lig")
 						cmd.delete("placement")
 
-						#format a "fixed" version of the reference ligand for rdkit
+						"""#format a "fixed" version of the reference ligand for rdkit
 						old_ref_file = open("ligand.mol2", "r")
 						fixed_ref_file = open("ligand_fixed.mol2", "w")
 
@@ -175,13 +175,13 @@ with pymol2.PyMOL() as pymol:
 
 						#close streams
 						old_ref_file.close()
-						fixed_ref_file.close()
+						fixed_ref_file.close()"""
 
-						ref_ligand = Chem.MolFromMol2File("ligand_fixed.mol2", removeHs=True, sanitize=False)
+						ref_ligand = Chem.MolFromMol2File("ligand.mol2", removeHs=True, sanitize=False)
 						
 						#check for successful load of ref_ligand and exit otherwise
 						if ref_ligand is None:
-							print("ERROR: Failed to load ligand_fixed.mol2 as RDKit molecule!")
+							print("ERROR: Failed to load ligand.mol2 as RDKit molecule!")
 							sys.exit(1)
 						
 
