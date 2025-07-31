@@ -19,7 +19,7 @@ for r1,d1,f1 in os.walk(os.getcwd()):
   
       print(f"{count} placements in {dir}")
 
-      groups = math.ceil(count / 1000) * 1000
+      groups = math.ceil(count / 1000)
       print(f"{groups} groups")
 
 
