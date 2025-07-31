@@ -82,43 +82,81 @@ with pymol2.PyMOL() as pymol:
 						cmd.delete("aligned_lig")
 						cmd.delete("placement")
 
-						#make a fixed version of the reference from the original so that the element is recognized
+						#format a "fixed" version of the reference ligand for rdkit
 						old_ref_file = open("ligand.mol2", "r")
 						fixed_ref_file = open("ligand_fixed.mol2", "w")
 
 						#isolate section with atoms into a list 
+						mol_section = []
 						atom_section = []
-						inside_atom_block = False
+						bond_section = []
+						
+						in_mol = in_atom = in_bond = False
 			
 						for line in old_ref_file.readlines():
-							if line.strip() == "@<TRIPOS>ATOM":
-								inside_atom_block = True
-								continue
-							elif line.strip() == "@<TRIPOS>BOND":
-								break
-							elif inside_atom_block:
-								atom_section.append(line.strip())
-
-						for atom_line in atom_section:
-							#check for and remove waters
-							if "HOH" in atom_line:
-								continue
-
-							#get atom name
-							atom_name = atom_line.split()[1]
-
-							#derive element
-							element = re.match(r"[A-Za-z]+", atom_name.strip()).group(0).capitalize()
-
-							#skip hydrogens
-							if element == "H":
+							if "@<TRIPOS>MOLECULE" in line:
+								in_mol = True
+								in_atom = in_bond = False
+								mol_section = [line]
+							elif "@<TRIPOS>ATOM" in line:
+								in_atom = True
+								in_mol = in_bond = False
+								atom_section = [line]
+							elif "@<TRIPOS>BOND" in line:
+								in_bond = True
+								in_mol = in_atom = False
+								bond_section = [line]
 								continue
 
-							stripped_line = atom_line.rstrip("\n")
+							if in_mol:
+								mol_section.append(line)
+							elif in_atom:
+								atom_section.append(line)
+							elif in_bond:
+								bond_section.append(line)
 
-							fixed_line = stripped_line[:76].ljust(76) + element.rjust(2) 
+						formatted_atom_section = [atom_section[0]]
+						for line in atom_section[1:]:
+							parts = line.strip().split()
+							if len(parts) < 6:
+								continue #skip incomplete lines
 
-							fixed_ref_file.write(fixed_line + "\n")
+							atom_id = parts[0]
+							atom_name = parts[1]
+						        x, y, z = parts[2:5]
+						        atom_type = parts[5]
+
+							#fix atom_type if needed
+							#if type is just 'C', 'N', 'O' etc., try to guess common type
+
+							if "." not in atom_type:
+						    		element = re.match(r"[A-Za-z]+", atom_name).group(0)
+						    		element = element.capitalize()
+						    		if element == "C":
+									atom_type = "C.3"
+								elif element == "N":
+									atom_type = "N.am"
+						   		elif element == "O":
+									atom_type = "O.3"
+						   		elif element == "S":
+									atom_type = "S.3"
+						  		else:
+									atom_type = f"{element}.3"
+
+							#fill out missing values
+							while len(parts) < 9:
+								parts.append("0.000")
+
+
+							#build formatted lines and add to formatted_atom_section
+							formatted_line = "{:<7}{:<7}{:>10}{:>10}{:>10} {:<6}{:<4}{:<10}{:>7}".format(parts[0], parts[1], x, y, z, atom_type, parts[6], parts[7], parts[8])
+							formatted_atom_section.append(formatted_line + "\n"
+
+						#combine everything
+						output_lines = mol_section + ["\n"] + formatted_atom_section + ["\n"] + bond_section
+
+						#write to fixed_ref_file
+						fixed_ref_file.write(output_lines)
 
 						#close streams
 						old_ref_file.close()
