@@ -163,8 +163,19 @@ with pymol2.PyMOL() as pymol:
 						fixed_ref_file.close()
 
 						ref_ligand = Chem.MolFromMol2File("ligand_fixed.mol2", removeHs=True, sanitize=False)
+						
+						#check for successful load of ref_ligand and exit otherwise
+						if ref_ligand is None:
+							print("ERROR: Failed to load ligand_fixed.mol2 as RDKit molecule!")
+							sys.exit(1)
+						
 
 						placement_ligand = Chem.MolFromPDBFile(f"{residue}/{file_basename}_aligned_lig.pdb", removeHs=True, sanitize=False)
+
+						#check for successful load of placement_ligand and exit otherwise
+						if placement_ligand is None:
+							print("ERROR: Failed to load placement ligand as RDKit molecule!")
+							sys.exit(1)
 
 						try:
 							Chem.SanitizeMol(placement_ligand, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
