@@ -94,18 +94,15 @@ with pymol2.PyMOL() as pymol:
 						in_mol = in_atom = in_bond = False
 			
 						for line in old_ref_file.readlines():
-							if "@<TRIPOS>MOLECULE" in line:
-								in_mol = True
-								in_atom = in_bond = False
-								mol_section = [line]
-							elif "@<TRIPOS>ATOM" in line:
-								in_atom = True
-								in_mol = in_bond = False
-								atom_section = [line]
-							elif "@<TRIPOS>BOND" in line:
-								in_bond = True
-								in_mol = in_atom = False
-								bond_section = [line]
+							if line.strip() == "@<TRIPOS>MOLECULE":
+								in_mol, in_atom, in_bond = True, False, False
+								mol_section.append(line)
+							elif line.strip() == "@<TRIPOS>ATOM":
+								in_mol, in_atom, in_bond = False, True, False
+								atom_section.append(line)
+							elif line.strip() == "@<TRIPOS>BOND":
+								in_mol, in_atom, in_bond = False, False, True
+								bond_section.append(line)
 								continue
 
 							if in_mol:
@@ -114,49 +111,67 @@ with pymol2.PyMOL() as pymol:
 								atom_section.append(line)
 							elif in_bond:
 								bond_section.append(line)
+							else:
+								#keep lines after bonds as is
+								bond_section.append(line)
 
-						formatted_atom_section = [atom_section[0]]
+						formatted_atom_section = [atom_section[0]] #header line "@<TRIPOS>ATOM"
+						
 						for line in atom_section[1:]:
 							parts = line.strip().split()
 							if len(parts) < 6:
 								continue #skip incomplete lines
-								
+
+							#parse mandatory columns from mol2 atom line:
+							#atom ID, atom name, x, y, z, atom type
 							atom_id = parts[0]
 							atom_name = parts[1]
 							x, y, z = parts[2:5]
 							atom_type = parts[5]						        
 
-							#fix atom_type if needed
-							#if type is just 'C', 'N', 'O' etc., try to guess common type
-
+							#fix atom_type if missing dot (e.g., "C" -> "C.3")
 							if "." not in atom_type:
-								element = re.match(r"[A-Za-z]+", atom_name).group(0)
-								element = element.capitalize()
-								if element == "C":
+								element_guess = re.match(r"[A-Za-z]+", atom_name).group(0).capitalize()
+
+								#simple common guesses:
+								if element_guess == "C":
 									atom_type = "C.3"
-								elif element == "N":
+								elif element_guess == "N":
 									atom_type = "N.am"
-								elif element == "O":
+								elif element_guess == "O":
 									atom_type = "O.3"
-								elif element == "S":
+								elif element_guess == "S":
 									atom_type = "S.3"
 								else:
-									atom_type = f"{element}.3"
+									atom_type = f"{element_guess}.3"
+									
+							element = re.match(r"[A-Za-z]+", atom_name).group(0).capitalize()
+							#skip hydrogens
+							if element == "H": 
+								continue
 
-							#fill out missing values
+							#fill out missing optional columns 
 							while len(parts) < 9:
 								parts.append("0.000")
 
+							#overwrite atom_type in parts
+							parts[5] = atom_type
+							
+							# Format line with proper spacing, adding element column right-justified at end (like Tripos)
+							# Mol2 columns: id, name, x, y, z, type, subst_id, subst_name, charge, [element (fixed)]
+							formatted_line = (
+								f"{parts[0]:<7}{parts[1]:<7}"
+								f"{float(x):>10.4f}{float(y):>10.4f}{float(z):>10.4f} "
+								f"{atom_type:<6}{parts[6]:<4}{parts[7]:<10}{parts[8]:>7} "
+								f"{element:>2}\n"
+							)
 
-							#build formatted lines and add to formatted_atom_section
-							formatted_line = "{:<7}{:<7}{:>10}{:>10}{:>10} {:<6}{:<4}{:<10}{:>7}".format(parts[0], parts[1], x, y, z, atom_type, parts[6], parts[7], parts[8])
-							formatted_atom_section.append(formatted_line + "\n")
-
-						#combine everything
-						output_lines = mol_section + ["\n"] + formatted_atom_section + ["\n"] + bond_section
-
-						#write to fixed_ref_file
-						fixed_ref_file.writelines(output_lines)
+						#write everything to fixed_ref_file
+						fixed_ref_file.writelines(mol_section)
+						fixed_ref_file.write("\n")
+						fixed_ref_file.writelines(formatted_atom_section)
+						fixed_ref_file.write("\n")
+						fixed_ref_file.writelines(bond_section)
 
 						#close streams
 						old_ref_file.close()
