@@ -22,14 +22,17 @@ with pymol2.PyMOL() as pymol:
 	best_1 = open("best_placements_1.csv", "w")
 	best_1.write("system,placement,rmsd\n")
 
-	#itereate through systems
+	#iterate through systems
 	for system in os.walk(os.getcwd()):
 		#temporary filter to just test on 9HZ0. delete second condition when doing all systems
-		if os.path.isdir(system) and system = "9HZ0":
+		if os.path.isdir(system) and system == "9HZ0":
 			print(system)
 
 			#enter system directory
 			os.chdir(system)
+
+			#prepare original ligand for rdkit using openbabel
+			os.system("obabel ligand.mol2 -O ligand.sdf --gen3d")	
 
 			#open a system-specific file to write pairings of the files with rmsd 
 			system_file = open(f"{system}_placements_summary.csv", 'w')
@@ -39,14 +42,11 @@ with pymol2.PyMOL() as pymol:
 			#declare placeholder variables to hold the best placement
 			best_rmsd_1 = ["X","X","X"]
 
-			#locate original reference file (just the chain that was used, which is in test_params/)
-			for file in os.listdir("test_params/"):
-				if "chain" in file:
-					orig_file = file
-
+			#locate original reference file 
+			orig_file = f"{system}.pdb"
 
 			#load original file in pymol
-			cmd.load(f"{test_params}/{orig_file}", "reference")
+			cmd.load(f"{orig_file}", "reference")
 
 			#ensure reference was loaded properly
 			num_ref_atoms = cmd.count_atoms("reference")
@@ -101,7 +101,29 @@ with pymol2.PyMOL() as pymol:
 								sys.exit(1)
 							else:
 								print(f"ATOMS IN PLACEMENT: {num_pla_atoms}")
-						
+
+							#align placement to reference
+							cmd.align("placement", "reference")
+
+							#select aligned ligand
+							cmd.select("aligned_lig", "placement and not polymer.protein")
+
+							#construct save name for aligned ligand and save
+							aligned_lig_basename = group_file.split(".")[0] + "_aligned_lig.pdb"
+							
+							cmd.save(os.path.join(group_path, aligned_lig_basename), "aligned_lig")
+
+							#clear the aligned ligand and placement from session but keep reference 
+							cmd.delete("aligned_lig")
+							cmd.delete("placement")
+
+
+							#convert aligned ligand .pdb into .sdf format for rdkit
+							aligned_lig_sdf_basename = group_file.split(".")[0] + "_aligned_lig.sdf"
+							os.system(f"obabel {group_path}/{aligned_lig_basename} -O {group_path}/{aligned_lig_sdf_basename} --gen3d")
+
+							
+							
 					
 				
 				
