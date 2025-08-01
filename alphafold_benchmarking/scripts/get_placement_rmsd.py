@@ -123,14 +123,14 @@ with pymol2.PyMOL() as pymol:
 							#construct save name for aligned ligand and save
 							aligned_lig_basename = group_file.split(".")[0] + "_aligned_lig.mol2"
 							
-							cmd.save(os.path.join(group_path, aligned_lig_basename), "aligned_lig")
+							cmd.save(os.path.join(group_path, aligned_lig_basename))
 
 							#clear the aligned ligand and placement from session but keep reference 
 							cmd.delete("aligned_lig")
 							cmd.delete("placement")
 
 
-							#convert aligned ligand .pdb into .sdf format for rdkit
+							#convert aligned ligand .mol2 into .sdf format for rdkit
 							aligned_lig_sdf_basename = group_file.split(".")[0] + "_aligned_lig.sdf"
 							os.system(f"obabel {group_path}/{aligned_lig_basename} -O {group_path}/{aligned_lig_sdf_basename} --gen3d")
 
