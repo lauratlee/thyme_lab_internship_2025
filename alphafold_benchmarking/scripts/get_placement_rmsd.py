@@ -141,12 +141,14 @@ with pymol2.PyMOL() as pymol:
 
 							#read placement ligand into rdkit without hydrogens
 							pla_ligand = Chem.MolFromMolFile(f"{group_path}/{aligned_lig_sdf_basename}", removeHs=True)
-							Chem.SanitizeMol(pla_ligand)
 
 							#check that placement loaded successfully
 							if pla_ligand is None:
 								print("WARNING: placement ligand did not read into rdkit. Exiting.")
 								sys.exit(1)
+
+							#sanitize placement ligand
+							Chem.SanitizeMol(pla_ligand)
 
 							#get smiles of placement ligand
 							pla_smiles = Chem.MolToSmiles(pla_ligand)
