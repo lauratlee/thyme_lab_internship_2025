@@ -11,7 +11,8 @@ from rdkit.Chem import AllChem, rdMolAlign
 #from openbabel import openbabel as ob
 from openbabel import pybel
 #import re
-#from rdkit.Chem import SanitizeFlags
+from rdkit.Chem import SanitizeFlags
+from rdkit.Chem import AllChem
 
 
 #begin a pymol session
