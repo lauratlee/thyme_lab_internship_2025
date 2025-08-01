@@ -122,6 +122,26 @@ with pymol2.PyMOL() as pymol:
 							aligned_lig_sdf_basename = group_file.split(".")[0] + "_aligned_lig.sdf"
 							os.system(f"obabel {group_path}/{aligned_lig_basename} -O {group_path}/{aligned_lig_sdf_basename} --gen3d")
 
+							#read reference ligand into rdkit without hydrogens
+							ref_ligand = Chem.MolFromMolFile("ligand.sdf", removeHs=True)
+
+							#check that reference loaded successfully
+							if ref_ligand is None:
+								print("WARNING: reference ligand did not read into rdkit. Exiting.")
+								sys.exit(1)
+
+
+							#read placement ligand into rdkit without hydrogens
+							pla_ligand = Chem.MolFromMolFile(f"{group_path}/{aligned_lig_sdf_basename}", removeHs=True)
+
+							#check that placement loaded successfully
+							if pla_ligand is None:
+								print("WARNING: placement ligand did not read into rdkit. Exiting.")
+								sys.exit(1)
+
+
+							
+
 							
 							
 					
