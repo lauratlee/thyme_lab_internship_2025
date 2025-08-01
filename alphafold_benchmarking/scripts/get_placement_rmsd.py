@@ -97,6 +97,7 @@ with pymol2.PyMOL() as pymol:
 
 				#iterate through each group
 				for group in group_list:
+					print(f"residue {residue}, group {group}")
 					#construct path to group folder
 					group_path = os.path.join(residue, group)
 
