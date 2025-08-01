@@ -124,7 +124,7 @@ with pymol2.PyMOL() as pymol:
 							#construct save name for aligned ligand and save
 							aligned_lig_basename = group_file.split(".")[0] + "_aligned_lig.mol2"
 							
-							cmd.save(os.path.join(group_path, aligned_lig_basename))
+							cmd.save(os.path.join(group_path, aligned_lig_basename), "aligned_lig")
 
 							#clear the aligned ligand and placement from session but keep reference 
 							cmd.delete("aligned_lig")
