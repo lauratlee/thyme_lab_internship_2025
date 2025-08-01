@@ -49,7 +49,10 @@ with pymol2.PyMOL() as pymol:
 			best_rmsd_1 = ["X","X","X"]
 			
 			#get the original placement and open it in pymol
-			cmd.load(f"{dire}.pdb", "reference")
+			#cmd.load(f"{dire}.pdb", "reference")
+			cmd.load("test_params/chain_A.pdb", "reference")
+
+			
 			if cmd.count_atoms("reference") == 0:
 				print("WARNING: no reference loaded")
 				sys.exit(1)
