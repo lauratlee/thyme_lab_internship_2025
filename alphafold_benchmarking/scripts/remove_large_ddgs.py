@@ -9,7 +9,7 @@ def count_files(folder):
   for root, dirs, files in os.walk(folder):
     for file in files:
       if file.endswith(".pdb"):
-      pdb_count += 1
+        pdb_count += 1
 
   return(pdb_count)
       
