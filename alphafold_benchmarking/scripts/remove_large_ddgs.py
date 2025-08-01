@@ -3,6 +3,17 @@
 
 import os
 
+#function to count files
+def count_files(folder):
+  pdb_count = 0
+  for root, dirs, files in os.walk(folder):
+    for file in files:
+      if file.endswith(".pdb")
+      pdb_count += 1
+
+  return(pdb_count)
+      
+
 
 #helper function for cleaning
 def clean_ddgs(residue_folder):
@@ -60,8 +71,14 @@ for res in residue_list:
   #enter residue folder
   os.chdir(res)
 
+  #print number of files initially
+  print(f"INITIAL: {count_files(res)}")
+
   #clean out files with ddgs >= 0
   clean_ddgs(res)
+
+  #print number of files post-cleaning
+  print(f"POST-CLEANING: {count_files(res)}")
 
   #exit residue folder to move on to the next residue
   os.chdir("..")
