@@ -53,6 +53,7 @@ with pymol2.PyMOL() as pymol:
 			if cmd.count_atoms("reference") == 0:
 				print("WARNING: no reference loaded")
 				sys.exit(1)
+			print(f"ATOMS IN REFERENCE: {cmd.count_atoms("reference")}")
 
 			#create a dictionary the holds the placement files and the corresponding confidence and rmsd values
 			#the file is the key and the value is a 2 entry list of confidence then rmsd
@@ -74,6 +75,7 @@ with pymol2.PyMOL() as pymol:
 						if cmd.count_atoms("placement") == 0:
 							print("WARNING: no placement loaded")
 							sys.exit(1)
+						print(f"ATOMS IN PLACEMENT: {cmd.count_atoms("placement")}")
 
 						#align placement to reference
 						cmd.align("placement", "reference")
