@@ -24,7 +24,8 @@ with pymol2.PyMOL() as pymol:
 
 	#itereate through systems
 	for system in os.walk(os.getcwd()):
-		if os.path.isdir(system):
+		#temporary filter to just test on 9HZ0. delete second condition when doing all systems
+		if os.path.isdir(system) and system = "9HZ0":
 			print(system)
 
 			#enter system directory
@@ -43,20 +44,70 @@ with pymol2.PyMOL() as pymol:
 				if "chain" in file:
 					orig_file = file
 
+
+			#load original file in pymol
+			cmd.load(f"{test_params}/{orig_file}", "reference")
+
+			#ensure reference was loaded properly
+			num_ref_atoms = cmd.count_atoms("reference")
+			if num_ref_atoms == 0:
+				print("WARNING: no atoms in reference. Exiting.")
+				sys.exit(1)
+			else:
+				print(f"ATOMS IN REFERENCE: {num_ref_atoms}")
+
+
+			#create a dictionary the holds the placement files (and the residue they were derived from) and the corresponding rmsd values
+			#key is a tuple of (residue, file), and the value is the rmsd
+			placements_data = {}
+
+			#iterate over the placements by residue folder by creating a list of folders to look at per system
+			residue_list = []
+			for folder in os.listdir(os.getcwd()):
+				if os.path.isdir(folder) and "res_" in folder:
+					residue_list.append(folder)
+
+
+			#iterate over residues for analysis
+			for residue in residue_list:
+				print(residue)
+
+				#iterate through folders for groups and add to a list
+				group_list = []
+
+				for res_folder in os.listdir(residue):
+					if os.path.isdir(os.path.join("residue", "res_folder"):
+						try:
+							int(res_folder) #group folder names are all integers
+							group_list.append(res_folder)
+						except ValueError:
+							continue
+
+				#iterate through each group
+				for group in group_list:
+					#construct path to group folder
+					group_path = os.path.join("residue", "group")
+
+					#iterate through files in each group folder
+					for group_file in os.listdir(group_path):
+						if ".pdb" in group_file: #confirm file is a placement
+							#load placement into pymol
+							cmd.load(os.path.join(group_path, group_file), "placement")
+
+							#ensure placement was loaded properly
+							num_pla_atoms = cmd.count_atoms("placement")
+							if num_pla_atoms == 0:
+								print("WARNING: no atoms in placement. Exiting.")
+								sys.exit(1)
+							else:
+								print(f"ATOMS IN PLACEMENT: {num_pla_atoms}")
+						
+					
+				
+				
 			
 			
 			
-
-			
-
-	
-
-	
-
-
-
-
-
 
 
 
