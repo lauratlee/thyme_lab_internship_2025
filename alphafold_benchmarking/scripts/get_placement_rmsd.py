@@ -139,6 +139,10 @@ with pymol2.PyMOL() as pymol:
 								print("WARNING: placement ligand did not read into rdkit. Exiting.")
 								sys.exit(1)
 
+							#get smiles of reference and placement ligands
+							ref_smiles = Chem.MolToSmiles(ref_ligand)
+							pla_smiles = Chem.MolToSmiles(pla_ligand)
+
 
 							
 
