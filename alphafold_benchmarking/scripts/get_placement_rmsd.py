@@ -121,7 +121,7 @@ with pymol2.PyMOL() as pymol:
 							cmd.select("aligned_lig", "placement and not polymer.protein")
 
 							#construct save name for aligned ligand and save
-							aligned_lig_basename = group_file.split(".")[0] + "_aligned_lig.pdb"
+							aligned_lig_basename = group_file.split(".")[0] + "_aligned_lig.mol2"
 							
 							cmd.save(os.path.join(group_path, aligned_lig_basename), "aligned_lig")
 
