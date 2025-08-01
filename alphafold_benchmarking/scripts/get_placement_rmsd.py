@@ -48,8 +48,11 @@ with pymol2.PyMOL() as pymol:
 			#declare placeholder variables to hold the best placement
 			best_rmsd_1 = ["X","X","X"]
 			
-			#get the original placement from the dude library and open it in pymol
+			#get the original placement and open it in pymol
 			cmd.load(f"{dire}.pdb", "reference")
+			if cmd.count_atoms("reference") == 0:
+				print("WARNING: no reference loaded")
+				sys.exit(1)
 
 			#create a dictionary the holds the placement files and the corresponding confidence and rmsd values
 			#the file is the key and the value is a 2 entry list of confidence then rmsd
@@ -68,6 +71,9 @@ with pymol2.PyMOL() as pymol:
 					if ".pdb" in file:
 						#load placement into pymol
 						cmd.load(f"{residue}/{file}", "placement")
+						if cmd.count_atoms("placement") == 0:
+							print("WARNING: no placement loaded")
+							sys.exit(1)
 
 						#align placement to reference
 						cmd.align("placement", "reference")
