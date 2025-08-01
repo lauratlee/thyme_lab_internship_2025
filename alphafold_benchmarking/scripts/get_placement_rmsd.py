@@ -193,10 +193,10 @@ with pymol2.PyMOL() as pymol:
 							print("ERROR: Failed to load placement ligand as RDKit molecule!")
 							sys.exit(1)
 
-						try:
+						"""try:
 							Chem.SanitizeMol(placement_ligand, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
 						except Exception as e:
-							print("Sanitization failed:", e)
+							print("Sanitization failed:", e)"""
 
 
 						ref_smiles = Chem.MolToSmiles(ref_ligand)
