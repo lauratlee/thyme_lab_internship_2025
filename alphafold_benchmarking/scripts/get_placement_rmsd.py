@@ -38,6 +38,13 @@ with pymol2.PyMOL() as pymol:
 			#declare placeholder variables to hold the best placement
 			best_rmsd_1 = ["X","X","X"]
 
+			#locate original reference file (just the chain that was used, which is in test_params/)
+			for file in os.listdir("test_params/"):
+				if "chain" in file:
+					orig_file = file
+
+			
+			
 			
 
 			
