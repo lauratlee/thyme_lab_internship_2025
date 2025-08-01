@@ -73,11 +73,11 @@ with pymol2.PyMOL() as pymol:
 				print(residue)
 				#iterate through group folders
 				for folder in os.listdir(residue):
-					if os.path.isdir(f"{residue}/{folder}"):
-						for file in os.listdir(folder):
+					if os.path.isdir(f"{residue}/{folder}/"):
+						for file in os.listdir(f"{residue}/{folder}/"):
 							if ".pdb" in file:
 								#load placement into pymol
-								cmd.load(f"{residue}/{file}", "placement")
+								cmd.load(f"{residue}/{folder}/{file}", "placement")
 								if cmd.count_atoms("placement") == 0:
 									print("WARNING: no placement loaded")
 									sys.exit(1)
