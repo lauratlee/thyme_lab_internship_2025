@@ -38,7 +38,7 @@ def clean_ddgs(residue_folder):
             ddg_value = float(parts[-1])
             break
 
-      if ddg_value >= 0:
+      if ddg_value is not None and ddg_value >= 0:
         os.remove(file)
 
     #exit group and move on to the next
