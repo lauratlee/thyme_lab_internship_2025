@@ -11,7 +11,7 @@ def count_files():
       if file.endswith(".pdb"):
         pdb_count += 1
 
-  return(pdb_count)
+  return pdb_count
       
 
 
