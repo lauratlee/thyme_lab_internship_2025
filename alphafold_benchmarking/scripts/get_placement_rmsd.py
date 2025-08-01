@@ -49,8 +49,8 @@ with pymol2.PyMOL() as pymol:
 			best_rmsd_1 = ["X","X","X"]
 			
 			#get the original placement and open it in pymol
-			#cmd.load(f"{dire}.pdb", "reference")
-			cmd.load("test_params/chain_A.pdb", "reference")
+			cmd.load(f"{dire}.pdb", "reference")
+			#cmd.load("test_params/chain_A.pdb", "reference")
 
 			
 			if cmd.count_atoms("reference") == 0:
@@ -71,167 +71,170 @@ with pymol2.PyMOL() as pymol:
 
 			for residue in residue_list:
 				print(residue)
-				for file in os.listdir(residue):
-					if ".pdb" in file:
-						#load placement into pymol
-						cmd.load(f"{residue}/{file}", "placement")
-						if cmd.count_atoms("placement") == 0:
-							print("WARNING: no placement loaded")
-							sys.exit(1)
-						print(f"ATOMS IN PLACEMENT: {cmd.count_atoms("placement")}")
-
-						#align placement to reference
-						cmd.align("placement", "reference")
-
-						#select the aligned ligand and save as .pdb 
-						cmd.select("aligned_lig", "placement and not polymer.protein")
-			
-						#derive save name for ligand and save
-						file_basename = file.split(".")[0]
-						cmd.save(f"{residue}/{file_basename}_aligned_lig.pdb", "aligned_lig")
-
-						#clear the aligned ligand and placement from session but keep reference
-						cmd.delete("aligned_lig")
-						cmd.delete("placement")
-
-						"""#format a "fixed" version of the reference ligand for rdkit
-						old_ref_file = open("ligand.mol2", "r")
-						fixed_ref_file = open("ligand_fixed.mol2", "w")
-
-						#isolate section with atoms into a list 
-						mol_section = []
-						atom_section = []
-						bond_section = []
-						
-						in_mol = in_atom = in_bond = False
-			
-						for line in old_ref_file.readlines():
-							if line.strip() == "@<TRIPOS>MOLECULE":
-								in_mol, in_atom, in_bond = True, False, False
-								mol_section.append(line)
-							elif line.strip() == "@<TRIPOS>ATOM":
-								in_mol, in_atom, in_bond = False, True, False
-								atom_section.append(line)
-							elif line.strip() == "@<TRIPOS>BOND":
-								in_mol, in_atom, in_bond = False, False, True
-								bond_section.append(line)
-								continue
-
-							if in_mol:
-								mol_section.append(line)
-							elif in_atom:
-								atom_section.append(line)
-							elif in_bond:
-								bond_section.append(line)
-							else:
-								#keep lines after bonds as is
-								bond_section.append(line)
-
-						formatted_atom_section = [atom_section[0]] #header line "@<TRIPOS>ATOM"
-						
-						for line in atom_section[1:]:
-							parts = line.strip().split()
-							if len(parts) < 6:
-								continue #skip incomplete lines
-
-							#parse mandatory columns from mol2 atom line:
-							#atom ID, atom name, x, y, z, atom type
-							atom_id = parts[0]
-							atom_name = parts[1]
-							x, y, z = parts[2:5]
-							atom_type = parts[5]						        
-
-							#fix atom_type if missing dot (e.g., "C" -> "C.3")
-							if "." not in atom_type:
-								element_guess = re.match(r"[A-Za-z]+", atom_name).group(0).capitalize()
-
-								#simple common guesses:
-								if element_guess == "C":
-									atom_type = "C.3"
-								elif element_guess == "N":
-									atom_type = "N.am"
-								elif element_guess == "O":
-									atom_type = "O.3"
-								elif element_guess == "S":
-									atom_type = "S.3"
-								else:
-									atom_type = f"{element_guess}.3"
+				#iterate through group folders
+				for folder in os.listdir(residue):
+					if os.path.isdir(f"{residue}/{folder}"):
+						for file in os.listdir(folder):
+							if ".pdb" in file:
+								#load placement into pymol
+								cmd.load(f"{residue}/{file}", "placement")
+								if cmd.count_atoms("placement") == 0:
+									print("WARNING: no placement loaded")
+									sys.exit(1)
+								print(f"ATOMS IN PLACEMENT: {cmd.count_atoms("placement")}")
+		
+								#align placement to reference
+								cmd.align("placement", "reference")
+		
+								#select the aligned ligand and save as .pdb 
+								cmd.select("aligned_lig", "placement and not polymer.protein")
+					
+								#derive save name for ligand and save
+								file_basename = file.split(".")[0]
+								cmd.save(f"{residue}/{file_basename}_aligned_lig.pdb", "aligned_lig")
+		
+								#clear the aligned ligand and placement from session but keep reference
+								cmd.delete("aligned_lig")
+								cmd.delete("placement")
+		
+								"""#format a "fixed" version of the reference ligand for rdkit
+								old_ref_file = open("ligand.mol2", "r")
+								fixed_ref_file = open("ligand_fixed.mol2", "w")
+		
+								#isolate section with atoms into a list 
+								mol_section = []
+								atom_section = []
+								bond_section = []
+								
+								in_mol = in_atom = in_bond = False
+					
+								for line in old_ref_file.readlines():
+									if line.strip() == "@<TRIPOS>MOLECULE":
+										in_mol, in_atom, in_bond = True, False, False
+										mol_section.append(line)
+									elif line.strip() == "@<TRIPOS>ATOM":
+										in_mol, in_atom, in_bond = False, True, False
+										atom_section.append(line)
+									elif line.strip() == "@<TRIPOS>BOND":
+										in_mol, in_atom, in_bond = False, False, True
+										bond_section.append(line)
+										continue
+		
+									if in_mol:
+										mol_section.append(line)
+									elif in_atom:
+										atom_section.append(line)
+									elif in_bond:
+										bond_section.append(line)
+									else:
+										#keep lines after bonds as is
+										bond_section.append(line)
+		
+								formatted_atom_section = [atom_section[0]] #header line "@<TRIPOS>ATOM"
+								
+								for line in atom_section[1:]:
+									parts = line.strip().split()
+									if len(parts) < 6:
+										continue #skip incomplete lines
+		
+									#parse mandatory columns from mol2 atom line:
+									#atom ID, atom name, x, y, z, atom type
+									atom_id = parts[0]
+									atom_name = parts[1]
+									x, y, z = parts[2:5]
+									atom_type = parts[5]						        
+		
+									#fix atom_type if missing dot (e.g., "C" -> "C.3")
+									if "." not in atom_type:
+										element_guess = re.match(r"[A-Za-z]+", atom_name).group(0).capitalize()
+		
+										#simple common guesses:
+										if element_guess == "C":
+											atom_type = "C.3"
+										elif element_guess == "N":
+											atom_type = "N.am"
+										elif element_guess == "O":
+											atom_type = "O.3"
+										elif element_guess == "S":
+											atom_type = "S.3"
+										else:
+											atom_type = f"{element_guess}.3"
+											
+									element = re.match(r"[A-Za-z]+", atom_name).group(0).capitalize()
+									#skip hydrogens
+									if element == "H": 
+										continue
+		
+									#fill out missing optional columns 
+									while len(parts) < 9:
+										parts.append("0.000")
+		
+									#overwrite atom_type in parts
+									parts[5] = atom_type
 									
-							element = re.match(r"[A-Za-z]+", atom_name).group(0).capitalize()
-							#skip hydrogens
-							if element == "H": 
-								continue
-
-							#fill out missing optional columns 
-							while len(parts) < 9:
-								parts.append("0.000")
-
-							#overwrite atom_type in parts
-							parts[5] = atom_type
-							
-							# Format line with proper spacing, adding element column right-justified at end (like Tripos)
-							# Mol2 columns: id, name, x, y, z, type, subst_id, subst_name, charge, [element (fixed)]
-							formatted_line = (
-								f"{parts[0]:<7}{parts[1]:<7}"
-								f"{float(x):>10.4f}{float(y):>10.4f}{float(z):>10.4f} "
-								f"{atom_type:<6}{parts[6]:<4}{parts[7]:<10}{parts[8]:>7} "
-								f"{element:>2}\n"
-							)
-
-						#write everything to fixed_ref_file
-						fixed_ref_file.writelines(mol_section)
-						fixed_ref_file.write("\n")
-						fixed_ref_file.writelines(formatted_atom_section)
-						fixed_ref_file.write("\n")
-						fixed_ref_file.writelines(bond_section)
-
-						#close streams
-						old_ref_file.close()
-						fixed_ref_file.close()"""
-
-						ref_ligand = Chem.MolFromMol2File("ligand.mol2", removeHs=True, sanitize=False)
-						
-						#check for successful load of ref_ligand and exit otherwise
-						if ref_ligand is None:
-							print("ERROR: Failed to load ligand.mol2 as RDKit molecule!")
-							sys.exit(1)
-						
-
-						placement_ligand = Chem.MolFromPDBFile(f"{residue}/{file_basename}_aligned_lig.pdb", removeHs=True, sanitize=False)
-
-						#check for successful load of placement_ligand and exit otherwise
-						if placement_ligand is None:
-							print("ERROR: Failed to load placement ligand as RDKit molecule!")
-							sys.exit(1)
-
-						"""try:
-							Chem.SanitizeMol(placement_ligand, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
-						except Exception as e:
-							print("Sanitization failed:", e)"""
-
-
-						ref_smiles = Chem.MolToSmiles(ref_ligand)
-						pla_smiles = Chem.MolToSmiles(placement_ligand)
-
-						rmsd = "X"
-
-						#use the get best RMS function to derive the rmsd
-						if ref_ligand and placement_ligand:
-							try:
-								rmsd = rdMolAlign.GetBestRMS(ref_ligand, placement_ligand)
-								print(f"{residue}/{file_basename}_aligned_lig.pdb", rmsd)
-							except RuntimeError as e:
-								print("Alignment failed:", e)
-
-
-						#if the rmsd is X, don't add it
-						if str(rmsd) == "X":
-							continue
-
-						#store the rmsd in the dictionary by the residue and file name
-						placements_data[(residue, file)] = ["X",rmsd]
-
-						#we are now done with the placement, and can move to the next
+									# Format line with proper spacing, adding element column right-justified at end (like Tripos)
+									# Mol2 columns: id, name, x, y, z, type, subst_id, subst_name, charge, [element (fixed)]
+									formatted_line = (
+										f"{parts[0]:<7}{parts[1]:<7}"
+										f"{float(x):>10.4f}{float(y):>10.4f}{float(z):>10.4f} "
+										f"{atom_type:<6}{parts[6]:<4}{parts[7]:<10}{parts[8]:>7} "
+										f"{element:>2}\n"
+									)
+		
+								#write everything to fixed_ref_file
+								fixed_ref_file.writelines(mol_section)
+								fixed_ref_file.write("\n")
+								fixed_ref_file.writelines(formatted_atom_section)
+								fixed_ref_file.write("\n")
+								fixed_ref_file.writelines(bond_section)
+		
+								#close streams
+								old_ref_file.close()
+								fixed_ref_file.close()"""
+		
+								ref_ligand = Chem.MolFromMol2File("ligand.mol2", removeHs=True, sanitize=False)
+								
+								#check for successful load of ref_ligand and exit otherwise
+								if ref_ligand is None:
+									print("ERROR: Failed to load ligand.mol2 as RDKit molecule!")
+									sys.exit(1)
+								
+		
+								placement_ligand = Chem.MolFromPDBFile(f"{residue}/{file_basename}_aligned_lig.pdb", removeHs=True, sanitize=False)
+		
+								#check for successful load of placement_ligand and exit otherwise
+								if placement_ligand is None:
+									print("ERROR: Failed to load placement ligand as RDKit molecule!")
+									sys.exit(1)
+		
+								"""try:
+									Chem.SanitizeMol(placement_ligand, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
+								except Exception as e:
+									print("Sanitization failed:", e)"""
+		
+		
+								ref_smiles = Chem.MolToSmiles(ref_ligand)
+								pla_smiles = Chem.MolToSmiles(placement_ligand)
+		
+								rmsd = "X"
+		
+								#use the get best RMS function to derive the rmsd
+								if ref_ligand and placement_ligand:
+									try:
+										rmsd = rdMolAlign.GetBestRMS(ref_ligand, placement_ligand)
+										print(f"{residue}/{file_basename}_aligned_lig.pdb", rmsd)
+									except RuntimeError as e:
+										print("Alignment failed:", e)
+		
+		
+								#if the rmsd is X, don't add it
+								if str(rmsd) == "X":
+									continue
+		
+								#store the rmsd in the dictionary by the residue and file name
+								placements_data[(residue, file)] = ["X",rmsd]
+		
+								#we are now done with the placement, and can move to the next
 
 			#done with all placements for the system, correlate rmsd and confidence and update dictionaries and finish the system-specific csv
 
