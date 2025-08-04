@@ -138,8 +138,11 @@ with pymol2.PyMOL() as pymol:
 							else:
 								print(f"ATOMS IN PLACEMENT: {num_pla_atoms}")
 
-							#align placement to reference
-							cmd.align("placement", "reference")
+							#align placement to reference. if alignment fails then skip file
+							try:
+								cmd.align("placement", "reference")
+							except cmd.CmdException as e:
+								continue
 
 							#select aligned ligand
 							cmd.select("aligned_lig", "placement and not polymer.protein")
