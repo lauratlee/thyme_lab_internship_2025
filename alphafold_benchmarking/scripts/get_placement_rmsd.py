@@ -15,6 +15,17 @@ from rdkit.Chem import SanitizeFlags
 from rdkit.Chem import AllChem
 
 
+#helper function to strip all bond orders by setting everything to single bonds
+def strip_bond_orders(mol):
+	rw_mol = Chem.RWMol(mol)
+	for bond in rw_mol.GetBonds():
+		bond.SetBondType(Chem.rdchem.BondType.SINGLE)
+	Chem.SanitizeMol(rw_mol)
+	return rw_mol.GetMol()
+
+
+
+
 #begin a pymol session
 with pymol2.PyMOL() as pymol:
 	cmd = pymol.cmd
@@ -32,12 +43,20 @@ with pymol2.PyMOL() as pymol:
 			#enter system directory
 			os.chdir(system)
 
+			# ---------------------------------- PREPARE ORIGINAL LIGAND ---------------------------------- #
+
 			#prepare original ligand for rdkit using openbabel
 			os.system("obabel ligand.mol2 -O ligand.sdf --gen3d")	
 			
+			'''#read reference ligand into rdkit without hydrogens
+			ref_ligand = Chem.MolFromMolFile("ligand.sdf", removeHs=True)
+			Chem.SanitizeMol(ref_ligand)'''
+
 			#read reference ligand into rdkit without hydrogens
 			ref_ligand = Chem.MolFromMolFile("ligand.sdf", removeHs=True)
-			Chem.SanitizeMol(ref_ligand)
+
+			#strip bond orders from reference
+			ref_ligand = strip_bond_orders(ref_ligand)
 
 			#check that reference loaded successfully
 			if ref_ligand is None:
@@ -47,7 +66,9 @@ with pymol2.PyMOL() as pymol:
 			#get smiles of reference ligand
 			ref_smiles = Chem.MolToSmiles(ref_ligand)
 
+			# ---------------------------------------------------------------------------------------------- #
 
+			
 			#open a system-specific file to write pairings of the files with rmsd 
 			with open(f"{system}_placements_summary.csv", "w") as system_file:
 				#write header
@@ -132,27 +153,31 @@ with pymol2.PyMOL() as pymol:
 							cmd.delete("aligned_lig")
 							cmd.delete("placement")
 
-
+							# ---------------------------------- PREPARE PLACEMENT LIGAND ---------------------------------- #
+							
 							#convert aligned ligand .mol2 into .sdf format for rdkit
 							aligned_lig_sdf_basename = group_file.split(".")[0] + "_aligned_lig.sdf"
 							os.system(f"obabel {group_path}/{aligned_lig_basename} -O {group_path}/{aligned_lig_sdf_basename} --gen3d")
 
-							
-
 
 							#read placement ligand into rdkit without hydrogens
 							pla_ligand = Chem.MolFromMolFile(f"{group_path}/{aligned_lig_sdf_basename}", removeHs=True)
+
+							#strip bond orders from placement
+							pla_ligand = strip_bond_orders(pla_ligand)
 
 							#check that placement loaded successfully
 							if pla_ligand is None:
 								print("WARNING: placement ligand did not read into rdkit. Exiting.")
 								sys.exit(1)
 
-							#sanitize placement ligand
-							Chem.SanitizeMol(pla_ligand)
+							'''#sanitize placement ligand
+							Chem.SanitizeMol(pla_ligand)'''
 
 							#get smiles of placement ligand
 							pla_smiles = Chem.MolToSmiles(pla_ligand)
+
+							# ---------------------------------------------------------------------------------------------- #
 
 							rmsd = "X"
 
