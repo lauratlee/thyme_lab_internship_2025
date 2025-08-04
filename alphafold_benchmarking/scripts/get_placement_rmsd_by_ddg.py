@@ -85,12 +85,12 @@ with pymol2.PyMOL() as pymol:
 			#open a system-specific file for best rmsd out of top 10 ddgs
 			with open(f"{system}_placements_summary_ddg_10.csv", "w") as system_file_10:
 				#write header
-				system_file.write("residue,file,ddg,rmsd\n")
+				system_file_10.write("residue,file,ddg,rmsd\n")
 
-			#open a system-specific fiel for best rmsd out of top 1 ddg
+			#open a system-specific file for best rmsd out of top 1 ddg
 			with open(f"{system}_placements_summary_ddg_1.csv", "w") as system_file_1:
 				#write header
-				system_file.write("residue,file,ddg,rmsd\n")
+				system_file_1.write("residue,file,ddg,rmsd\n")
 
 			#declare placeholder variables to hold the best placement
 			best_rmsd_10_ddg = ["X","X","X","X"]
