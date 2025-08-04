@@ -55,13 +55,12 @@ data_all = (5,5,5)
 
 
 
-print(
-      f"LIBRARY: {sys_library}\n
+print(f"""LIBRARY: {sys_library}\n
       # OF SYSTEMS: {lib_length}\n
       ALL PLACEMENTS: {data_all}\n
       TOP 10 DDG: {data_10}\n
-      TOP 1 DDG: {data_1}\n"
-)
+      TOP 1 DDG: {data_1}\n
+      """)
   
 
 
