@@ -154,97 +154,97 @@ with pymol2.PyMOL() as pymol:
 							#append file name and ddg value to ddg_vals list
 							ddg_vals.append((group_file_path, ddg))
 
-					#sort by ascending order of ddgs (most negative ddg values first) and then save only the top 10 ddgs
-					ddg_vals = sorted(ddg_vals, key=lambda x: x[1])
-					ddg_vals = ddg_vals[:10]
-					print(ddg_vals)
+			#sort by ascending order of ddgs (most negative ddg values first) and then save only the top 10 ddgs
+			ddg_vals = sorted(ddg_vals, key=lambda x: x[1])
+			ddg_vals = ddg_vals[:10]
+			print(ddg_vals)
 
 
-					#iterate through remaining files in ddg_vals
-					for i, placement in enumerate(ddg_vals):
-						#note ddg
-						placement_ddg = placement[1]
-						
-						#load placement into pymol
-						cmd.load(os.path.join(group_path, group_file), "placement")
-	
-						#ensure placement was loaded properly
-						num_pla_atoms = cmd.count_atoms("placement")
-						if num_pla_atoms == 0:
-							print("WARNING: no atoms in placement. Exiting.")
-							sys.exit(1)
-	
-	
-						#align placement to reference. if alignment fails then skip file
-						try:
-							cmd.align("placement", "reference")
-						except CmdException:
-							continue
-	
-						#select aligned ligand
-						cmd.select("aligned_lig", "placement and not polymer.protein")
-	
-						#construct save name for aligned ligand and save
-						aligned_lig_basename = group_file.split(".")[0] + "_aligned_lig.mol2"
-						
-						cmd.save(os.path.join(group_path, aligned_lig_basename), "aligned_lig")
-	
-						#clear the aligned ligand and placement from session but keep reference 
-						cmd.delete("aligned_lig")
-						cmd.delete("placement")
-	
-						# ---------------------------------- PREPARE PLACEMENT LIGAND ---------------------------------- #
-						
-						#convert aligned ligand .mol2 into .sdf format for rdkit
-						aligned_lig_sdf_basename = group_file.split(".")[0] + "_aligned_lig.sdf"
-						os.system(f"obabel {group_path}/{aligned_lig_basename} -O {group_path}/{aligned_lig_sdf_basename}")
-	
-	
-						#read placement ligand into rdkit without hydrogens
-						pla_ligand = Chem.MolFromMolFile(f"{group_path}/{aligned_lig_sdf_basename}", removeHs=True)
-	
-						#strip bond orders from placement
-						pla_ligand = strip_bond_orders(pla_ligand)
-	
-						#check that placement loaded successfully
-						if pla_ligand is None:
-							print("WARNING: placement ligand did not read into rdkit. Exiting.")
-							sys.exit(1)
-	
-	
-						#get smiles of placement ligand
-						pla_smiles = Chem.MolToSmiles(pla_ligand)
-	
-						# ---------------------------------------------------------------------------------------------- #
-	
-						rmsd = "X"
-	
-						#use the get best RMS function to derive the rmsd
-						if ref_ligand and pla_ligand:
-							try:
-								rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand)
-								print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
-							except RuntimeError as e:
-								print("Alignment failed:", e)
-	
-						#if the rmsd is X, don't add it
-						if str(rmsd) == "X":
-							continue
-	
-						#store the rmsd in the dictionary by the residue and file name
-						placements_data[(residue, group_file, placement_ddg)] = ["X",rmsd]
+			#iterate through remaining files in ddg_vals
+			for i, placement in enumerate(ddg_vals):
+				#note ddg
+				placement_ddg = placement[1]
+				
+				#load placement into pymol
+				cmd.load(os.path.join(group_path, group_file), "placement")
 
-						#if lowest ddg, write to top_1_ddg file
-						if i == 0:
-							for entry in placements_data.keys():
-								placement_residue = entry[0]
-								placement_file = entry[1]
-								placement_rmsd = placements_data[entry]
+				#ensure placement was loaded properly
+				num_pla_atoms = cmd.count_atoms("placement")
+				if num_pla_atoms == 0:
+					print("WARNING: no atoms in placement. Exiting.")
+					sys.exit(1)
 
-								with open(f"{system}_placements_summary_ddg_1.csv", "w") as system_file_1:
-									system_file_1.write(f"{placement_residue}, {placement_file}, {placement_ddg}, {placement_rmsd}")
-	
-						#we are now done with the placement, and can move to the next
+
+				#align placement to reference. if alignment fails then skip file
+				try:
+					cmd.align("placement", "reference")
+				except CmdException:
+					continue
+
+				#select aligned ligand
+				cmd.select("aligned_lig", "placement and not polymer.protein")
+
+				#construct save name for aligned ligand and save
+				aligned_lig_basename = group_file.split(".")[0] + "_aligned_lig.mol2"
+				
+				cmd.save(os.path.join(group_path, aligned_lig_basename), "aligned_lig")
+
+				#clear the aligned ligand and placement from session but keep reference 
+				cmd.delete("aligned_lig")
+				cmd.delete("placement")
+
+				# ---------------------------------- PREPARE PLACEMENT LIGAND ---------------------------------- #
+				
+				#convert aligned ligand .mol2 into .sdf format for rdkit
+				aligned_lig_sdf_basename = group_file.split(".")[0] + "_aligned_lig.sdf"
+				os.system(f"obabel {group_path}/{aligned_lig_basename} -O {group_path}/{aligned_lig_sdf_basename}")
+
+
+				#read placement ligand into rdkit without hydrogens
+				pla_ligand = Chem.MolFromMolFile(f"{group_path}/{aligned_lig_sdf_basename}", removeHs=True)
+
+				#strip bond orders from placement
+				pla_ligand = strip_bond_orders(pla_ligand)
+
+				#check that placement loaded successfully
+				if pla_ligand is None:
+					print("WARNING: placement ligand did not read into rdkit. Exiting.")
+					sys.exit(1)
+
+
+				#get smiles of placement ligand
+				pla_smiles = Chem.MolToSmiles(pla_ligand)
+
+				# ---------------------------------------------------------------------------------------------- #
+
+				rmsd = "X"
+
+				#use the get best RMS function to derive the rmsd
+				if ref_ligand and pla_ligand:
+					try:
+						rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand)
+						print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
+					except RuntimeError as e:
+						print("Alignment failed:", e)
+
+				#if the rmsd is X, don't add it
+				if str(rmsd) == "X":
+					continue
+
+				#store the rmsd in the dictionary by the residue and file name
+				placements_data[(residue, group_file, placement_ddg)] = ["X",rmsd]
+
+				#if lowest ddg, write to top_1_ddg file
+				if i == 0:
+					for entry in placements_data.keys():
+						placement_residue = entry[0]
+						placement_file = entry[1]
+						placement_rmsd = placements_data[entry]
+
+						with open(f"{system}_placements_summary_ddg_1.csv", "w") as system_file_1:
+							system_file_1.write(f"{placement_residue}, {placement_file}, {placement_ddg}, {placement_rmsd}")
+
+				#we are now done with the placement, and can move to the next
 
 
 			#done with all placements for the system, correlate rmsd and confidence and update dictionaries and finish the system-specific csv
