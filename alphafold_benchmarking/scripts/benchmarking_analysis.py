@@ -30,7 +30,7 @@ for system in os.listdir(os.getcwd()):
     
     os.chdir(system)
 
-    '''#get rmsd from all placements
+    #get rmsd from all placements
     with open(f"{system}_placements_summary.csv", 'r') as sum_all:
       entry_all = sum_all.readline()
       rmsd_all = entry_all.strip().split(',')[2]
@@ -40,7 +40,7 @@ for system in os.listdir(os.getcwd()):
         os.chdir("..")
         continue
 
-      count0_all, count2_all, count5_all = sort_rmsd(count0_all, count2_all, count5_all, float(rmsd_all))'''
+      count0_all, count2_all, count5_all = sort_rmsd(count0_all, count2_all, count5_all, float(rmsd_all))
 
     #get rmsd from top 10 ddg
     with open(f"{system}_placements_summary_ddg_10.csv", 'r') as sum_10:
@@ -68,8 +68,7 @@ for system in os.listdir(os.getcwd()):
 
     os.chdir("..")
 
-
-data_all = (5,5,5)
+data_all = (count0_all, count2_all, count5_all)
 data_10 = (count0_10, count2_10, count5_10)
 data_1 = (count0_1, count2_1, count5_1)
 
