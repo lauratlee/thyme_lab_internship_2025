@@ -190,8 +190,8 @@ with pymol2.PyMOL() as pymol:
 							if ref_ligand and pla_ligand:
 								try:
 									rmsd = rdMolAlign.GetBestRMS(
-										ref_ligand, 	#reference molecule
-										pla_ligand, 	#placement molecule
+										pla_ligand, 	#reference molecule
+										ref_ligand, 	#placement molecule
 										-1, 	#refId
 										-1, 	#probeId
 										None, 	#atom map
