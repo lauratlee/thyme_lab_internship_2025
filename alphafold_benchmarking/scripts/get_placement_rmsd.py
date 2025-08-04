@@ -25,20 +25,21 @@ def strip_bond_orders(mol):
 	return rw_mol.GetMol()
 
 
-
+#note system to work on based on user argument
+target_system = sys.argv[1]
 
 #begin a pymol session
 with pymol2.PyMOL() as pymol:
 	cmd = pymol.cmd
 
 	#write csv file for best csvs and write a header line for the system, anchor residue that produced the best rmsd, the placement file, and the rmsd
-	with open("best_placements_1.csv", "w") as best_1:
-		best_1.write("system,anchor residue,file,rmsd\n")
+	#with open("best_placements_1.csv", "w") as best_1:
+		#best_1.write("system,anchor residue,file,rmsd\n")
 
 	#iterate through systems
 	for system in os.listdir(os.getcwd()):
 		#temporary filter to just test on 9HZ0. delete second condition when doing all systems
-		if os.path.isdir(system) and system == "9HZ0":
+		if os.path.isdir(system) and system == target_system:
 			print(system)
 
 			#enter system directory
@@ -235,7 +236,7 @@ with pymol2.PyMOL() as pymol:
 				sys.exit(1)
 
 
-			best_1.write(f"{system},{best_rmsd_1[0]},{best_rmsd_1[1]},{best_rmsd_1[2]:.3f}\n")
+			#best_1.write(f"{system},{best_rmsd_1[0]},{best_rmsd_1[1]},{best_rmsd_1[2]:.3f}\n")
 
 			#clear reference from pymol session
 			cmd.delete("reference")
