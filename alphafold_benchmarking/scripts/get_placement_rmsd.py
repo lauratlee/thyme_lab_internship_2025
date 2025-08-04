@@ -13,6 +13,7 @@ from openbabel import pybel
 #import re
 from rdkit.Chem import SanitizeFlags
 from rdkit.Chem import AllChem
+from pymol import CmdException
 
 
 #helper function to strip all bond orders by setting everything to single bonds
@@ -141,7 +142,7 @@ with pymol2.PyMOL() as pymol:
 							#align placement to reference. if alignment fails then skip file
 							try:
 								cmd.align("placement", "reference")
-							except cmd.CmdException as e:
+							except CmdException:
 								continue
 
 							#select aligned ligand
