@@ -27,6 +27,7 @@ sys_library = os.path.basename(os.getcwd())
 for system in os.listdir(os.getcwd()):
   if os.path.isdir(system):
     lib_length += 1
+    print(system)
     os.chdir(system)
 
     '''#get rmsd from all placements
