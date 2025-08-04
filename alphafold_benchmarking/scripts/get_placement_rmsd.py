@@ -189,7 +189,7 @@ with pymol2.PyMOL() as pymol:
 							#use the get best RMS function to derive the rmsd
 							if ref_ligand and pla_ligand:
 								try:
-									rmsd = rdMolAlign.GetBestRMS(ref_ligand, pla_ligand)
+									rmsd = rdMolAlign.GetBestRMS(ref_ligand, pla_ligand, prealigned=True)
 									print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
 								except RuntimeError as e:
 									print("Alignment failed:", e)
