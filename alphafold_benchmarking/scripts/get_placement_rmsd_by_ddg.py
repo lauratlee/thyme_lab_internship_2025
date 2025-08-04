@@ -269,7 +269,7 @@ with pymol2.PyMOL() as pymol:
 
 			#write result to system file
 			with open(f"{system}_placements_summary_ddg_10.csv", "w") as system_file_10:
-				system_file_10.write(f"{best_rmsd_ddg_10[0]},{best_rmsd_ddg_10[1]},{best_rmsd_ddg_10[2],{best_rmsd_ddg_10[3]}")
+				system_file_10.write(f"{best_rmsd_ddg_10[0]},{best_rmsd_ddg_10[1]},{best_rmsd_ddg_10[2]},{best_rmsd_ddg_10[3]}\n")
 
 			
 							
