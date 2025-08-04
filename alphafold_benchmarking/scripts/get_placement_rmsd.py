@@ -189,7 +189,18 @@ with pymol2.PyMOL() as pymol:
 							#use the get best RMS function to derive the rmsd
 							if ref_ligand and pla_ligand:
 								try:
-									rmsd = rdMolAlign.GetBestRMS(ref_ligand, pla_ligand, prealigned=True)
+									rmsd = rdMolAlign.GetBestRMS(
+										ref_ligand, 	#reference molecule
+										pla_ligand, 	#placement molecule
+										-1, 	#refId
+										-1, 	#probeId
+										None, 	#atom map
+										1000000, 	#maxMatches
+										True, 	#symmetrizeConjugatedTerminalGroups
+										[], 	#weights
+										1, 	#numThreads
+										True 	#prealigned
+									)
 									print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
 								except RuntimeError as e:
 									print("Alignment failed:", e)
