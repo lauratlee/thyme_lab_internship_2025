@@ -46,7 +46,7 @@ with pymol2.PyMOL() as pymol:
 			# ---------------------------------- PREPARE ORIGINAL LIGAND ---------------------------------- #
 
 			#prepare original ligand for rdkit using openbabel
-			os.system("obabel ligand.mol2 -O ligand.sdf --gen3d")	
+			os.system("obabel ligand.mol2 -O ligand.sdf")	
 			
 			'''#read reference ligand into rdkit without hydrogens
 			ref_ligand = Chem.MolFromMolFile("ligand.sdf", removeHs=True)
@@ -157,7 +157,7 @@ with pymol2.PyMOL() as pymol:
 							
 							#convert aligned ligand .mol2 into .sdf format for rdkit
 							aligned_lig_sdf_basename = group_file.split(".")[0] + "_aligned_lig.sdf"
-							os.system(f"obabel {group_path}/{aligned_lig_basename} -O {group_path}/{aligned_lig_sdf_basename} --gen3d")
+							os.system(f"obabel {group_path}/{aligned_lig_basename} -O {group_path}/{aligned_lig_sdf_basename}")
 
 
 							#read placement ligand into rdkit without hydrogens
