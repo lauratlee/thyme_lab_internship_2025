@@ -63,6 +63,8 @@ for system in os.listdir(os.getcwd()):
 
       count0_1, count2_1, count5_1 = sort_rmsd(count0_1, count2_1, count5_1, float(rmsd_1))
 
+    os.chdir("..")
+
 
 data_all = (5,5,5)
 data_10 = (count0_10, count2_10, count5_10)
