@@ -27,6 +27,8 @@ sys_library = os.path.basename(os.getcwd())
 for system in os.listdir(os.getcwd()):
   if os.path.isdir(system):
     lib_length += 1
+
+    print(system)
     
     os.chdir(system)
 
@@ -34,6 +36,7 @@ for system in os.listdir(os.getcwd()):
     with open(f"{system}_placements_summary.csv", 'r') as sum_all:
       entry_all = sum_all.readline()
       rmsd_all = entry_all.strip().split(',')[2]
+      print(rmsd_all)
 
       #skip if no rmsd
       if rmsd_all == "rmsd":
@@ -46,6 +49,7 @@ for system in os.listdir(os.getcwd()):
     with open(f"{system}_placements_summary_ddg_10.csv", 'r') as sum_10:
       entry_10 = sum_10.readline()
       rmsd_10 = entry_10.strip().split(',')[3]
+      print(rmsd_10)
 
       #skip if no rmsd
       if rmsd_10 == "rmsd":
@@ -58,6 +62,7 @@ for system in os.listdir(os.getcwd()):
     with open(f"{system}_placements_summary_ddg_1.csv", 'r') as sum_1:
       entry_1 = sum_1.readline()
       rmsd_1 = entry_1.strip().split(',')[3]
+      print(rmsd_1)
 
       #skip if no rmsd
       if rmsd_1 == "rmsd":
