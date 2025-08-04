@@ -162,11 +162,12 @@ with pymol2.PyMOL() as pymol:
 
 			#iterate through remaining files in ddg_vals
 			for i, placement in enumerate(ddg_vals):
-				#note ddg
+				#get file name and ddg
+				placement_file = placement[0]
 				placement_ddg = placement[1]
 				
 				#load placement into pymol
-				cmd.load(os.path.join(group_path, group_file), "placement")
+				cmd.load(placement_file, "placement")
 
 				#ensure placement was loaded properly
 				num_pla_atoms = cmd.count_atoms("placement")
