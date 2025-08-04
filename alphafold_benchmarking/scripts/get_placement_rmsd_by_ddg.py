@@ -239,7 +239,7 @@ with pymol2.PyMOL() as pymol:
 					for entry in placements_data.keys():
 						placement_residue = entry[0]
 						placement_file = entry[1]
-						placement_rmsd = placements_data[entry][1]
+						placement_rmsd = float(placements_data[entry][1])
 
 						with open(f"{system}_placements_summary_ddg_1.csv", "w") as system_file_1:
 							system_file_1.write(f"{placement_residue}, {placement_file}, {placement_ddg}, {placement_rmsd}")
