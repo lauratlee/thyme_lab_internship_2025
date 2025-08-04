@@ -27,7 +27,8 @@ def strip_bond_orders(mol):
 
 #note system to work on based on user argument
 target_system = sys.argv[1]
-print(target_system)
+
+print("Dirs:", os.listdir(os.getcwd()))
 
 #begin a pymol session
 with pymol2.PyMOL() as pymol:
