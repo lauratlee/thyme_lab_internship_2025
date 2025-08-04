@@ -152,7 +152,7 @@ with pymol2.PyMOL() as pymol:
 							ddg = get_ddg(group_file_path)
 
 							#append file name and ddg value to ddg_vals list
-							ddg_vals.append((group_file_path, ddg))
+							ddg_vals.append((group_file_path, ddg, residue))
 
 			#sort by ascending order of ddgs (most negative ddg values first) and then save only the top 10 ddgs
 			ddg_vals = sorted(ddg_vals, key=lambda x: x[1])
@@ -165,6 +165,7 @@ with pymol2.PyMOL() as pymol:
 				#get file name and ddg
 				placement_file = placement[0]
 				placement_ddg = placement[1]
+				placement_residue = placement[2]
 				
 				#load placement into pymol
 				cmd.load(placement_file, "placement")
@@ -233,7 +234,7 @@ with pymol2.PyMOL() as pymol:
 					continue
 
 				#store the rmsd in the dictionary by the residue and file name
-				placements_data[(residue, group_file, placement_ddg)] = ["X",rmsd]
+				placements_data[(placement_residue, placement_file, placement_ddg)] = ["X",rmsd]
 
 				#if lowest ddg, write to top_1_ddg file
 				if i == 0:
