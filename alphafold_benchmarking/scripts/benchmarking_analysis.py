@@ -40,8 +40,7 @@ for system in os.listdir(os.getcwd()):
 
       #skip if no rmsd
       if rmsd_all == "rmsd":
-        os.chdir("..")
-        continue
+        rmsd_all = 0
 
       count0_all, count2_all, count5_all = sort_rmsd(count0_all, count2_all, count5_all, float(rmsd_all))
 
@@ -53,8 +52,7 @@ for system in os.listdir(os.getcwd()):
 
       #skip if no rmsd
       if rmsd_10 == "rmsd":
-        os.chdir("..")
-        continue
+        rmsd_10 = 0
       
       count0_10, count2_10, count5_10 = sort_rmsd(count0_10, count2_10, count5_10, float(rmsd_10))
 
@@ -66,8 +64,7 @@ for system in os.listdir(os.getcwd()):
 
       #skip if no rmsd
       if rmsd_1 == "rmsd":
-        os.chdir("..")
-        continue
+        rmsd_1 = 0
 
       count0_1, count2_1, count5_1 = sort_rmsd(count0_1, count2_1, count5_1, float(rmsd_1))
 
