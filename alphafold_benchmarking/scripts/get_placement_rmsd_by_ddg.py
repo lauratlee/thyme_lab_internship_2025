@@ -149,7 +149,7 @@ with pymol2.PyMOL() as pymol:
 							group_file_path = os.path.join(group_path, group_file)
 
 							#get ddg value of file
-							ddg = get_ddg(group_file)
+							ddg = get_ddg(group_file_path)
 
 							#append file name and ddg value to ddg_vals list
 							ddg_vals.append((group_file_path, ddg))
