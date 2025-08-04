@@ -32,23 +32,35 @@ for system in os.listdir(os.getcwd()):
     '''#get rmsd from all placements
     with open(f"{system}_placements_summary.csv", 'r') as sum_all:
       entry_all = sum_all.readline()
-      rmsd_all = float(entry_all.strip().split(',')[2])
+      rmsd_all = entry_all.strip().split(',')[2]
 
-      data_all = sort_rmsd(count0_all, count2_all, count5_all, rmsd_all)'''
+      #skip if no rmsd
+      if rmsd_all == "rmsd":
+        continue
+
+      data_all = sort_rmsd(count0_all, count2_all, count5_all, float(rmsd_all))'''
 
     #get rmsd from top 10 ddg
     with open(f"{system}_placements_summary_ddg_10.csv", 'r') as sum_10:
       entry_10 = sum_10.readline()
-      rmsd_10 = float(entry_10.strip().split(',')[3])
+      rmsd_10 = entry_10.strip().split(',')[3]
 
-      data_10 = sort_rmsd(count0_10, count2_10, count5_10, rmsd_10)
+      #skip if no rmsd
+      if rmsd_10 == "rmsd":
+        continue
+
+      data_10 = sort_rmsd(count0_10, count2_10, count5_10, float(rmsd_10))
 
     #get rmsd from top 10 ddg
       with open(f"{system}_placements_summary_ddg_1.csv", 'r') as sum_1:
         entry_1 = sum_1.readline()
-        rmsd_1 = float(entry_1.strip().split(',')[3])
+        rmsd_1 = entry_1.strip().split(',')[3]
 
-      data_1 = sort_rmsd(count0_1, count2_1, count5_1, rmsd_1)
+        #skip if no rmsd
+        if rmsd_1 == "rmsd":
+          continue
+
+        data_1 = sort_rmsd(count0_1, count2_1, count5_1, float(rmsd_1))
 
 
 data_all = (5,5,5)
