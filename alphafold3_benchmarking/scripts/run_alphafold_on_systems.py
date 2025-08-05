@@ -43,7 +43,7 @@ for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 			residue_sequence_file_location = this_script_path + "/../system_dir/" + dire + "/" + dire + "_residue_sequences.csv"
 
 			#make folder in alphafold section of repo to runalphafold for the system
-			os.system("mkdir " + this_script_path + "/../alphafold3_benchmarking/" + dire)
+			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire)
 
 			#make folders called af_input and af_output for inputs and outputs
 			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_input")
