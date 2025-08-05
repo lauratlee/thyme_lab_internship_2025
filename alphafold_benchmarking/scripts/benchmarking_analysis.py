@@ -1,5 +1,5 @@
 #parses system library and returns number of rmsds 0-2A, 2-5A, and >5A from reference for the categories of All Placements, Top 10 DDG, Top 1 DDG
-#user should input a list of systems to skip, e.g. [9HZ0, 9ODR]. if doing all systems, just put the empty list []
+#user should input a list of systems to skip as a comma-separated series, e.g. 9HZ0,9ODR,9OG3 (no spaces). if not skipping anything then do not put input
 #run from system library, e.g. system_dir_h_bonds
 
 import os, sys
