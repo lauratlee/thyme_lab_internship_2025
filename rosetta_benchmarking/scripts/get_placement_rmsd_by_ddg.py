@@ -225,7 +225,7 @@ with pymol2.PyMOL() as pymol:
 				if ref_ligand and pla_ligand:
 					try:
 						rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand)
-						print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
+						print(placement_file, rmsd)
 					except RuntimeError as e:
 						print("Alignment failed:", e)
 
