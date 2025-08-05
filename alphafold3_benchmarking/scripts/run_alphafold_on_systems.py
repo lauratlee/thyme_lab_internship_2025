@@ -21,10 +21,10 @@ if repo_location.endswith("/") == False:
 this_script_path = os.path.dirname(os.path.abspath(__file__))
 
 #iterate over each dude system to runalphafold
-#iterate over each system folder in thyme_lab_internship_2024/dude_library_simple
+#iterate over each system folder in thyme_lab_internship_2025/alphafold3_benchmarking/system_dir/
 for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 	for dire in d:
-		#only look at directories at the level within dude_library_simple
+		#only look at directories at the level within system_dir/
 		if r == this_script_path + "/../system_dir/":
 			print(dire)
 
@@ -43,7 +43,7 @@ for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 			residue_sequence_file_location = this_script_path + "/../system_dir/" + dire + "/" + dire + "_residue_sequences.csv"
 
 			#make folder in alphafold section of repo to runalphafold for the system
-			os.system("mkdir " + this_script_path + "/../alphafold3_benchmarking/" + dire)
+			#os.system("mkdir " + this_script_path + "/../alphafold3_benchmarking/" + dire)
 
 			#make folders called af_input and af_output for inputs and outputs
 			os.system("mkdir " + this_script_path + "/../alphafold3_benchmarking/" + dire + "/af_input")
