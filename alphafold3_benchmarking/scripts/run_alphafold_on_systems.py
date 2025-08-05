@@ -46,13 +46,13 @@ for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 			#os.system("mkdir " + this_script_path + "/../alphafold3_benchmarking/" + dire)
 
 			#make folders called af_input and af_output for inputs and outputs
-			os.system("mkdir " + this_script_path + "/../alphafold3_benchmarking/" + dire + "/af_input")
-			os.system("mkdir " + this_script_path + "/../alphafold3_benchmarking/" + dire + "/af_output")
+			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_input")
+			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output")
 
 			#now, create the json protein-only file to run alphafold and needs to be run first
-			json_file = open(this_script_path + "/../alphafold3_benchmarking/" + dire + "/af_input/" + dire + "_protein_only.json", "w")
+			json_file = open(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_input/" + dire + "_protein_only.json", "w")
 
-			#open the smiles and residue sequence files to get that dat afor the json file as well
+			#open the smiles and residue sequence files to get that data for the json file as well
 			smiles_file = open(ligand_smile_location, "r")
 			residue_file = open(residue_sequence_file_location, "r")
 
@@ -121,7 +121,7 @@ for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 			json_file.close()
 
 			#now write the corresponding shell script
-			shell_file = open(this_script_path + "/../alphafold3_benchmarking/" + dire + "/" + dire + "_no_inference.sh", "w")
+			shell_file = open(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/" + dire + "_no_inference.sh", "w")
 
 			#for now at least, I'm just going to hard code the path variables, since I'm not sure if this will really be reused
 
@@ -159,7 +159,7 @@ for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 			shell_file.close()
 
 			#chmod the shell file so it can be executed
-			os.system("chmod 777 " + this_script_path + "/../alphafold3_benchmarking/" + dire + "/" + dire + "_no_inference.sh")
+			os.system("chmod 777 " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/" + dire + "_no_inference.sh")
 
 			#run a bsub job with the shell file
-			os.system("bsub -n 8 -R \"rusage[mem=2048]\" -W 300 -gpu \"num=1:gmodel=TeslaV100_SXM2_32GB-30G:mode=shared:j_exclusive=no\" -q gpu  -o " + this_script_path + "/../alphafold3_benchmarking/" + dire + "/" + dire + "_protein_preparation_log.txt bash " + this_script_path + "/../alphafold3_benchmarking/" + dire + "/" + dire + "_no_inference.sh")
+			os.system("bsub -n 8 -R \"rusage[mem=2048]\" -W 300 -gpu \"num=1:gmodel=TeslaV100_SXM2_32GB-30G:mode=shared:j_exclusive=no\" -q gpu  -o " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/" + dire + "_protein_preparation_log.txt bash " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/" + dire + "_no_inference.sh")
