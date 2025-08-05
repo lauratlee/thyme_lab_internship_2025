@@ -1,7 +1,13 @@
 #parses system library and returns number of rmsds 0-2A, 2-5A, and >5A from reference for the categories of All Placements, Top 10 DDG, Top 1 DDG
+#user should input a list of systems to skip, e.g. [9HZ0, 9ODR]. if doing all systems, just put the empty list []
 #run from system library, e.g. system_dir_h_bonds
 
-import os
+import os, sys
+
+#note systems to skip; default to empty list if no input
+systems_to_skip = sys.argv[1]
+if systems_to_skip == None:
+  systems_to_skip = []
 
 #helper function to update counts of ranges [0,2), [2,5], (5+)
 def sort_rmsd(count0, count2, count5, num):
@@ -25,7 +31,7 @@ sys_library = os.path.basename(os.getcwd())
 
 #iterate thru all systems in library
 for system in os.listdir(os.getcwd()):
-  if os.path.isdir(system):
+  if os.path.isdir(system) and system not in systems_to_skip:
     lib_length += 1
 
     print(system)
