@@ -5,7 +5,7 @@
 import os, sys
 
 #note systems to skip; default to empty list if no input
-systems_to_skip = sys.argv[1]
+systems_to_skip = sys.argv[1].split(',') if len(sys.argv) > 1 else []
 
 #helper function to update counts of ranges [0,2), [2,5], (5+)
 def sort_rmsd(count0, count2, count5, num):
