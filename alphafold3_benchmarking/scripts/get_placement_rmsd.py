@@ -119,7 +119,7 @@ with pymol2.PyMOL() as pymol:
 						#os.system("cat " + r + "/" + dire + "/" + dire + "-lig.mol2")
 
 						#convert crystal_ligand.mol2 into crystal_ligand.pdb for reading
-						pybel.readfile("mol2", r + "/" + dire + "/" + "crystal_ligand.mol2")._next_().write("pdb", r + "/" + dire + "/" + "crystal_ligand.pdb")
+						next(pybel.readfile("mol2", f"{r}/{dire}/crystal_ligand.mol2")).write("pdb", f"{r}/{dire}/crystal_ligand.pdb")
 
 						#make a fixed version of the reference from the original so that the element is regognized
 						old_reference_file = open(r + "/" + dire + "/" + "crystal_ligand.pdb", "r")
