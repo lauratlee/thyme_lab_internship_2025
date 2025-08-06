@@ -129,7 +129,8 @@ with pymol2.PyMOL() as pymol:
 						#os.system("cat " + r + "/" + dire + "/" + dire + "-lig.mol2")
 
 						#convert crystal_ligand.mol2 into crystal_ligand.pdb for reading
-						next(pybel.readfile("mol2", f"{r}/{dire}/crystal_ligand.mol2")).write("pdb", f"{r}/{dire}/crystal_ligand.pdb")
+						next(pybel.readfile("mol2", f"{r}/{dire}/crystal_ligand.mol2")).write("pdb", f"{r}/{dire}/crystal_ligand.pdb", overwrite=True)
+						print(f"{r}/{dire}/crystal_ligand.pdb")
 
 						#check for existence of crystal_ligand.pdb
 						if not os.path.isfile(f"{r}/{dire}/crystal_ligand.pdb"):
