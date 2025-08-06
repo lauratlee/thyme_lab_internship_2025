@@ -29,13 +29,15 @@ with open(summary_csv, newline='') as summary:
 
     system_counter += 1
 
-    rmsd_all = values[0]
-    rmsd_10 = values[1]
-    rsmd_1 = values[2]
+    rmsd_all = float(values[0])
+    rmsd_10 = float(values[1])
+    rsmd_1 = float(values[2])
 
-    count0_all, count2_all, count5_all = sort_rmsd(count0_all, count2_all, count5_all, float(rmsd_all))
-    count0_10, count2_10, count5_10 = sort_rmsd(count0_10, count2_10, count5_10, float(rmsd_10))
-    count0_1, count2_1, count5_1 = sort_rmsd(count0_1, count2_1, count5_1, float(rmsd_1))
+    print(rmsd_all, rmsd_10, rmsd_1)
+    
+    count0_all, count2_all, count5_all = sort_rmsd(count0_all, count2_all, count5_all, rmsd_all)
+    count0_10, count2_10, count5_10 = sort_rmsd(count0_10, count2_10, count5_10, rmsd_10)
+    count0_1, count2_1, count5_1 = sort_rmsd(count0_1, count2_1, count5_1, rmsd_1)
 
 
 data_all = (count0_all, count2_all, count5_all)
