@@ -77,6 +77,7 @@ with pymol2.PyMOL() as pymol:
 					#if it is the confidence file
 					if file == (dire + "_ranking_scores.csv"):
 						#read the file
+						print(file)
 						confidences_file = open(r2 + "/" + dire + "_ranking_scores.csv", "r")
 
 						for line in confidences_file:
