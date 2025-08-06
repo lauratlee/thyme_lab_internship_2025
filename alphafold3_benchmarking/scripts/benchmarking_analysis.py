@@ -26,7 +26,7 @@ with open(summary_csv, newline='') as summary:
     values = row[1:]
 
     #skip systems that do not have data
-    if values == "X,X,X":
+    if values == ["X","X","X"]:
       continue
 
     system_counter += 1
