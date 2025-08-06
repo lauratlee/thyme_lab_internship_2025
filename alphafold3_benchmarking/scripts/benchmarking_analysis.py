@@ -8,6 +8,8 @@ def sort_rmsd(count0, count2, count5, num):
   elif 2 <= num <= 5: count2 += 1
   elif num > 5: count5 += 1
 
+  return(count0, count2, count5)
+
 #initialize counts
 system_counter = 0
 count0_all, count2_all, count5_all = 0,0,0
