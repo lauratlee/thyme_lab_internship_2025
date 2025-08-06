@@ -28,6 +28,7 @@ with open(summary_csv, newline='') as summary:
       continue
 
     system_counter += 1
+    print(values)
 
     rmsd_all = float(values[0])
     rmsd_10 = float(values[1])
