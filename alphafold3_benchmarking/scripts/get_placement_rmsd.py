@@ -57,6 +57,11 @@ with pymol2.PyMOL() as pymol:
 			#get the original placement from the library and open it in pymol
 			cmd.load(r + "/" + dire + "/" + dire + ".pdb", "reference")
 
+			#check that reference loaded
+			if cmd.count_atoms("reference") == 0:
+				print("WARNING: reference did not load. Exiting")
+				sys.argv(1)
+
 			#create a dictionary the holds the placement files and the corresponding confidence and rmsd values
 			#the file is the key and the value is a 2 entry list of confidence then rmsd
 			placements_data = {}
@@ -89,6 +94,11 @@ with pymol2.PyMOL() as pymol:
 					if file.startswith(dire + "_") and file.endswith("_model.cif") and "seed" in file and "sample" in file:
 						#load it into pymol
 						cmd.load(r2 + "/" + file, "placement")
+
+						#ensure that placement loaded
+						if cmd.count_atoms("placement") == 0:
+							print("WARNING: placement did not load. Exiting")
+							sys.argv(1)
 
 						#align the placement to the reference
 						cmd.align("placement", "reference")
