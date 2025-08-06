@@ -1,4 +1,4 @@
-import csv
+import csv, sys
 
 #note systems to skip; default to empty list if no input
 systems_to_skip = sys.argv[1].split(',') if len(sys.argv) > 1 else []
