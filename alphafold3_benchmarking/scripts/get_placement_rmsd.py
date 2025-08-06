@@ -36,9 +36,9 @@ with pymol2.PyMOL() as pymol:
 	#iterate over each system in the dude library
 	for r,d,f in os.walk(this_script_path + "/../system_dir"):
 		for dire in d:
-			#temporary filter to ignore 9QAC as the data does not seem to have generated properly
-			#if dire == "9QAC":
-				#continue
+			#temporary filter to ignore 9QU1 as the data does not seem to have generated properly
+			if dire == "9QU1":
+				continue
 				
 			print(dire)
 
