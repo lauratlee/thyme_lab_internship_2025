@@ -282,6 +282,13 @@ with pymol2.PyMOL() as pymol:
 
 				counter = counter + 1
 
+			#debug check to see if best values were indeed obtained
+			print(f"""{dire}\n
+   				best_rmsd_1: {best_rmsd_1}\n
+       				best_rmsd_10: {best_rmsd_10}\n
+	   			best_rmsd_all: {best_rmsd_all}\n"""
+			     )
+			
 			#now that we have iterated over all systems, write the best of each category to the other csv files
 			best_all.write(dire + "," + best_rmsd_all[0] + "," + str(best_rmsd_all[1]) + "," + str(best_rmsd_all[2]) + "\n")
 			best_10.write(dire + "," + best_rmsd_10[0] + "," + str(best_rmsd_10[1]) + "," + str(best_rmsd_10[2]) + "\n")
