@@ -29,7 +29,7 @@ for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 	for dire in d:
 		#only look at directories at the level within system library
 		#temporary filter below to only run for 9QAC. remove 2nd condition if running for all systems
-		if r == this_script_path + "/../system_dir/" and dire == "9QAC":
+		if r == this_script_path + "/../system_dir/" and dire == "9QU1":
 			print(dire)
 
 			#derive the smiles string of the ligand and get the residue sequence(s) of the peptide
