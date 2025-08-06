@@ -23,12 +23,13 @@ if repo_location.endswith("/") == False:
 this_script_path = os.path.dirname(os.path.abspath(__file__))
 print(this_script_path)
 
-#iterate over each dude system to runalphafold
-#iterate over each system folder in thyme_lab_internship_2024/dude_library_simple
+#iterate over each system to runalphafold
+#iterate over each system library
 for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 	for dire in d:
-		#only look at directories at the level within dude_library_simple
-		if r == this_script_path + "/../system_dir/":
+		#only look at directories at the level within system library
+		#temporary filter below to only run for 9QAC. remove 2nd condition if running for all systems
+		if r == this_script_path + "/../system_dir/" and dire == "9QAC":
 			print(dire)
 
 			#derive the smiles string of the ligand and get the residue sequence(s) of the peptide
