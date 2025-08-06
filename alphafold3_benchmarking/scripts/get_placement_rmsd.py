@@ -75,9 +75,8 @@ with pymol2.PyMOL() as pymol:
 			for r2,d2,f2 in os.walk(this_script_path + "/../../alphafold3_benchmarking"):
 				for file in f2:
 					#if it is the confidence file
-					if file == (dire + "_ranking_scores.csv"):
+					if file == (dire.lower() + "_ranking_scores.csv"):
 						#read the file
-						print(file)
 						confidences_file = open(r2 + "/" + dire + "_ranking_scores.csv", "r")
 
 						for line in confidences_file:
@@ -92,7 +91,7 @@ with pymol2.PyMOL() as pymol:
 							confidences[(seed,sample)] = conf
 
 					#if it is a placement file for the system
-					if file.startswith(dire + "_") and file.endswith("_model.cif") and "seed" in file and "sample" in file:
+					if file.startswith(dire.lower() + "_") and file.endswith("_model.cif") and "seed" in file and "sample" in file:
 						#load it into pymol
 						cmd.load(r2 + "/" + file, "placement")
 
