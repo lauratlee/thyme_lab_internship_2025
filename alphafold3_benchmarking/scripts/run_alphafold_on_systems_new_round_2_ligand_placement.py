@@ -21,6 +21,7 @@ if repo_location.endswith("/") == False:
 
 #record this script path for referencing it and other files by relative location
 this_script_path = os.path.dirname(os.path.abspath(__file__))
+print(this_script_path)
 
 #iterate over each dude system to runalphafold
 #iterate over each system folder in thyme_lab_internship_2024/dude_library_simple
