@@ -1,5 +1,8 @@
 import csv
 
+#note systems to skip; default to empty list if no input
+systems_to_skip = sys.argv[1].split(',') if len(sys.argv) > 1 else []
+
 summary_csv = "../system_dir/best_placements_summary.csv"
 
 #helper function to update counts of ranges [0,2), [2,5], (5+)
@@ -25,8 +28,8 @@ with open(summary_csv, newline='') as summary:
     system = row[0]
     values = row[1:]
 
-    #skip systems that do not have data
-    if values == ["X","X","X"]:
+    #skip systems that do not have data or were not included in rosetta analysis
+    if values == ["X","X","X"] or system in systems_to_skip:
       continue
 
     system_counter += 1
