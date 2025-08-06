@@ -121,6 +121,11 @@ with pymol2.PyMOL() as pymol:
 						#convert crystal_ligand.mol2 into crystal_ligand.pdb for reading
 						next(pybel.readfile("mol2", f"{r}/{dire}/crystal_ligand.mol2")).write("pdb", f"{r}/{dire}/crystal_ligand.pdb")
 
+						#check for existence of crystal_ligand.pdb
+						if not os.path.isfile(f"{r}/{dire}/crystal_ligand.pdb"):
+							print(f"WARNING: {r}/{dire}/crystal_ligand.pdb does not exist")
+							sys.exit(1)
+
 						#make a fixed version of the reference from the original so that the element is regognized
 						old_reference_file = open(r + "/" + dire + "/" + "crystal_ligand.pdb", "r")
 						fixed_reference_file = open(r + "/" + dire + "/" + dire + "-lig_fixed.pdb", "w")
