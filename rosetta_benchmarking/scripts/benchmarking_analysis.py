@@ -40,7 +40,7 @@ for system in os.listdir(os.getcwd()):
     with open(f"{system}_placements_summary.csv", 'r') as sum_all:
       entry_all = sum_all.readline()
       rmsd_all = entry_all.strip().split(',')[2]
-      print(rmsd_all)
+      #print(rmsd_all)
 
       #skip if no rmsd
       if rmsd_all == "rmsd":
@@ -52,7 +52,7 @@ for system in os.listdir(os.getcwd()):
     with open(f"{system}_placements_summary_ddg_10.csv", 'r') as sum_10:
       entry_10 = sum_10.readline()
       rmsd_10 = entry_10.strip().split(',')[3]
-      print(rmsd_10)
+      #print(rmsd_10)
 
       #skip if no rmsd
       if rmsd_10 == "rmsd":
@@ -64,13 +64,15 @@ for system in os.listdir(os.getcwd()):
     with open(f"{system}_placements_summary_ddg_1.csv", 'r') as sum_1:
       entry_1 = sum_1.readline()
       rmsd_1 = entry_1.strip().split(',')[3]
-      print(rmsd_1)
+      #print(rmsd_1)
 
       #skip if no rmsd
       if rmsd_1 == "rmsd":
         rmsd_1 = 0
 
       count0_1, count2_1, count5_1 = sort_rmsd(count0_1, count2_1, count5_1, float(rmsd_1))
+
+      print(rmsd_all, rmsd_10, rmsd_1)
 
     os.chdir("..")
 
