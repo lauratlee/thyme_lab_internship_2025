@@ -1,6 +1,6 @@
 #the purpose of this script is to derive the rmsd of the alphafold placement rmsd from native
 #this will create csv files that note the closest placement to native for the closest of all placements, the closest of the top 10 by confidence, and the closeness of the most confident placement. These files will note the placement as well. A summary csv for the top rmsd will also be made for porting for figure making
-#Since the placements are not aligned with the dude library (due to being made by alphafold), we need to align them. The ligand atom indices also do not match, so we will use a heuristic method from rdkit to get rmsd.
+#Since the placements are not aligned with the system library (due to being made by alphafold), we need to align them. The ligand atom indices also do not match, so we will use a heuristic method from rdkit to get rmsd.
 
 #import os,sys
 import os,sys
@@ -13,7 +13,7 @@ from openbabel import pybel
 import re
 from rdkit.Chem import SanitizeFlags
 
-#this script acts locally, and looks for placement files from alphafold and the native files from DUD-E
+#this script acts locally, and looks for placement files from alphafold and the native files from the system library
 this_script_path = os.path.dirname(os.path.abspath(__file__))
 
 #begin a pymol session
@@ -34,7 +34,7 @@ with pymol2.PyMOL() as pymol:
 	best_summary.write("system,all,10,1\n")
 
 	#iterate over each system in the dude library
-	for r,d,f in os.walk(this_script_path + "/../../dude_library_simple"):
+	for r,d,f in os.walk(this_script_path + "/../system_dir"):
 		for dire in d:
 			print(dire)
 
@@ -45,7 +45,7 @@ with pymol2.PyMOL() as pymol:
 
 			#open a file to write pairings of the files with confidence values and rmsd
 			#open it in the respective folder in the alphafold section of the repository
-			system_file = open("../../alphafold3/" + dire + "/" + dire + "_placements_summary.csv", "w")
+			system_file = open("../../alphafold3_benchmarking/" + dire + "/" + dire + "_placements_summary.csv", "w")
 			system_file.write("file,confidence,rmsd\n")
 
 			#declare placeholder variables to hold the best placements for each group
@@ -54,8 +54,8 @@ with pymol2.PyMOL() as pymol:
 			best_rmsd_10 = ["X","X","X"]
 			best_rmsd_1 = ["X","X","X"]
 			
-			#get the original placement from the dude library and open it in pymol, the file we want is the "name"_orig.pdb
-			cmd.load(r + "/" + dire + "/" + dire + "_orig.pdb", "reference")
+			#get the original placement from the library and open it in pymol
+			cmd.load(r + "/" + dire + "/" + dire + ".pdb", "reference")
 
 			#create a dictionary the holds the placement files and the corresponding confidence and rmsd values
 			#the file is the key and the value is a 2 entry list of confidence then rmsd
@@ -67,7 +67,7 @@ with pymol2.PyMOL() as pymol:
 			confidences = {}
 
 			#now, iterate over the placements
-			for r2,d2,f2 in os.walk(this_script_path + "/../../alphafold3"):
+			for r2,d2,f2 in os.walk(this_script_path + "/../../alphafold3_benchmarking"):
 				for file in f2:
 					#if it is the confidence file
 					if file == (dire + "_ranking_scores.csv"):
@@ -118,8 +118,11 @@ with pymol2.PyMOL() as pymol:
 
 						#os.system("cat " + r + "/" + dire + "/" + dire + "-lig.mol2")
 
+						#convert crystal_ligand.mol2 into crystal_ligand.pdb for reading
+						pybel.readfile("mol2", r + "/" + dire + "/" + "crystal_ligand.mol2")._next_().write("pdb", r + "/" + dire + "/" + "crystal_ligand.pdb")
+
 						#make a fixed version of the reference from the original so that the element is regognized
-						old_reference_file = open(r + "/" + dire + "/" + dire + "-lig.pdb", "r")
+						old_reference_file = open(r + "/" + dire + "/" + "crystal_ligand.pdb", "r")
 						fixed_reference_file = open(r + "/" + dire + "/" + dire + "-lig_fixed.pdb", "w")
 
 						for line in old_reference_file.readlines():
@@ -181,7 +184,7 @@ with pymol2.PyMOL() as pymol:
 						#use the get best RMS function to derive the rmsd
 						if reference_ligand and placement_ligand:
 							try:
-								rmsd = rdMolAlign.GetBestRMS(reference_ligand, placement_ligand)
+								rmsd = rdMolAlign.CalcRMS(reference_ligand, placement_ligand)
 								print(r2 + "/" + file_basename + "_aligned_lig.pdb", rmsd)
 							except RuntimeError as e:
 								print("Alignment failed:", e)
