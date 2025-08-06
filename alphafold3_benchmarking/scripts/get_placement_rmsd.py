@@ -130,7 +130,6 @@ with pymol2.PyMOL() as pymol:
 
 						#convert crystal_ligand.mol2 into crystal_ligand.pdb for reading
 						next(pybel.readfile("mol2", f"{r}/{dire}/crystal_ligand.mol2")).write("pdb", f"{r}/{dire}/crystal_ligand.pdb", overwrite=True)
-						print(f"{r}/{dire}/crystal_ligand.pdb")
 
 						#check for existence of crystal_ligand.pdb
 						if not os.path.isfile(f"{r}/{dire}/crystal_ligand.pdb"):
@@ -186,9 +185,16 @@ with pymol2.PyMOL() as pymol:
 						placement_ligand = Chem.MolFromPDBFile(r2 + "/" + file_basename + "_aligned_lig.pdb", removeHs=True, sanitize=False)
 
 						try:
-							Chem.SanitizeMol(mol, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
+							Chem.SanitizeMol(reference_ligand, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
 						except Exception as e:
 							print("Sanitization failed:", e)
+
+						try:
+							Chem.SanitizeMol(placement_ligand, sanitizeOps=SanitizeFlags.SANITIZE_ALL ^ SanitizeFlags.SANITIZE_PROPERTIES)
+						except Exception as e:
+							print("Sanitization failed:", e)
+
+						
 
 						ref_smiles = Chem.MolToSmiles(reference_ligand)
 						pla_smiles = Chem.MolToSmiles(placement_ligand)
