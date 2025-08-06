@@ -28,11 +28,10 @@ with open(summary_csv, newline='') as summary:
       continue
 
     system_counter += 1
-    print(values)
 
     rmsd_all = float(values[0])
     rmsd_10 = float(values[1])
-    rsmd_1 = float(values[2])
+    rmsd_1 = float(values[2])
 
     print(rmsd_all, rmsd_10, rmsd_1)
     
