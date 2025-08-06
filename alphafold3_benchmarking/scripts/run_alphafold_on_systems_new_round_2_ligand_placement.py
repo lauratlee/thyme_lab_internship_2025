@@ -55,11 +55,11 @@ for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 			#this will be used as a template to write most of the new input file, and we just need to insert the ligand smiles data for a rerun
 
 			#check and make sure the file exists, since there were a handful of cases where alphafold died from a segfault
-			if not os.path.exists(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/" + dire + "/" + dire +  "_data.json"):
-				print(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/" + dire + "/" + dire +  "_data.json does not exist! Moving to next file.")
+			if not os.path.exists(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/" + dire + "/" + dire.lower() +  "_data.json"):
+				print(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/" + dire + "/" + dire.lower() +  "_data.json does not exist! Moving to next file.")
 				continue
 
-			msa_json_file = open(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/" + dire + "/" + dire +  "_data.json", "r")
+			msa_json_file = open(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/" + dire + "/" + dire.lower() +  "_data.json", "r")
 
 			#now, create the json data file that has the msa data from an initial run of alphafold, and we include the corresponding smiles data
 			json_file = open(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_input/" + dire + "_data.json", "w")
