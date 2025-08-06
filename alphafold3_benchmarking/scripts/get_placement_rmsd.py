@@ -77,7 +77,7 @@ with pymol2.PyMOL() as pymol:
 					#if it is the confidence file
 					if file == (dire.lower() + "_ranking_scores.csv"):
 						#read the file
-						confidences_file = open(r2 + "/" + dire + "_ranking_scores.csv", "r")
+						confidences_file = open(r2 + "/" + dire.lower() + "_ranking_scores.csv", "r")
 
 						for line in confidences_file:
 							#skip the header
