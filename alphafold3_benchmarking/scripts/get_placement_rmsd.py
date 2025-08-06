@@ -21,16 +21,16 @@ with pymol2.PyMOL() as pymol:
 	cmd = pymol.cmd
 
 	#write csv files for the different metrics and write a header line for the system, the placement file, confidence, and the rmsd
-	best_all = open("best_placements_all.csv", "w")
+	best_all = open("../system_dir/best_placements_all.csv", "w")
 	best_all.write("system,placement,confidence,rmsd\n")
 
-	best_10 = open("best_placements_10.csv", "w")
+	best_10 = open("../system_dir/best_placements_10.csv", "w")
 	best_10.write("system,placement,confidence,rmsd\n")
 
-	best_1 = open("best_placements_1.csv", "w")
+	best_1 = open("../system_dir/best_placements_1.csv", "w")
 	best_1.write("system,placement,confidence,rmsd\n")
 
-	best_summary = open("best_placements_summary.csv", "w")
+	best_summary = open("../system_dir/best_placements_summary.csv", "w")
 	best_summary.write("system,all,10,1\n")
 
 	#iterate over each system in the dude library
