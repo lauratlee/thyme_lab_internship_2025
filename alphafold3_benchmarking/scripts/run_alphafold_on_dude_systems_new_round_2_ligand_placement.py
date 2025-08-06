@@ -24,45 +24,45 @@ this_script_path = os.path.dirname(os.path.abspath(__file__))
 
 #iterate over each dude system to runalphafold
 #iterate over each system folder in thyme_lab_internship_2024/dude_library_simple
-for r,d,f in os.walk(this_script_path + "/../../dude_library_simple/"):
+for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 	for dire in d:
 		#only look at directories at the level within dude_library_simple
-		if r == this_script_path + "/../../dude_library_simple/":
+		if r == this_script_path + "/../system_dir/":
 			print(dire)
 
 			#derive the smiles string of the ligand and get the residue sequence(s) of the peptide
 			#derive smiles string first
 			#write the smiles string to the location where the ligand came from, and name it after the folder (instead of crystal_ligand)
-			os.system("python " + repo_location + "misc/alphafold_prep/get_smiles_of_ligand_file.py " + this_script_path + "/../../dude_library_simple/" + dire + "/crystal_ligand.mol2 " + this_script_path + "/../../dude_library_simple/" + dire + " " + dire)
+			os.system("python " + repo_location + "misc/alphafold_prep/get_smiles_of_ligand_file.py " + this_script_path + "/../system_dir/" + dire + "/crystal_ligand.mol2 " + this_script_path + "/../system_dir/" + dire + " " + dire)
 
 			#hold the path for the smiles file so we can access later
-			ligand_smile_location = this_script_path + "/../../dude_library_simple/" + dire + "/" + dire + ".smi"
+			ligand_smile_location = this_script_path + "/../system_dir/" + dire + "/" + dire + ".smi"
 
 			#now, derive the residue chain(s) for the system and write it to a file
-			os.system("python " + repo_location + "misc/alphafold_prep/get_residue_sequences_from_pdb_file.py " + this_script_path + "/../../dude_library_simple/" + dire + "/" + dire + ".pdb " + this_script_path + "/../../dude_library_simple/" + dire + "/" + dire + "_residue_sequences.csv")
+			os.system("python " + repo_location + "misc/alphafold_prep/get_residue_sequences_from_pdb_file.py " + this_script_path + "/../system_dir/" + dire + "/" + dire + ".pdb " + this_script_path + "/../system_dir/" + dire + "/" + dire + "_residue_sequences.csv")
 
 			#hold the path for the residue sequences file so we can access later
-			residue_sequence_file_location = this_script_path + "/../../dude_library_simple/" + dire + "/" + dire + "_residue_sequences.csv"
+			residue_sequence_file_location = this_script_path + "/../system_dir/" + dire + "/" + dire + "_residue_sequences.csv"
 
 			#make folder in alphafold section of repo to runalphafold for the system
 			os.system("mkdir " + this_script_path + "/../../alphafold3/" + dire)
 
 			#make folders called af_input and af_output for inputs and outputs
-			os.system("mkdir " + this_script_path + "/../../alphafold3/" + dire + "/af_input")
-			os.system("mkdir " + this_script_path + "/../../alphafold3/" + dire + "/af_output")
+			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_input")
+			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output")
 
 			#open the previously made data file, which should exist in the af_output location
 			#this will be used as a template to write most of the new input file, and we just need to insert the ligand smiles data for a rerun
 
 			#check and make sure the file exists, since there were a handful of cases where alphafold died from a segfault
-			if not os.path.exists(this_script_path + "/../../alphafold3/" + dire + "/af_output/" + dire + "/" + dire +  "_data.json"):
-				print(this_script_path + "/../../alphafold3/" + dire + "/af_output/" + dire + "/" + dire +  "_data.json does not exist! Moving to next file.")
+			if not os.path.exists(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/" + dire + "/" + dire +  "_data.json"):
+				print(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/" + dire + "/" + dire +  "_data.json does not exist! Moving to next file.")
 				continue
 
-			msa_json_file = open(this_script_path + "/../../alphafold3/" + dire + "/af_output/" + dire + "/" + dire +  "_data.json", "r")
+			msa_json_file = open(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/" + dire + "/" + dire +  "_data.json", "r")
 
 			#now, create the json data file that has the msa data from an initial run of alphafold, and we include the corresponding smiles data
-			json_file = open(this_script_path + "/../../alphafold3/" + dire + "/af_input/" + dire + "_data.json", "w")
+			json_file = open(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_input/" + dire + "_data.json", "w")
 
 			#open the smiles and residue sequence files to get that dat afor the json file as well
 			smiles_file = open(ligand_smile_location, "r")
@@ -167,7 +167,7 @@ for r,d,f in os.walk(this_script_path + "/../../dude_library_simple/"):
 			msa_json_file.close()
 
 			#now write the corresponding shell script
-			shell_file = open(this_script_path + "/../../alphafold3/" + dire + "/" + dire + "_docking.sh", "w")
+			shell_file = open(this_script_path + "/../../alphafold3_benchmarking/" + dire + "/" + dire + "_docking.sh", "w")
 
 			#for now at least, I'm just going to hard code the path variables, since I'm not sure if this will really be reused
 
@@ -175,8 +175,8 @@ for r,d,f in os.walk(this_script_path + "/../../dude_library_simple/"):
 			shell_file.write("export AF3_RESOURCES_DIR=/pi/summer.thyme-umw/alphafold3\n")
 			shell_file.write("export AF3_IMAGE=${AF3_RESOURCES_DIR}/alphafold3_cuda7.sif\n")
 			shell_file.write("export AF3_CODE_DIR=${AF3_RESOURCES_DIR}/code\n")
-			shell_file.write("export AF3_INPUT_DIR=/pi/summer.thyme-umw/2024_intern_lab_space/thyme_lab_internship_2024/alphafold3/" + dire + "/af_input\n")
-			shell_file.write("export AF3_OUTPUT_DIR=/pi/summer.thyme-umw/2024_intern_lab_space/thyme_lab_internship_2024/alphafold3/" + dire + "/af_output\n")
+			shell_file.write("export AF3_INPUT_DIR=/pi/summer.thyme-umw/2024_intern_lab_space/thyme_lab_internship_2024/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/" + dire + "/af_input\n")
+			shell_file.write("export AF3_OUTPUT_DIR=/pi/summer.thyme-umw/2024_intern_lab_space/thyme_lab_internship_2024/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/" + dire + "/af_output\n")
 			shell_file.write("export AF3_MODEL_PARAMETERS_DIR=${AF3_RESOURCES_DIR}/params\n")
 			shell_file.write("export AF3_DATABASES_DIR=${AF3_RESOURCES_DIR}/db\n")
 			shell_file.write("\n")
@@ -206,7 +206,7 @@ for r,d,f in os.walk(this_script_path + "/../../dude_library_simple/"):
 			shell_file.close()
 
 			#chmod the shell file so it can be executed
-			os.system("chmod 777 " + this_script_path + "/../../alphafold3/" + dire + "/" + dire + "_docking.sh")
+			os.system("chmod 777 " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/" + dire + "_docking.sh")
 
 			#run a bsub job with the shell file
-			os.system("bsub -n 8 -R \"rusage[mem=2048]\" -W 300 -gpu \"num=1:gmodel=TeslaV100_SXM2_32GB-30G:mode=shared:j_exclusive=no\" -q gpu  -o " + this_script_path + "/../../alphafold3/" + dire + "/" + dire + "_docking_log.txt bash " + this_script_path + "/../../alphafold3/" + dire + "/" + dire + "_docking.sh")
+			os.system("bsub -n 8 -R \"rusage[mem=2048]\" -W 300 -gpu \"num=1:gmodel=TeslaV100_SXM2_32GB-30G:mode=shared:j_exclusive=no\" -q gpu  -o " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/" + dire + "_docking_log.txt bash " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/" + dire + "_docking.sh")
