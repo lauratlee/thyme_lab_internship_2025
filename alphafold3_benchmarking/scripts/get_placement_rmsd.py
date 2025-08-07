@@ -79,7 +79,7 @@ with pymol2.PyMOL() as pymol:
 			#print(this_script_path + f"/../../alphafold3_benchmarking/{dire}")
 			for r2,d2,f2 in os.walk(f"/../../alphafold3_benchmarking/{dire}/af_output/"):
 				for file in f2:
-					print(os.path.abspath(file)
+					print(os.path.abspath(file))
 					#if it is the confidence file
 					if file == (dire.lower() + "_ranking_scores.csv"):
 						#read the file
