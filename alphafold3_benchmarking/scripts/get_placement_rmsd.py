@@ -98,11 +98,12 @@ with pymol2.PyMOL() as pymol:
 					if file.startswith(dire.lower() + "_") and file.endswith("_model.cif") and "seed" in file and "sample" in file:
 						#make sure it's a placement
 						file_path = os.path.abspath(file)
+						print(file_path)
 						base_dir = "/pi/summer.thyme-umw/2024_intern_lab_space/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/9QU1"
 						if os.path.commonpath([file_path, base_dir]) != base_dir:
 							continue
 						
-						print(file_path)
+
 						
 						#load it into pymol
 						cmd.load(r2 + "/" + file, "placement")
