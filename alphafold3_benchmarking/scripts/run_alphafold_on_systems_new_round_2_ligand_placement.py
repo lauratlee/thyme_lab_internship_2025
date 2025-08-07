@@ -50,8 +50,8 @@ for r,d,f in os.walk(this_script_path + "/../system_dir/"):
 			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire)
 
 			#make folders called af_input and af_output for inputs and outputs
-			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_input")
-			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output")
+			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_input/")
+			os.system("mkdir " + this_script_path + "/../../alphafold3_benchmarking/" + dire + "/af_output/")
 
 			#open the previously made data file, which should exist in the af_output location
 			#this will be used as a template to write most of the new input file, and we just need to insert the ligand smiles data for a rerun
