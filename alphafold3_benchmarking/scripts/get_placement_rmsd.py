@@ -103,9 +103,9 @@ with pymol2.PyMOL() as pymol:
 						#make sure it's a placement
 						file_path = os.path.abspath(file)
 						print(file_path)
-						base_dir = "/pi/summer.thyme-umw/2024_intern_lab_space/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/9QU1/af_output/"
-						if os.path.commonpath([file_path, base_dir]) != base_dir:
-							continue
+						#base_dir = "/pi/summer.thyme-umw/2024_intern_lab_space/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/9QU1/af_output/"
+						#if os.path.commonpath([file_path, base_dir]) != base_dir:
+							#continue
 						
 
 						
