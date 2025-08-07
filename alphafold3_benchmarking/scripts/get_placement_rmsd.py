@@ -130,6 +130,7 @@ with pymol2.PyMOL() as pymol:
 						file_basename = file.split(".")[0]
 
 						cmd.save(r2 + "/" + file_basename + "_aligned_lig.pdb", "aligned_lig")
+						print(r2 + "/" + file_basename + "_aligned_lig.pdb")
 
 						#clear the aligned ligand and the placement from the session, but keep the reference
 						cmd.delete("aligned_lig")
