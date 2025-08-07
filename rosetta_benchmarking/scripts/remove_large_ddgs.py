@@ -23,13 +23,9 @@ def clean_ddgs(residue_folder):
   
   for folder in os.listdir(os.getcwd()):
     if os.path.isdir(folder):
-      print(folder)
-      try:
-        int(folder)
-        group_list.append(folder)
-      except ValueError:
-        continue
-
+      #this assumes all folders inside the residue folder are the number-organized groups
+      group_list.append(int(folder))
+      
   #print group list
   print(group_list)
 
