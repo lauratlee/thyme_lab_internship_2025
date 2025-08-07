@@ -96,7 +96,7 @@ with pymol2.PyMOL() as pymol:
 
 					#if it is a placement file for the system
 					if file.startswith(dire.lower() + "_") and file.endswith("_model.cif") and "seed" in file and "sample" in file:
-						print(file)
+						print(os.path.abspath(file))
 						#load it into pymol
 						cmd.load(r2 + "/" + file, "placement")
 
