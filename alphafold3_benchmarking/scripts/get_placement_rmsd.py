@@ -193,6 +193,9 @@ with pymol2.PyMOL() as pymol:
 
 						#reference_ligand = Chem.MolFromPDBFile(r + "/" + dire + "/" + dire + "-lig.pdb", removeHs=True)
 						reference_ligand = Chem.MolFromPDBFile(r + "/" + dire + "/" + dire + "-lig_fixed.pdb", removeHs=True, sanitize=False)
+						if reference_ligand == None:
+							print("WARNING: " + r + "/" + dire + "/" + dire + "-lig_fixed.pdb" + "not found")
+							sys.exit(1)
 						#reference_ligand = Chem.MolFromMol2File(r + "/" + dire + "/" + dire + "-lig.mol2", removeHs=True)
 						#reference_ligand = Chem.MolFromMol2File(r + "/" + dire + "/crystal_ligand.mol2", removeHs=True)
 						
