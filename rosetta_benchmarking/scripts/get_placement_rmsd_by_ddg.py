@@ -162,6 +162,8 @@ with pymol2.PyMOL() as pymol:
 
 			#iterate through remaining files in ddg_vals
 			for i, placement in enumerate(ddg_vals):
+				print(f"STARTING {placement}")
+				
 				#get file name and ddg
 				placement_file = placement[0]
 				placement_ddg = placement[1]
@@ -176,11 +178,14 @@ with pymol2.PyMOL() as pymol:
 					print("WARNING: no atoms in placement. Exiting.")
 					sys.exit(1)
 
+				print(f"atoms in placement: {num_pla_atoms}")
+
 
 				#align placement to reference. if alignment fails then skip file
 				try:
 					cmd.align("placement", "reference")
 				except CmdException:
+					print("alignment failed")
 					continue
 
 				#select aligned ligand
