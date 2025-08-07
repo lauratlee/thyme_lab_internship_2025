@@ -160,6 +160,7 @@ with pymol2.PyMOL() as pymol:
 						#make a fixed version of the reference from the original so that the element is regognized
 						old_reference_file = open(r + "/" + dire + "/" + "crystal_ligand.pdb", "r")
 						fixed_reference_file = open(r + "/" + dire + "/" + dire + "-lig_fixed.pdb", "w")
+						print("FIXED PDB PATH: " + r + "/" + dire + "/" + dire + "-lig_fixed.pdb")
 
 						for line in old_reference_file.readlines():
 							#remove waters
