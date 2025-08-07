@@ -37,7 +37,7 @@ with pymol2.PyMOL() as pymol:
 	for r,d,f in os.walk(this_script_path + "/../system_dir"):
 		for dire in d:
 			#temporary filter to ignore 9QU1 as the data does not seem to have generated properly
-			if dire != "9HZ0":
+			if dire != "9QU1":
 				continue
 				
 			print(dire)
@@ -77,10 +77,13 @@ with pymol2.PyMOL() as pymol:
 
 			#now, iterate over the placements
 			#print(this_script_path + f"/../../alphafold3_benchmarking/{dire}")
+			for a2,b2,c2 in os.walk(f"/pi/summer.thyme-umw/2024_intern_lab_space/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/{dire}"):
+				for file in c2:
+					print(os.path.abspath(file))
 			#for r2,d2,f2 in os.walk(f"/../../alphafold3_benchmarking/{dire}/af_output/"):
 			for r2,d2,f2 in os.walk(f"/pi/summer.thyme-umw/2024_intern_lab_space/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/{dire}"):
 				for file in f2:
-					print(os.path.abspath(file))
+					#print(os.path.abspath(file))
 					#if it is the confidence file
 					if file == (dire.lower() + "_ranking_scores.csv"):
 						#read the file
