@@ -77,7 +77,7 @@ with pymol2.PyMOL() as pymol:
 
 			#now, iterate over the placements
 			print(this_script_path + f"/../../alphafold3_benchmarking/{dire}")
-			for r2,d2,f2 in os.walk(this_script_path + f"/../../alphafold3_benchmarking/{dire}"):
+			for r2,d2,f2 in os.walk(f"/../../alphafold3_benchmarking/{dire}"):
 				for file in f2:
 					#if it is the confidence file
 					if file == (dire.lower() + "_ranking_scores.csv"):
