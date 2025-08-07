@@ -82,6 +82,7 @@ with pymol2.PyMOL() as pymol:
 					#if it is the confidence file
 					if file == (dire.lower() + "_ranking_scores.csv"):
 						#read the file
+						print(r2 + "/" + dire.lower() + "_ranking_scores.csv")
 						confidences_file = open(r2 + "/" + dire.lower() + "_ranking_scores.csv", "r")
 
 						for line in confidences_file:
@@ -100,7 +101,7 @@ with pymol2.PyMOL() as pymol:
 						#make sure it's a placement
 						file_path = os.path.abspath(file)
 						print(file_path)
-						base_dir = "/pi/summer.thyme-umw/2024_intern_lab_space/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/9QU1"
+						base_dir = "/pi/summer.thyme-umw/2024_intern_lab_space/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/9QU1/af_output/"
 						if os.path.commonpath([file_path, base_dir]) != base_dir:
 							continue
 						
