@@ -23,6 +23,7 @@ def clean_ddgs(residue_folder):
   
   for folder in os.listdir(os.getcwd()):
     if os.path.isdir(folder):
+      print(folder)
       try:
         int(folder)
         group_list.append(folder)
