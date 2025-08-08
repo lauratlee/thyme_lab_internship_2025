@@ -75,8 +75,8 @@ with pymol2.PyMOL() as pymol:
 			#now, iterate over the placements
 			#print(this_script_path + f"/../../alphafold3_benchmarking/{dire}")
 			for a2,b2,c2 in os.walk(f"/pi/summer.thyme-umw/2024_intern_lab_space/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/{dire}"):
-				for file in c2:
-					print(os.path.abspath(file))
+				#for file in c2:
+					#print(os.path.abspath(file))
 			#for r2,d2,f2 in os.walk(f"/../../alphafold3_benchmarking/{dire}/af_output/"):
 			for r2,d2,f2 in os.walk(f"/pi/summer.thyme-umw/2024_intern_lab_space/laura_work/thyme_lab_internship_2025/alphafold3_benchmarking/{dire}"):
 				for file in f2:
@@ -127,7 +127,7 @@ with pymol2.PyMOL() as pymol:
 						file_basename = file.split(".")[0]
 
 						cmd.save(r2 + "/" + file_basename + "_aligned_lig.pdb", "aligned_lig")
-						print(r2 + "/" + file_basename + "_aligned_lig.pdb")
+						#print(r2 + "/" + file_basename + "_aligned_lig.pdb")
 
 						#clear the aligned ligand and the placement from the session, but keep the reference
 						cmd.delete("aligned_lig")
@@ -157,7 +157,7 @@ with pymol2.PyMOL() as pymol:
 						#make a fixed version of the reference from the original so that the element is regognized
 						old_reference_file = open(r + "/" + dire + "/" + "crystal_ligand.pdb", "r")
 						fixed_reference_file = open(r + "/" + dire + "/" + dire + "-lig_fixed.pdb", "w")
-						print("FIXED PDB PATH: " + r + "/" + dire + "/" + dire + "-lig_fixed.pdb")
+						#print("FIXED PDB PATH: " + r + "/" + dire + "/" + dire + "-lig_fixed.pdb")
 
 						for line in old_reference_file.readlines():
 							#remove waters
