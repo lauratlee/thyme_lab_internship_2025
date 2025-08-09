@@ -216,8 +216,8 @@ with pymol2.PyMOL() as pymol:
 									
 									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand, refMatch=ref_match, prbMatch=pla_match)
 									print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
-								except RuntimeError as e:
-									print("Alignment failed:", e)
+								except Exception as e:
+									print("Error during RMSD calculation: ", e)
 
 							#if the rmsd is X, don't add it
 							if str(rmsd) == "X":
