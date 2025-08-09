@@ -217,6 +217,9 @@ with pymol2.PyMOL() as pymol:
 									# build a list of (prbIdx, refIdx) tuples from matches:
 									atom_map = list(zip(pla_match, ref_match))
 									print(atom_map)
+
+									print("Ref ligand num conformers:", ref_ligand.GetNumConformers())
+									print("Pla ligand num conformers:", pla_ligand.GetNumConformers())
 									
 									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand, map=atom_map)
 									print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
