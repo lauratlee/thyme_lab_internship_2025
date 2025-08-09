@@ -55,9 +55,10 @@ with pymol2.PyMOL() as pymol:
 
 			#read reference ligand into rdkit without hydrogens
 			ref_ligand = Chem.MolFromMolFile("ligand.sdf", removeHs=True)
+			Chem.SanitizeMol(ref_ligand)
 
 			#strip bond orders from reference
-			ref_ligand = strip_bond_orders(ref_ligand)
+			#ref_ligand = strip_bond_orders(ref_ligand)
 
 			#check that reference loaded successfully
 			if ref_ligand is None:
@@ -175,6 +176,7 @@ with pymol2.PyMOL() as pymol:
 
 							#read placement ligand into rdkit without hydrogens
 							pla_ligand = Chem.MolFromMolFile(f"{group_path}/{aligned_lig_sdf_basename}", removeHs=True)
+							Chem.SanitizeMol(pla_ligand)
 
 							#strip bond orders from placement
 							#pla_ligand = strip_bond_orders(pla_ligand)
