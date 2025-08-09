@@ -201,8 +201,12 @@ with pymol2.PyMOL() as pymol:
 									print("MCS atoms:", mcs.numAtoms, "MCS bonds:", mcs.numBonds)
 									if mcs.numAtoms == 0:
 										print("No common substructure found between reference and placement.")
+										continue
+
+									ref_match = ref_ligand.GetSubstructMatch(Chem.MolFromSmarts(mcs.smartsString))
+									pla_match = pla_ligand.GetSubstructMatch(Chem.MolFromSmarts(mcs.smartsString))
 									
-									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand)
+									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand, refMatch=ref_match, prbMatch=pla_match)
 									print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
 								except RuntimeError as e:
 									print("Alignment failed:", e)
