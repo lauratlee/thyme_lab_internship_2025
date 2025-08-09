@@ -242,12 +242,29 @@ with pymol2.PyMOL() as pymol:
 
 			placements_list = []
 
+			best_rmsd_residue = None
+			best_rmsd_file = None
+			best_rmsd_val = None
+
+
 			for entry in placements_data.keys():
 				placement_residue = entry[0]
 				placement_file = entry[1]
 
+				if (best_rmsd_residue, best_rmsd_file, best_rmsd_val) == (None, None, None):
+					best_rmsd_residue, best_rmsd_file, best_rmsd_val = placement_residue, placement_file, float(placements_data[entry][1])
+				else:
+					curr_rmsd_val = float(placements_data[entry][1])
+					if curr_rmsd_val < best_rmsd_val:
+						best_rmsd_residue, best_rmsd_file, best_rmsd_val = placement_residue, placement_file, float(placements_data[entry][1])
+
+			placements_list.append([best_rmsd_residue, best_rmsd_file, best_rmsd_val])
+				
+
+				"""
 				#add placements to a list
 				placements_list.append([placement_residue, placement_file, float(placements_data[entry][1])])
+	"""
 
 
 			#sort placements_list by rmsd in ascending order
