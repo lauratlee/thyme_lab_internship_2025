@@ -199,12 +199,20 @@ with pymol2.PyMOL() as pymol:
 								try:
 									mcs = rdFMCS.FindMCS([ref_ligand, pla_ligand])
 									print("MCS atoms:", mcs.numAtoms, "MCS bonds:", mcs.numBonds)
+									
 									if mcs.numAtoms == 0:
 										print("No common substructure found between reference and placement.")
 										continue
 
 									ref_match = ref_ligand.GetSubstructMatch(Chem.MolFromSmarts(mcs.smartsString))
+									print("ref_match: ", ref_match)
+				
 									pla_match = pla_ligand.GetSubstructMatch(Chem.MolFromSmarts(mcs.smartsString))
+									print("pla_match: ", pla_match)
+
+									if not ref_match or not pla_match:
+										print("Substructure match failed, skipping RMSD calculation")
+										continue
 									
 									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand, refMatch=ref_match, prbMatch=pla_match)
 									print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
