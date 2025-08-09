@@ -62,7 +62,7 @@ with pymol2.PyMOL() as pymol:
 
 			#check that reference loaded successfully
 			if ref_ligand is None:
-				print("WARNING: reference ligand did not read into rdkit. Exiting.")
+				print("WARNING: reference ligand did not read into rdkit. Exiting.", flush=True)
 				sys.exit(1)
 				
 			#get smiles of reference ligand
@@ -97,7 +97,7 @@ with pymol2.PyMOL() as pymol:
 			#ensure reference was loaded properly
 			num_ref_atoms = cmd.count_atoms("reference")
 			if num_ref_atoms == 0:
-				print("WARNING: no atoms in reference. Exiting.")
+				print("WARNING: no atoms in reference. Exiting.", flush=True)
 				sys.exit(1)
 			else:
 				print(f"ATOMS IN REFERENCE: {num_ref_atoms}")
@@ -144,7 +144,7 @@ with pymol2.PyMOL() as pymol:
 							#ensure placement was loaded properly
 							num_pla_atoms = cmd.count_atoms("placement")
 							if num_pla_atoms == 0:
-								print("WARNING: no atoms in placement. Exiting.")
+								print("WARNING: no atoms in placement. Exiting.", flush=True)
 								sys.exit(1)
 							#else:
 								#print(f"ATOMS IN PLACEMENT: {num_pla_atoms}")
@@ -184,7 +184,7 @@ with pymol2.PyMOL() as pymol:
 
 							#check that placement loaded successfully
 							if pla_ligand is None:
-								print("WARNING: placement ligand did not read into rdkit. Exiting.")
+								print("WARNING: placement ligand did not read into rdkit. Exiting.", flush=True)
 								sys.exit(1)
 
 							'''#sanitize placement ligand
@@ -287,7 +287,7 @@ with pymol2.PyMOL() as pymol:
 
 			#confirm that current working directory is a system library
 			if "system_dir" not in os.getcwd():
-				print("WARNING: not in a system library!")
+				print("WARNING: not in a system library!", flush=True)
 				sys.exit(1)
 
 
