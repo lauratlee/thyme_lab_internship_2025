@@ -54,9 +54,17 @@ with pymol2.PyMOL() as pymol:
 			best_rmsd_all = ["X","X","X"]
 			best_rmsd_10 = ["X","X","X"]
 			best_rmsd_1 = ["X","X","X"]
+
+			ref_path = r + "/" + dire + "/" + dire + ".pdb"
+
+			#strip bond orders from reference
+			ref_mol = Chem.MolFromMolFile(ref_path, removeHs=False)
+			for bond in ref_mol.GetBonds():
+				bond.SetBondType(Chem.BondType.SINGLE)
+			Chem.MolToPDBFile(ref_mol, r + "/" + dire + "/" + dire + "_stripped.pdb")
 			
-			#get the original placement from the library and open it in pymol
-			cmd.load(r + "/" + dire + "/" + dire + ".pdb", "reference")
+			#get the original file from the library and open it in pymol
+			cmd.load(ref_mol, r + "/" + dire + "/" + dire + "_stripped.pdb", "reference")
 
 			#check that reference loaded
 			if cmd.count_atoms("reference") == 0:
