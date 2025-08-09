@@ -150,6 +150,7 @@ with pymol2.PyMOL() as pymol:
 
 							#align placement to reference. if alignment fails then skip file
 							try:
+								cmd.set("logging", 1)
 								cmd.align("placement", "reference")
 							except CmdException:
 								continue
