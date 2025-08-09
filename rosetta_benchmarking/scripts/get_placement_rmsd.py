@@ -82,8 +82,16 @@ with pymol2.PyMOL() as pymol:
 			#locate original reference file 
 			orig_file = f"{system}.pdb"
 
+			#strip bond orders from reference
+			orig_mol = Chem.MolFromPDBFile(orig_file, removeHs=False)
+			for bond in orig_mol.GetBonds():
+				bond.SetBondType(Chem.BondType.SINGLE)
+			Chem.MolToPDBFile(f"{system}_stripped.pdb")
+
 			#load original file in pymol
-			cmd.load(f"{orig_file}", "reference")
+			cmd.load(f"{system}_stripped.pdb", "reference")
+
+			
 
 			#ensure reference was loaded properly
 			num_ref_atoms = cmd.count_atoms("reference")
