@@ -63,6 +63,9 @@ with pymol2.PyMOL() as pymol:
 				bond.SetBondType(Chem.BondType.SINGLE)
 			Chem.MolToPDBFile(ref_mol, r + "/" + dire + "/" + dire + "_stripped.pdb")
 			
+			#print stripped reference path
+			print(r + "/" + dire + "/" + dire + "_stripped.pdb")
+			
 			#get the original file from the library and open it in pymol
 			cmd.load(r + "/" + dire + "/" + dire + "_stripped.pdb", "reference")
 
