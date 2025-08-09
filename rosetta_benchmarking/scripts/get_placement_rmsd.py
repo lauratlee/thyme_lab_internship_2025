@@ -198,6 +198,11 @@ with pymol2.PyMOL() as pymol:
 							#use the get best RMS function to derive the rmsd
 							if ref_ligand and pla_ligand:
 								try:
+									mcs = rdFMCS.FindMCS([ref_ligand, pla_ligand])
+									print("MCS atoms:", mcs.numAtoms, "MCS bonds:", mcs.numBonds)
+									if mcs.numAtoms == 0:
+    									print("No common substructure found between reference and placement.")
+									
 									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand)
 									print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
 								except RuntimeError as e:
