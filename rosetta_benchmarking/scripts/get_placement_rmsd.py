@@ -90,8 +90,8 @@ with pymol2.PyMOL() as pymol:
 			if num_ref_atoms == 0:
 				print("WARNING: no atoms in reference. Exiting.")
 				sys.exit(1)
-			#else:
-				#print(f"ATOMS IN REFERENCE: {num_ref_atoms}")
+			else:
+				print(f"ATOMS IN REFERENCE: {num_ref_atoms}")
 
 
 			#create a dictionary the holds the placement files (and the residue they were derived from) and the corresponding rmsd values
