@@ -213,8 +213,11 @@ with pymol2.PyMOL() as pymol:
 									if not ref_match or not pla_match:
 										print("Substructure match failed, skipping RMSD calculation")
 										continue
+										
+									# build a list of (prbIdx, refIdx) tuples from matches:
+									atom_map = list(zip(pla_match, ref_match))
 									
-									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand, refMatch=ref_match, prbMatch=pla_match)
+									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand, map=atom_map)
 									print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
 								except Exception as e:
 									print("Error during RMSD calculation: ", e)
