@@ -55,10 +55,10 @@ with pymol2.PyMOL() as pymol:
 
 			#read reference ligand into rdkit without hydrogens
 			ref_ligand = Chem.MolFromMolFile("ligand.sdf", removeHs=True)
-			Chem.SanitizeMol(ref_ligand)
+			#Chem.SanitizeMol(ref_ligand)
 
 			#strip bond orders from reference
-			#ref_ligand = strip_bond_orders(ref_ligand)
+			ref_ligand = strip_bond_orders(ref_ligand)
 
 			#check that reference loaded successfully
 			if ref_ligand is None:
@@ -84,13 +84,14 @@ with pymol2.PyMOL() as pymol:
 
 			#strip bond orders from reference
 			orig_mol = Chem.MolFromPDBFile(orig_file, removeHs=False)
-			orig_mol_stripped = strip_bond_orders(orig_mol)
+			#orig_mol_stripped = strip_bond_orders(orig_mol)
 			
-			Chem.MolToPDBFile(orig_mol_stripped, f"{system}_stripped.pdb")
-			print(os.path.abspath(f"{system}_stripped.pdb"))
+			#Chem.MolToPDBFile(orig_mol_stripped, f"{system}_stripped.pdb")
+			#print(os.path.abspath(f"{system}_stripped.pdb"))
 
 			#load original file in pymol
-			cmd.load(f"{system}_stripped.pdb", "reference")
+			#cmd.load(f"{system}_stripped.pdb", "reference")
+			cmd.load(orig_file, "reference")
 
 			
 			#ensure reference was loaded properly
@@ -179,7 +180,7 @@ with pymol2.PyMOL() as pymol:
 							Chem.SanitizeMol(pla_ligand)
 
 							#strip bond orders from placement
-							#pla_ligand = strip_bond_orders(pla_ligand)
+							pla_ligand = strip_bond_orders(pla_ligand)
 
 							#check that placement loaded successfully
 							if pla_ligand is None:
@@ -199,6 +200,7 @@ with pymol2.PyMOL() as pymol:
 							#use the get best RMS function to derive the rmsd
 							if ref_ligand and pla_ligand:
 								try:
+									"""
 									mcs = rdFMCS.FindMCS([ref_ligand, pla_ligand])
 									print("MCS atoms:", mcs.numAtoms, "MCS bonds:", mcs.numBonds)
 									
@@ -223,7 +225,8 @@ with pymol2.PyMOL() as pymol:
 									print("Ref ligand num conformers:", ref_ligand.GetNumConformers())
 									print("Pla ligand num conformers:", pla_ligand.GetNumConformers())
 									
-									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand, map=atom_map)
+									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand, map=atom_map)"""
+									rmsd = rdMolAlign.CalcRMS(ref_ligand, pla_ligand)
 									print(f"{group_path}/{aligned_lig_sdf_basename}", rmsd)
 								except Exception as e:
 									print("Error during RMSD calculation: ", e)
