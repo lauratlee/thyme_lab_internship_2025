@@ -87,6 +87,7 @@ with pymol2.PyMOL() as pymol:
 			orig_mol_stripped = strip_bond_orders(orig_mol)
 			
 			Chem.MolToPDBFile(orig_mol_stripped, f"{system}_stripped.pdb")
+			print(os.path.abspath(f"{system}_stripped.pdb"))
 
 			#load original file in pymol
 			cmd.load(f"{system}_stripped.pdb", "reference")
