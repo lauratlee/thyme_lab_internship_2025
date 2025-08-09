@@ -64,7 +64,7 @@ with pymol2.PyMOL() as pymol:
 			Chem.MolToPDBFile(ref_mol, r + "/" + dire + "/" + dire + "_stripped.pdb")
 			
 			#get the original file from the library and open it in pymol
-			cmd.load(ref_mol, r + "/" + dire + "/" + dire + "_stripped.pdb", "reference")
+			cmd.load(r + "/" + dire + "/" + dire + "_stripped.pdb", "reference")
 
 			#check that reference loaded
 			if cmd.count_atoms("reference") == 0:
