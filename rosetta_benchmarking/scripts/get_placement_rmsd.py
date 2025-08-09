@@ -218,6 +218,7 @@ with pymol2.PyMOL() as pymol:
 
 			#sort placements_list by rmsd in ascending order
 			sorted_list = sorted(placements_list, key=lambda x: x[2])
+			print(sorted_list)
 
 			#get the best (lowest) rmsd entry
 			best_rmsd_1_entry = sorted_list[0]
