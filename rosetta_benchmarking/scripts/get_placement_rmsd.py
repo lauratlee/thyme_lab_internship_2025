@@ -6,14 +6,13 @@
 import os,sys
 import pymol2
 from rdkit import Chem
-from rdkit.Chem import AllChem, rdMolAlign
+from rdkit.Chem import AllChem, rdMolAlign, SanitizeFlags, rdFMCS
 #import numpy as np
 #from openbabel import openbabel as ob
 from openbabel import pybel
 #import re
-from rdkit.Chem import SanitizeFlags
-from rdkit.Chem import AllChem
 from pymol import CmdException
+
 
 
 #helper function to strip all bond orders by setting everything to single bonds
