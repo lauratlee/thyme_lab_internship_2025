@@ -177,7 +177,7 @@ with pymol2.PyMOL() as pymol:
 							pla_ligand = Chem.MolFromMolFile(f"{group_path}/{aligned_lig_sdf_basename}", removeHs=True)
 
 							#strip bond orders from placement
-							pla_ligand = strip_bond_orders(pla_ligand)
+							#pla_ligand = strip_bond_orders(pla_ligand)
 
 							#check that placement loaded successfully
 							if pla_ligand is None:
