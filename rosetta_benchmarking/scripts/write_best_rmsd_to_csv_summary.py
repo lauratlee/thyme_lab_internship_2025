@@ -9,13 +9,22 @@ best_rmsds = []
 for file in os.listdir(os.getcwd()):
   if "res_" in file and "rmsd_out" in file:
     with open(file, newline="") as rmsd_file:
+      lines = rmsd_file.readlines()
+      if len(lines) < 2:
+        continue
+
+      #get second to last line
+      second_last_line = lines[-2].strip()
+      print(second_last_line)
+
+      """
       reader = list(csv.reader(rmsd_file))
       #print(len(reader))
       if len(reader) >= 2:
         #see if the second to last row has the best rmsd for that residue
         second_last_row = reader[-2]
         second_last_row_text = second_last_row[0]
-        print(second_last_row_text)
+        #print(second_last_row_text)
         
         if "BEST RMSD 1 ENTRY:" in second_last_row_text:
           #get entry as a string
@@ -39,6 +48,6 @@ best_system_rmsd = best_rmsds[0]
 #write to system summary file
 with open(f"{system}_placements_summary.csv", "w") as system_file:
   system_file.write("residue,file,rmsd\n")
-  system_file.write(f"{best_system_rmsd[0]},{best_system_rmsd[1]},{best_system_rmsd[2]}\n")
+  system_file.write(f"{best_system_rmsd[0]},{best_system_rmsd[1]},{best_system_rmsd[2]}\n")"""
   
           
