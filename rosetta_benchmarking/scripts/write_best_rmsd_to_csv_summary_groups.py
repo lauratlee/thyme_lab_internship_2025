@@ -16,6 +16,7 @@ for file in os.listdir(os.getcwd()):
     print(file)
     with open(file, newline="") as rmsd_file:
       reader = csv.reader(rmsd_file)
+      header = next(reader, None) #skip header
       rows = list(reader)
       if not rows:
         print(f"WARNING: {file} is empty")
