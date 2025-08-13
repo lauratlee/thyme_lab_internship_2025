@@ -7,48 +7,25 @@ system = os.path.basename(os.getcwd())
 best_rmsds = []
 
 for file in os.listdir(os.getcwd()):
-  if "res_" in file and "rmsd_out" in file:
+  if "res_" in file and "placements_summary.csv" in file:
     with open(file, newline="") as rmsd_file:
-      lines = rmsd_file.readlines()
-      print(f"# of placements in {file}: {len(lines)}")
-      if len(lines) < 2:
-        continue
+      reader = csv.reader(rmsd_file)
+      header = next(reader, None)
+      rows = list(reader)
 
-      #get second to last line
-      second_last_line = lines[-2].strip()
-      print(second_last_line)
+      for row in rows:
+        best_rmsds.append([row[0], row[1], float(row[2])]
 
-      """
-      reader = list(csv.reader(rmsd_file))
-      #print(len(reader))
-      if len(reader) >= 2:
-        #see if the second to last row has the best rmsd for that residue
-        second_last_row = reader[-2]
-        second_last_row_text = second_last_row[0]
-        #print(second_last_row_text)
-        
-        if "BEST RMSD 1 ENTRY:" in second_last_row_text:
-          #get entry as a string
-          entry_str = second_last_row_text.split(":", 1)[1].strip()
-          
-          #convert entry to a list
-          entry_list = ast.literal_eval(entry_str)
-          print(entry_list)
 
-          best_rmsds.append(entry_list)
-        else:
-          continue
-      else:
-        continue
+if best_rmsds:
+  best_rmsds.sort(key=lambda x: x[2])
+  best_system_rmsd = best_rmsds[0]
+  print(best_system_rmsd)
 
-#sort best_rmsds by rmsd value
-best_rmsds.sort(key=lambda x: x[2])
-print(best_rmsds)
-best_system_rmsd = best_rmsds[0]
 
-#write to system summary file
 with open(f"{system}_placements_summary.csv", "w") as system_file:
-  system_file.write("residue,file,rmsd\n")
-  system_file.write(f"{best_system_rmsd[0]},{best_system_rmsd[1]},{best_system_rmsd[2]}\n")"""
-  
+  system_file.write("residue, file, rmsd\n")
+  system_file.write(f"{best_system_rmsd[0]},{best_system_rmsd[1]},{best_system_rmsd[2]}\n")
+
+
           
