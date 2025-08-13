@@ -265,13 +265,13 @@ with pymol2.PyMOL() as pymol:
 					if curr_rmsd_val < best_rmsd_val:
 						best_rmsd_residue, best_rmsd_file, best_rmsd_val = placement_residue, placement_file, float(placements_data[entry][1])
 
-			placements_list.append([best_rmsd_residue, best_rmsd_file, best_rmsd_val])
+				placements_list.append([best_rmsd_residue, best_rmsd_file, best_rmsd_val])
 				
 
 
 			#sort placements_list by rmsd in ascending order
 			sorted_list = sorted(placements_list, key=lambda x: x[2])
-			print(sorted_list)
+			#print(sorted_list)
 
 			#get the best (lowest) rmsd entry
 			best_rmsd_1_entry = sorted_list[0]
