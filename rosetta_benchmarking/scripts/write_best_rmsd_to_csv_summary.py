@@ -8,9 +8,9 @@ best_rmsds = []
 
 for file in os.listdir(os.getcwd()):
   if "res_" in file and "placements_summary" in file:
-    print(file)
     with open(file, newline="") as rmsd_file:
       reader = list(csv.reader(rmsd_file))
+      print(len(reader))
       if len(reader) >= 2:
         #see if the second to last row has the best rmsd for that residue
         second_last_row = reader[-2]
@@ -23,6 +23,7 @@ for file in os.listdir(os.getcwd()):
           
           #convert entry to a list
           entry_list = ast.literal_eval(entry_str)
+          print(entry_list)
 
           best_rmsds.append(entry_list)
         else:
