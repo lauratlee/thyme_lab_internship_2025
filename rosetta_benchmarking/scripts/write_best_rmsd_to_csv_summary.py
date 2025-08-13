@@ -8,6 +8,7 @@ best_rmsds = []
 
 for file in os.listdir(os.getcwd()):
   if "res_" in file and "placements_summary" in file:
+    print(file)
     with open(file, newline="") as rmsd_file:
       reader = list(csv.reader(rmsd_file))
       if len(reader) >= 2:
