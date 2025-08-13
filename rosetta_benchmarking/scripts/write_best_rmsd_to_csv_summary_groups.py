@@ -13,6 +13,7 @@ rmsd_list = []
 
 for file in os.listdir(os.getcwd()):
   if "res_" in file and "group" in file:
+    print(file)
     with open(file, newline="") as rmsd_file:
       reader = csv.reader(rmsd_file)
       rows = list(reader)
