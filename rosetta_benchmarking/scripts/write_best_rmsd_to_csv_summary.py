@@ -32,6 +32,7 @@ for file in os.listdir(os.getcwd()):
 
 #sort best_rmsds by rmsd value
 best_rmsds.sort(key=lambda x: x[2])
+print(best_rmsds)
 best_system_rmsd = best_rmsds[0]
 
 #write to system summary file
