@@ -10,6 +10,7 @@ for file in os.listdir(os.getcwd()):
   if "res_" in file and "rmsd_out" in file:
     with open(file, newline="") as rmsd_file:
       lines = rmsd_file.readlines()
+      print(f"# of placements in {file}: {len(lines)}")
       if len(lines) < 2:
         continue
 
