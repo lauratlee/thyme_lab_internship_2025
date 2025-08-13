@@ -14,6 +14,7 @@ for file in os.listdir(os.getcwd()):
         #see if the second to last row has the best rmsd for that residue
         second_last_row = reader[-2]
         second_last_row_text = "".join(second_last_row)
+        print(second_last_row_text)
         
         if "BEST RMSD 1 ENTRY:" in second_last_row_text:
           #get entry as a string
