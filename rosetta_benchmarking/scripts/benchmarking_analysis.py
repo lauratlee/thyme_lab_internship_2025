@@ -38,9 +38,15 @@ for system in os.listdir(os.getcwd()):
 
     #get rmsd from all placements
     with open(f"{system}_placements_summary.csv", 'r') as sum_all:
-      entry_all = sum_all.readline()
-      rmsd_all = entry_all.strip().split(',')[2]
-      #print(rmsd_all)
+      entry_all = sum_all.readline().strip()
+      cols = entry_all.split(',')
+
+      #if top line is a header, read next line
+      if cols[:3] == ["residue", "file", "rmsd"]:
+        entry_all = sum_all.readline().strip()
+        cols = cols = entry_all.split(',')
+      
+      rmsd_all = float(cols[2])
 
       #skip if no rmsd
       if rmsd_all == "rmsd":
