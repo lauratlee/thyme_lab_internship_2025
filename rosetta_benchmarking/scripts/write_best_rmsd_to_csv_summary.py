@@ -7,7 +7,7 @@ system = os.path.basename(os.getcwd())
 best_rmsds = []
 
 for file in os.listdir(os.getcwd()):
-  if "res_" in file and "placements_summary" in file:
+  if "res_" in file and "rmsd_out" in file:
     with open(file, newline="") as rmsd_file:
       reader = list(csv.reader(rmsd_file))
       print(len(reader))
