@@ -245,6 +245,8 @@ with pymol2.PyMOL() as pymol:
 
 			#done with all placements for the system, correlate rmsd and confidence and update dictionaries and finish the system-specific csv
 
+			print("All placement files read")
+
 			placements_list = []
 
 			best_rmsd_residue = None
@@ -273,6 +275,7 @@ with pymol2.PyMOL() as pymol:
 
 			#get the best (lowest) rmsd entry
 			best_rmsd_1_entry = sorted_list[0]
+			print(f"BEST RMSD 1 ENTRY: {best_rmsd_1_entry}")
 			best_rmsd_1 = [best_rmsd_1_entry[0], best_rmsd_1_entry[1], best_rmsd_1_entry[2]]
 
 			#write result to system file
