@@ -29,6 +29,7 @@ sys_library = os.path.basename(os.getcwd())
 
 #iterate thru all systems in library
 for system in os.listdir(os.getcwd()):
+  print(system)
   if os.path.isdir(system) and system not in systems_to_skip:
     lib_length += 1
 
