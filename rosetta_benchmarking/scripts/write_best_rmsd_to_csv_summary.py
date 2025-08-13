@@ -10,11 +10,11 @@ for file in os.listdir(os.getcwd()):
   if "res_" in file and "rmsd_out" in file:
     with open(file, newline="") as rmsd_file:
       reader = list(csv.reader(rmsd_file))
-      print(len(reader))
+      #print(len(reader))
       if len(reader) >= 2:
         #see if the second to last row has the best rmsd for that residue
         second_last_row = reader[-2]
-        second_last_row_text = "".join(second_last_row)
+        second_last_row_text = second_last_row[0]
         print(second_last_row_text)
         
         if "BEST RMSD 1 ENTRY:" in second_last_row_text:
