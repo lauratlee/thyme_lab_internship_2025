@@ -49,8 +49,8 @@ with pymol2.PyMOL() as pymol:
 	
 	#check that reference loaded successfully
 	if ref_ligand is None:
-	print("WARNING: reference ligand did not read into rdkit. Exiting.", flush=True)
-	sys.exit(1)
+		print("WARNING: reference ligand did not read into rdkit. Exiting.", flush=True)
+		sys.exit(1)
 	
 	#get smiles of reference ligand
 	ref_smiles = Chem.MolToSmiles(ref_ligand)
@@ -60,8 +60,8 @@ with pymol2.PyMOL() as pymol:
 	
 	#open a system-specific file to write pairings of the files with rmsd 
 	with open(f"{system}_{residue_folder}_placements_summary.csv", "w") as system_res_file:
-	#write header
-	system_res_file.write("residue,file,rmsd\n")
+		#write header
+		system_res_file.write("residue,file,rmsd\n")
 	
 	#declare placeholder variables to hold the best placement
 	best_rmsd_1 = ["X","X","X","X"]
@@ -84,10 +84,10 @@ with pymol2.PyMOL() as pymol:
 	#ensure reference was loaded properly
 	num_ref_atoms = cmd.count_atoms("reference")
 	if num_ref_atoms == 0:
-	print("WARNING: no atoms in reference. Exiting.", flush=True)
-	sys.exit(1)
+		print("WARNING: no atoms in reference. Exiting.", flush=True)
+		sys.exit(1)
 	else:
-	print(f"ATOMS IN REFERENCE: {num_ref_atoms}")
+		print(f"ATOMS IN REFERENCE: {num_ref_atoms}")
 	
 	
 	#create a dictionary the holds the placement files (and the residue they were derived from) and the corresponding rmsd values
@@ -97,13 +97,13 @@ with pymol2.PyMOL() as pymol:
 	#iterate over the placements by residue folder by creating a list of folders to look at per system
 	residue_list = []
 	for folder in os.listdir(os.getcwd()):
-	if os.path.isdir(folder) and "res_" in folder and folder == residue_folder:
-	  residue_list.append(folder)
+		if os.path.isdir(folder) and "res_" in folder and folder == residue_folder:
+	  		residue_list.append(folder)
 	
 	
 	#iterate over residues for analysis
 	for residue in residue_list:
-	print(residue)
+		print(residue)
 	
 	#iterate through folders for groups and add to a list
 	group_list = []
@@ -267,15 +267,15 @@ with pymol2.PyMOL() as pymol:
 	
 	#write result to system file
 	with open(f"{system}_{residue_folder}_placements_summary.csv", "w") as system_res_file:
-	system_res_file.write(f"{best_rmsd_1[0]},{best_rmsd_1[1]},{best_rmsd_1[2]}\n")
+		system_res_file.write(f"{best_rmsd_1[0]},{best_rmsd_1[1]},{best_rmsd_1[2]}\n")
 	
 	#exit system directory to write data to general best rmsds file
 	os.chdir("..")
 	
 	#confirm that current working directory is a system library
 	if "system_dir" not in os.getcwd():
-	print("WARNING: not in a system library!", flush=True)
-	sys.exit(1)
+		print("WARNING: not in a system library!", flush=True)
+		sys.exit(1)
 	
 	
 	#best_1.write(f"{system},{best_rmsd_1[0]},{best_rmsd_1[1]},{best_rmsd_1[2]:.3f}\n")
