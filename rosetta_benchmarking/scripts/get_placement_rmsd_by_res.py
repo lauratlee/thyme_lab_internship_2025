@@ -280,6 +280,9 @@ with pymol2.PyMOL() as pymol:
 
 			#write result to system file
 			with open(f"{system}_{residue_folder}_placements_summary.csv", "w") as system_res_file:
+				system_res_file.write(f"{best_rmsd_1[0]},{best_rmsd_1[1]},{best_rmsd_1[2]}\n")
+
+			with open(f"{system}_placements_summary.csv", "w") as system_file:
 				system_file.write(f"{best_rmsd_1[0]},{best_rmsd_1[1]},{best_rmsd_1[2]}\n")
 
 			#exit system directory to write data to general best rmsds file
