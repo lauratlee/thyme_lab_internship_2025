@@ -14,7 +14,7 @@ for file in os.listdir(os.getcwd()):
       rows = list(reader)
 
       for row in rows:
-        best_rmsds.append([row[0], row[1], float(row[2])]
+        best_rmsds.append([row[0], row[1], float(row[2])])
 
 
 if best_rmsds:
