@@ -6,7 +6,6 @@ import os, sys, csv, ast
 
 system = os.path.basename(os.getcwd())
 residue = sys.argv[1]
-best_rmsds = []
 
 output_path = f"{system}_{residue}_placements_summary.csv"
 
@@ -30,6 +29,6 @@ best_system_rmsd = rmsd_list[0]
 #write to system summary file
 with open(f"{system}_{residue}_placements_summary.csv", "w") as system_file:
   system_file.write("residue,file,rmsd\n")
-  system_file.write(f"{best_system_rmsd[0]},{best_system_rmsd[1]},{best_system_rmsd[2]}\n")"""
+  system_file.write(f"{best_system_rmsd[0]},{best_system_rmsd[1]},{best_system_rmsd[2]}\n")
   
           
