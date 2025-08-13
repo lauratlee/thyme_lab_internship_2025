@@ -107,7 +107,8 @@ with pymol2.PyMOL() as pymol:
 
 			#create a dictionary the holds the placement files (and the residue they were derived from) and the corresponding rmsd values
 			#key is a tuple of (residue, file), and the value is the rmsd
-			placements_data = {}
+			#placements_data = {}
+			group_dicts = {}
 
 			#iterate over the placements by residue folder by creating a list of folders to look at per system
 			residue_list = []
@@ -134,6 +135,11 @@ with pymol2.PyMOL() as pymol:
 				#iterate through each group
 				for group in group_list:
 					print(f"residue {residue}, group {group}")
+
+					#initialize dictionary for group
+					group_dict_name = f"group_{group}_data"
+					group_dicts[group_dict_name] = {}
+					
 					#construct path to group folder
 					group_path = os.path.join(residue, group)
 
@@ -238,7 +244,8 @@ with pymol2.PyMOL() as pymol:
 								continue
 	
 							#store the rmsd in the dictionary by the residue and file name
-							placements_data[(residue, group_file)] = ["X",rmsd]
+							#placements_data[(residue, group_file)] = ["X",rmsd]
+							group_dicts[group_dict_name][(residue, group_file)] = rmsd
 	
 							#we are now done with the placement, and can move to the next
 
@@ -247,13 +254,30 @@ with pymol2.PyMOL() as pymol:
 
 			print("All placement files read")
 
-			placements_list = []
+			group_rmsd_lists = {}
+			for group_name, data_dict in group_dicts.items():
+				#store tuples (residue, file, rmsd)
+				group_rmsd_lists[group_name] = [(res, f, rmsd) for (res, f), rmsd in data_dict.items()]
 
-			best_rmsd_residue = None
+			best_rmsd_per_group = {}
+			for group_name, rmsd_list in group_rmsd_lists.items():
+				if rmsd_list:
+					best_entry = min(rmsd_list, key=lambda x: x[2])
+					best_rmsd_per_group[group_name] = best_entry
+
+			if best_rmsd_per_group:
+				best_group_name = min(best_rmsd_per_group, key=lambda g: best_rmsd_per_group[g][2])
+				best_rmsd_1_entry = best_rmsd_per_group[best_group_name]
+
+			
+			#placements_list = []
+			#placements_list.append(best_system_rmsd)
+
+			"""best_rmsd_residue = None
 			best_rmsd_file = None
 			best_rmsd_val = None
 
-
+			
 			for entry in placements_data.keys():
 				placement_residue = entry[0]
 				placement_file = entry[1]
@@ -266,15 +290,17 @@ with pymol2.PyMOL() as pymol:
 						best_rmsd_residue, best_rmsd_file, best_rmsd_val = placement_residue, placement_file, float(placements_data[entry][1])
 
 				placements_list.append([best_rmsd_residue, best_rmsd_file, best_rmsd_val])
+			"""
 				
 
 
 			#sort placements_list by rmsd in ascending order
-			sorted_list = sorted(placements_list, key=lambda x: x[2])
+			#sorted_list = sorted(placements_list, key=lambda x: x[2])
 			#print(sorted_list)
 
 			#get the best (lowest) rmsd entry
-			best_rmsd_1_entry = sorted_list[0]
+			#best_rmsd_1_entry = sorted_list[0]
+			#best_rmsd_1_entry = placements_list
 			print(f"BEST RMSD 1 ENTRY: {best_rmsd_1_entry}")
 			best_rmsd_1 = [best_rmsd_1_entry[0], best_rmsd_1_entry[1], best_rmsd_1_entry[2]]
 
