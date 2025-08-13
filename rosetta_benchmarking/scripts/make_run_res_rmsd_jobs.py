@@ -22,7 +22,7 @@ for residue in residue_list:
 
 
   print(f"{target_system}_{residue}_rmsd.slurm")
-  os.sys(f"bsub {target_system}_{residue}_rmsd.slurm")
+  os.system(f"bsub {target_system}_{residue}_rmsd.slurm")
 
 
 
