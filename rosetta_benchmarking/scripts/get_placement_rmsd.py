@@ -264,12 +264,6 @@ with pymol2.PyMOL() as pymol:
 			placements_list.append([best_rmsd_residue, best_rmsd_file, best_rmsd_val])
 				
 
-				"""
-				#add placements to a list
-				placements_list.append([placement_residue, placement_file, float(placements_data[entry][1])])
-	"""
-
-
 			#sort placements_list by rmsd in ascending order
 			sorted_list = sorted(placements_list, key=lambda x: x[2])
 			print(sorted_list)
