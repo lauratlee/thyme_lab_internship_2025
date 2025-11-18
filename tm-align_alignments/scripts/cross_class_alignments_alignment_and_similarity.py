@@ -21,6 +21,7 @@ def parse_summary(file, gpcr_class):
     for row in reader_f:
       key = (row[0], row[1])
       value = tuple(row[2:7] + [gpcr_class])
+      print(key,value)
       if key in data_dict:
         data_dict[key].append(value)
       else:
