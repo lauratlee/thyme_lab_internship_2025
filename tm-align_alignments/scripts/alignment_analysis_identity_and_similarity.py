@@ -80,7 +80,7 @@ def count_matches_by_identity(data):
             similar += 1
 
             #add handling for if similar but not identity
-            if ref_id == aligned_id:
+            if ref_id != aligned_id:
                 mismatched += 1
         else:
             mismatched += 1
