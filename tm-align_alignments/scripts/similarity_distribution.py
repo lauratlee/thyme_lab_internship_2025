@@ -25,8 +25,8 @@ n_points = df['% similarity'].dropna().shape[0]
 plt.figure(figsize=(10, 6))
 bins = list(range(60, 105, 5))
 sns.histplot(df['% similarity'], bins=bins, color='skyblue', kde=False)
-plt.title('Distribution of % Similarity')
-plt.xlabel('% Similarity')
+plt.title('Distribution of % Identity')
+plt.xlabel('% Identity')
 plt.ylabel('Frequency')
 plt.grid(True)
 
