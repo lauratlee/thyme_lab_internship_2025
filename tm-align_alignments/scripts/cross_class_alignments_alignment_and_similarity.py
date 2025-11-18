@@ -20,7 +20,7 @@ def parse_summary(file, gpcr_class):
     next(reader_f)
     for row in reader_f:
       key = (row[0], row[1])
-      value = tuple(row[2:7] + [gpcr_class])
+      value = tuple(row[2:9] + [gpcr_class])
       print(key,value)
       if key in data_dict:
         data_dict[key].append(value)
@@ -49,10 +49,11 @@ with open(output_name, "w", newline = '') as output_file:
   writer.writerow(["human gene", "zebrafish gene", "matched", "similarity", "mismatched", "failed alignments", "% identity", "% similarity", "best class alignment"])
 
   for key, value_list in data_dict.items():
+    #THIS IS A GREEDY ALGORITHM THAT WILL ONLY LOOK FOR THE BEST SIMILARITY AND ASSUME THAT THE BEST IDENTITY COMES WITH IT (SINCE IT LIKELY DOES)
     # Find best % similarity
-    best_similarity = max(float(x[3]) for x in value_list)
+    best_similarity = max(float(x[5]) for x in value_list)
     # Check if there are multiple outputs that produced the best similarity
-    best_similarities = [t for t in value_list if float(t[3]) == best_similarity]
+    best_similarities = [t for t in value_list if float(t[5]) == best_similarity]
 
     # write entries to csv file
     for entry in best_similarities:
