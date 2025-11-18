@@ -68,6 +68,9 @@ def count_matches_by_identity(data):
         ref_id = parse_residue_identity(row[0])
         aligned_id = parse_residue_identity(row[1])
 
+        #debug print
+        print(aligned_id,ref_id)
+
         if aligned_id is None:
             failed += 1
         elif ref_id == aligned_id:
