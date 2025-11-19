@@ -6,7 +6,7 @@
 import os,sys
 
 #make a dictionary that has all systems of interest and residue indices to use:
-"""
+
 systems_dict = {
     "9HZ0": [92, 94, 100],
     "9I1H": [13, 60, 92, 93, 160, 161, 218, 220, 329, 365, 367, 368, 370, 392, 394, 422, 474, 475, 481],
@@ -30,9 +30,9 @@ systems_dict = {
     "9MZX": [144],
     "9I0W": [3, 105, 107]
 }
-"""
+
 #temp smaller dictionary to test with and make sure this works
-systems_dict = {"9QEL": [18, 22, 23]}
+#systems_dict = {"9QEL": [18, 22, 23]}
 
 #iterate over each system
 #for each system, make a diverse (up to 250) conformer set for the system ligand
@@ -158,7 +158,20 @@ for system in systems_dict.keys():
 				argfile.write("-best_pdbs_to_keep 0\n")
 				argfile.close()
 
-				#bsub job throttle to make sure we do not exceed our local 
+				#bsub job throttle to make sure we do not exceed our local limit
+				#write the length of the bjobs queue to this current location
+				os.system("bjobs | wc -l > bjobs_length.txt")
+				job_count = 0
+				with open("bjobs_length.txt") as f:
+					job_count = int(f.read().strip())
+				while job_count > 3000:
+					#sleep for 1 second to not overburden the system
+					os.system("sleep 1")
+					os.system("bjobs | wc -l > bjobs_length.txt")
+					with open("bjobs_length.txt") as f:
+						job_count = int(f.read().strip())
+				#remove the length file to avoid clutter
+				os.system("rm bjobs_length.txt")
 
 				#now, run Rosetta in a bsub job
 				os.system("bsub -q long -M 5000 -R \"rusage[mem=5000]\" -W 8:00 \"/pi/summer.thyme-umw/2024_intern_lab_space/rosetta/source/bin/ligand_discovery_search_protocol.linuxgccrelease @args\"")
