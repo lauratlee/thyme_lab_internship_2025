@@ -55,7 +55,7 @@ for system in systems_dict.keys():
 	system_dir = os.getcwd()
 
 	#debug print
-	print("not working out of ", os.getcwd())
+	print("now working out of ", os.getcwd())
 
 	#run conformator on the ligand (always named ligand.mol2)
 	os.system("/pi/summer.thyme-umw/2024_intern_lab_space/conformator_1.2.1/conformator -i ligand.mol2 -o confs.mol2 --keep3d --hydrogens -n 250 -v 0")
@@ -105,6 +105,7 @@ for system in systems_dict.keys():
 				restype_file.close()
 
 				#now, write the flags file for this Rosetta run
+
 				#derive the anchor residue(s) list from the dictionary
 				anchor_res_list = ""
 				for resid in systems_dict[system]:
@@ -113,13 +114,21 @@ for system in systems_dict.keys():
 				if anchor_res_list.endswith(","):
 					anchor_res_list = anchor_res_list[:-1]
 
+				#derive the backbone pdb file, the only pdb file in ../test_params/
+				backbone_file = ""
+				for r2, d2, f2 in os.walk("../test_params/"):
+					for file2 in f2:
+						if "chain_" in file2 and file2.endswith(".pdb"):
+							backbone_file = file2
+
+
 				argfile = open("args", "w")
 
 				argfile.write("#keep seed constant\n")
 				argfile.write("-constant_seed\n")
 
 				argfile.write("#input empty receptor protein\n")
-				argfile.write("-s ../test_params/chain_A.pdb\n")
+				argfile.write("-s ../test_params/" + backbone_file + "\n")
 
 				argfile.write("#directory of ligand(s) to attempt to dock\n")
 				argfile.write("#POINT TO test_params DIRECTORY\n")
@@ -145,6 +154,9 @@ for system in systems_dict.keys():
 				argfile.write("#keep all placements\n")
 				argfile.write("-best_pdbs_to_keep 0\n")
 				argfile.close()
+
+				#now, run Rosetta in a bsub job
+				os.system("bsub -q long -M 5000 -R \"rusage[mem=5000]\"  \"/pi/summer.thyme-umw/2024_intern_lab_space/rosetta/source/bin/ligand_discovery_search_protocol.linuxgccrelease @args\"")
 
 				#at end, move back up
 				os.chdir(system_dir)
