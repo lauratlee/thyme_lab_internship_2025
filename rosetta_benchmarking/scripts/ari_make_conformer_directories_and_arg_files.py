@@ -181,7 +181,5 @@ for system in systems_dict.keys():
 				#at end, move back up
 				os.chdir(system_dir)
 
-	
-	#singularity exec  /pi/summer.thyme-umw/2024_intern_lab_space/ari_work/rosetta_discovery_benchmark_test_space_september_2025/rosetta_and_conformator.sif /rosetta/source/bin/ligand_discovery_search_protocol.linuxgccrelease
-
-
+	#return to the top
+	os.chdir(starting_script_dir)
