@@ -32,7 +32,7 @@ systems_dict = {
 }
 """
 #temp smaller dictionary to test with and make sure this works
-systems_dict = {"9I0W": [3, 105, 107]}
+systems_dict = {"9QEL": [18, 22, 23]}
 
 #iterate over each system
 #for each system, make a diverse (up to 250) conformer set for the system ligand
@@ -56,6 +56,9 @@ for system in systems_dict.keys():
 
 	#debug print
 	print("now working out of ", os.getcwd())
+
+	#initial cleanup
+	os.system("rm -drf individual_conf* confs.mol2")
 
 	#run conformator on the ligand (always named ligand.mol2)
 	os.system("/pi/summer.thyme-umw/2024_intern_lab_space/conformator_1.2.1/conformator -i ligand.mol2 -o confs.mol2 --keep3d --hydrogens -n 250 -v 0")
@@ -155,8 +158,12 @@ for system in systems_dict.keys():
 				argfile.write("-best_pdbs_to_keep 0\n")
 				argfile.close()
 
+				#bsub job throttle to make sure we do not exceed our local 
+
 				#now, run Rosetta in a bsub job
-				os.system("bsub -q long -M 5000 -R \"rusage[mem=5000]\"  \"/pi/summer.thyme-umw/2024_intern_lab_space/rosetta/source/bin/ligand_discovery_search_protocol.linuxgccrelease @args\"")
+				os.system("bsub -q long -M 5000 -R \"rusage[mem=5000]\" -W 8:00 \"/pi/summer.thyme-umw/2024_intern_lab_space/rosetta/source/bin/ligand_discovery_search_protocol.linuxgccrelease @args\"")
+
+
 
 				#at end, move back up
 				os.chdir(system_dir)
