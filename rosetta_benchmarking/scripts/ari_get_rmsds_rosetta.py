@@ -18,6 +18,9 @@ os.chdir("../system_dir/")
 #store the system directory
 system_dir = os.getcwd()
 
+#make a file to write the results
+write_file = open("ari_rosetta_placement_results.txt")
+
 #iterate over the systems directories and go system by system, collecting the best rmsds
 for r,d,f in os.walk(system_dir):
 	#go over each directory
@@ -153,4 +156,7 @@ for r,d,f in os.walk(system_dir):
 			print("top 10: ", top_10_rmsd)
 			print("top 1: ", top_1_rmsd)
 
-
+			write_file.write(dire + "\n")
+			write_file.write(f"top all: {top_all_rmsd}\n")
+			write_file.write(f"top 10: {top_10_rmsd}\n")
+			write_file.write(f"top 1: {top_1_rmsd}\n")
