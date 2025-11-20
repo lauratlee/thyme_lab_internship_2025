@@ -114,11 +114,43 @@ for r,d,f in os.walk(system_dir):
 						#send values to the list
 						placements_data.append([rmsd,ddg,r2 + "/" + placement_file])
 
+			if len(placements_data) == 0:
+				print("NO PLACEMENTS FOR THIS SYSTEM!")
+				continue
+
 			#done looking at placements, derive the best rmsd for the ddg cutoffs
 			#sort the placements_data by ddg
 			placements_data = sorted(placements_data, key=lambda x: x[1])
 
 			#test print of top 10 ddg
+			#for i in range(0,10):
+			#	print(placements_data[i])
+
+			#determine the best rmsd for all, top 10, and top 1
+			top_1_rmsd = placements_data[0]
+
+			#top 10
+			#default to keeping the first
+			top_10_rmsd = placements_data[0]
 			for i in range(0,10):
-				print(placements_data[i])
+				#safety check to make sure we don't run out of bounds in case there are fewer than 10 palcements (which seems unlikely)
+				if len(placements_data) > i:
+					#check if better than currently held
+					if placements_data[i][0] < top_10_rmsd[0]:
+						top_10_rmsd = placements_data[i]
+
+
+			#top all
+			top_all_rmsd = placements_data[0]
+			for i in range(0,len(placements_data)):
+
+				#check if better than currently held
+				if placements_data[i][0] < top_all_rmsd[0]:
+					top_all_rmsd = placements_data[i]
+
+			#return the top rmsds
+			print("top all: ", top_all_rmsd)
+			print("top 10: ", top_10_rmsd)
+			print("top 1: ", top_1_rmsd)
+
 
