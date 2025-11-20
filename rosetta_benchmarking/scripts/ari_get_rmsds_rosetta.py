@@ -26,6 +26,10 @@ for r,d,f in os.walk(system_dir):
 		if r == system_dir:
 			print("On system: ", dire)
 
+			#create a list that holds all placements with the rmsd, ddg, and system file
+			#this will get sorted at the end by ddg to derive the top ddg for the best of all, 10, and single lowest ddg
+			placements_data = []
+
 			#we have our system, now go through and get the original ligand placement data
 			#store native ligand placement data as a dictionary
 			native_ligand_coords = {}
@@ -52,8 +56,69 @@ for r,d,f in os.walk(system_dir):
 					atom_y = float(line.split()[3])
 					atom_z = float(line.split()[4])
 
+					#skip hydrogens
+					if atom_name.startswith("H"):
+						continue
+
 					native_ligand_coords[atom_name] = [atom_x,atom_y,atom_z]
 
 			#test print of the native atom data
 			print("Native atom data: ", native_ligand_coords)
+
+			#now, read through each system and derive the placement
+			for r2,d2,f2 in os.walk(r + "/" + dire):
+				for placement_file in f2:
+					if "_individual_conf_" in placement_file and placement_file.endswith(".pdb"):
+						#we have a placement file; derive the ligand data
+						placement_ligand_coords = {}
+
+						#variable to store teh ddg
+						ddg = 100
+
+						placement_read_file = open(r2 + "/" + placement_file, "r")
+						for line in placement_read_file.readlines():
+							#the ligand lines start with HETATM
+							if line.startswith("HETATM"):
+								#derive the atom data
+								atom_name = line.split()[2]
+								atom_x = float(line.split()[6])
+								atom_y = float(line.split()[7])
+								atom_z = float(line.split()[8])		
+														
+								if atom_name.startswith("H"):
+									continue
+
+								placement_ligand_coords[atom_name] = [atom_x,atom_y,atom_z]
+
+							if line.startswith("Scoring: Post-HighResDock system ddG:"):
+								ddg = float(line.strip().split()[4])
+
+						#now, derive the placement rmsd
+						distance_sum = 0
+						natoms = 0
+
+						for atom in placement_ligand_coords.keys():
+							if atom in native_ligand_coords.keys():
+								#derive the distance 
+								distance = (((placement_ligand_coords[atom][0] - native_ligand_coords[atom][0]) ** 2) + ((placement_ligand_coords[atom][1] - native_ligand_coords[atom][1]) ** 2) + ((placement_ligand_coords[atom][2] - native_ligand_coords[atom][2]) ** 2)) ** 0.5
+
+								#add the distance to the distance sum and increment the natoms
+								distance_sum = distance_sum + distance
+								natoms = natoms + 1
+
+						#derive the rmsd
+						rmsd = 100
+						if natoms > 0:
+							rmsd = distance_sum / natoms
+
+						#send values to the list
+						placements_data.append([rmsd,ddg,r2 + "/" + placement_file])
+
+			#done looking at placements, derive the best rmsd for the ddg cutoffs
+			#sort the placements_data by ddg
+			placements_data = sorted(placements_data, key=lambda x: x[1])
+
+			#test print of top 10 ddg
+			for i in range(0,10):
+				print(placements_data[i])
 
