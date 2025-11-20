@@ -52,6 +52,8 @@ for r,d,f in os.walk(system_dir):
 					atom_y = float(line.split()[3])
 					atom_z = float(line.split()[4])
 
+					native_ligand_coords[atom_name] = [atom_x,atom_y,atom_z]
+
 			#test print of the native atom data
 			print("Native atom data: ", native_ligand_coords)
 
