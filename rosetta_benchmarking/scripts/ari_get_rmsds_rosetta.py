@@ -81,9 +81,9 @@ for r,d,f in os.walk(system_dir):
 							if line.startswith("HETATM"):
 								#derive the atom data
 								atom_name = line.split()[2]
-								atom_x = float(line.split()[6])
-								atom_y = float(line.split()[7])
-								atom_z = float(line.split()[8])		
+								atom_x = float(line[30:38])
+								atom_y = float(line[38:46])
+								atom_z = float(line[46:54])		
 														
 								if atom_name.startswith("H"):
 									continue
