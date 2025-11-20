@@ -6,7 +6,7 @@
 import os,sys
 
 #make a dictionary that has all systems of interest and residue indices to use:
-
+"""
 systems_dict = {
     "9HZ0": [92, 94, 100],
     "9I1H": [13, 60, 92, 93, 160, 161, 218, 220, 329, 365, 367, 368, 370, 392, 394, 422, 474, 475, 481],
@@ -30,6 +30,15 @@ systems_dict = {
     "9MZX": [144],
     "9I0W": [3, 105, 107]
 }
+"""
+#smaller dict to rerun
+systems_dict = {
+    "9LSL": [245],
+    "9QAC": [89],
+    "9MZX": [144],
+    "9I0W": [3, 105, 107]
+}
+
 
 #temp smaller dictionary to test with and make sure this works
 #systems_dict = {"9QEL": [18, 22, 23]}
