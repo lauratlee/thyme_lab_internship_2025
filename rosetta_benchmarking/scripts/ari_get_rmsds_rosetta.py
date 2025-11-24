@@ -1,8 +1,19 @@
 #the purpose of this script is to go system by system and determine the best RMSDS for the best, top 10, and all placements per system using the 250 conformer schema
 #this script is to be run in the scripts directory like: python ari_get_rmsds_rosetta.py
 
+#if you only want to look at a single system or group of systems, add them after the call
+
 #import
 import os,sys
+
+#collect select systems if there are any
+select_systems = []
+
+if len(sys.argv) > 2:
+	#add each specific system
+	for i in range(len(sys.argv)):
+		if i > 1:
+			select_systems.append(sys.argv[i])
 
 #create a dictionary that holds the systems and a list for the best rmsds per system
 systems_rmsds = {}
@@ -19,7 +30,7 @@ os.chdir("../system_dir/")
 system_dir = os.getcwd()
 
 #make a file to write the results
-write_file = open("ari_rosetta_placement_results.txt", "w")
+write_file = open("all_ari_rosetta_placement_results.txt", "w")
 
 #iterate over the systems directories and go system by system, collecting the best rmsds
 for r,d,f in os.walk(system_dir):
@@ -27,6 +38,11 @@ for r,d,f in os.walk(system_dir):
 	for dire in d:
 		#ensure that the root is the system directory
 		if r == system_dir:
+			#ensure the directory is in the select systems
+			if dire not in select_systems:
+				print(dire + " not in selected systems.")
+				continue
+
 			print("On system: ", dire)
 
 			#create a list that holds all placements with the rmsd, ddg, and system file
@@ -160,3 +176,10 @@ for r,d,f in os.walk(system_dir):
 			write_file.write(f"top all: {top_all_rmsd}\n")
 			write_file.write(f"top 10: {top_10_rmsd}\n")
 			write_file.write(f"top 1: {top_1_rmsd}\n")
+
+			#open and write a system_specific file to write the data for too
+			system_write_file = open(r + "/" + dire + "/" + dire + "_best_rmsds.txt","w")
+			write_file.write(dire + "\n")
+			system_write_file.write(f"top all: {top_all_rmsd}\n")
+			system_write_file.write(f"top 10: {top_10_rmsd}\n")
+			system_write_file.write(f"top 1: {top_1_rmsd}\n")
