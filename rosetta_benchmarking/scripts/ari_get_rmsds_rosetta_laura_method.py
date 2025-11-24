@@ -38,16 +38,26 @@ def strip_bond_orders(mol):
 	return rw_mol.GetMol()
 
 def nuke_bonds(mol):
-    """Return a molecule with all bonds removed for RMSD calculation."""
     if mol is None:
         return None
+    
     rw_mol = Chem.RWMol()
     
-    # Copy all atoms
+    # Copy atoms but set all to carbon
     for atom in mol.GetAtoms():
-        rw_mol.AddAtom(atom)
+        new_atom = Chem.Atom(6)  # 6 = Carbon
+        rw_mol.AddAtom(new_atom)
     
     # Do NOT add any bonds
+    # Optionally, copy conformer if coordinates exist
+    if mol.GetNumConformers() > 0:
+        conf = mol.GetConformer()
+        new_conf = Chem.Conformer(rw_mol.GetNumAtoms())
+        for i in range(rw_mol.GetNumAtoms()):
+            pos = conf.GetAtomPosition(i)
+            new_conf.SetAtomPosition(i, pos)
+        rw_mol.AddConformer(new_conf)
+    
     return rw_mol.GetMol()
 
 #collect select systems if there are any
