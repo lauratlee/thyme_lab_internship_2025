@@ -9,10 +9,10 @@ import os,sys
 #collect select systems if there are any
 select_systems = []
 
-if len(sys.argv) > 2:
+if len(sys.argv) > 1:
 	#add each specific system
 	for i in range(len(sys.argv)):
-		if i > 1:
+		if i > 0:
 			select_systems.append(sys.argv[i])
 
 #print the select systems for confirmation
