@@ -37,6 +37,18 @@ def strip_bond_orders(mol):
 	Chem.SanitizeMol(rw_mol)
 	return rw_mol.GetMol()
 
+def nuke_bonds(mol):
+    """Return a molecule with all bonds removed for RMSD calculation."""
+    if mol is None:
+        return None
+    rw_mol = Chem.RWMol()
+    
+    # Copy all atoms
+    for atom in mol.GetAtoms():
+        rw_mol.AddAtom(atom)
+    
+    # Do NOT add any bonds
+    return rw_mol.GetMol()
 
 #collect select systems if there are any
 select_systems = []
@@ -126,7 +138,8 @@ for r,d,f in os.walk(system_dir):
 			ref_ligand = Chem.MolFromMol2File(r + "/" + dire + "/ligand.mol2", removeHs=True)
 
 			#strip bond orders from reference
-			ref_ligand = strip_bond_orders(ref_ligand)
+			#ref_ligand = strip_bond_orders(ref_ligand)
+			ref_ligand = nuke_bonds(ref_ligand)
 
 			#check that reference loaded successfully
 			if ref_ligand is None:
@@ -163,7 +176,8 @@ for r,d,f in os.walk(system_dir):
 						pla_ligand = Chem.MolFromPDBFile(r2 + "/ligand_only.pdb", removeHs=True)
 
 						#strip bond orders from placement
-						pla_ligand = strip_bond_orders(pla_ligand)
+						#pla_ligand = strip_bond_orders(pla_ligand)
+						pla_ligand = nuke_bonds(pla_ligand)
 
 						print(Chem.MolToSmiles(ref_ligand),Chem.MolToSmiles(pla_ligand))
 
