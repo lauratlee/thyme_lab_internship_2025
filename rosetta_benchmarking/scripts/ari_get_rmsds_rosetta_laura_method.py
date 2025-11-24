@@ -165,7 +165,7 @@ for r,d,f in os.walk(system_dir):
 						#strip bond orders from placement
 						pla_ligand = strip_bond_orders(pla_ligand)
 
-						print(ref_ligand,pla_ligand)
+						print(Chem.MolToSmiles(ref_ligand),Chem.MolToSmiles(pla_ligand))
 
 						#use the get best RMS function to derive the rmsd
 						if ref_ligand and pla_ligand:
