@@ -183,7 +183,7 @@ for r,d,f in os.walk(system_dir):
 
 			#open and write a system_specific file to write the data for too
 			system_write_file = open(r + "/" + dire + "/" + dire + "_best_rmsds.txt","w")
-			write_file.write(dire + "\n")
+			system_write_file.write(dire + "\n")
 			system_write_file.write(f"top all: {top_all_rmsd}\n")
 			system_write_file.write(f"top 10: {top_10_rmsd}\n")
 			system_write_file.write(f"top 1: {top_1_rmsd}\n")
