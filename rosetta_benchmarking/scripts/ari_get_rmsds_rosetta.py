@@ -15,6 +15,10 @@ if len(sys.argv) > 2:
 		if i > 1:
 			select_systems.append(sys.argv[i])
 
+#print the select systems for confirmation
+print("Selected systems:")
+print(select_systems)
+
 #create a dictionary that holds the systems and a list for the best rmsds per system
 systems_rmsds = {}
 
@@ -38,8 +42,8 @@ for r,d,f in os.walk(system_dir):
 	for dire in d:
 		#ensure that the root is the system directory
 		if r == system_dir:
-			#ensure the directory is in the select systems
-			if dire not in select_systems:
+			#ensure the directory is in the select systems and we are selecting systems
+			if dire not in select_systems and len(select_systems) > 0:
 				print(dire + " not in selected systems.")
 				continue
 
