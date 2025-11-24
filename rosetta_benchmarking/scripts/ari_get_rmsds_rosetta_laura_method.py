@@ -123,7 +123,7 @@ for r,d,f in os.walk(system_dir):
 			print(r + "/" + dire + "/ligand.mol2")
 
 			#read reference ligand into rdkit without hydrogens
-			ref_ligand = Chem.MolFromMolFile(r + "/" + dire + "/ligand.mol2", removeHs=True)
+			ref_ligand = Chem.MolFromMol2File(r + "/" + dire + "/ligand.mol2", removeHs=True)
 
 			#strip bond orders from reference
 			ref_ligand = strip_bond_orders(ref_ligand)
@@ -160,7 +160,7 @@ for r,d,f in os.walk(system_dir):
 						os.system("grep \"^HETATM\" " + r2 + "/" + placement_file + " | grep -v -E \" ZN | MG | NA | K | CA | FE | MN | CU | CO | NI | CD | HG | SR | YB \" > " + r2 + "/ligand_only.pdb")
 
 						#read placement ligand into rdkit without hydrogens
-						pla_ligand = Chem.MolFromMolFile(r2 + "/ligand_only.pdb", removeHs=True)
+						pla_ligand = Chem.MolFromPDBFile(r2 + "/ligand_only.pdb", removeHs=True)
 
 						#strip bond orders from placement
 						pla_ligand = strip_bond_orders(pla_ligand)
