@@ -120,6 +120,8 @@ for r,d,f in os.walk(system_dir):
 			#test print of the native atom data
 			print("Native atom data: ", native_ligand_coords)
 
+			print(r + "/" + dire + "/ligand.mol2")
+
 			#read reference ligand into rdkit without hydrogens
 			ref_ligand = Chem.MolFromMolFile(r + "/" + dire + "/ligand.mol2", removeHs=True)
 
