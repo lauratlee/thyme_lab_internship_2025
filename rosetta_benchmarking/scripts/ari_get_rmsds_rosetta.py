@@ -19,7 +19,7 @@ os.chdir("../system_dir/")
 system_dir = os.getcwd()
 
 #make a file to write the results
-write_file = open("ari_rosetta_placement_results.txt")
+write_file = open("ari_rosetta_placement_results.txt", "w")
 
 #iterate over the systems directories and go system by system, collecting the best rmsds
 for r,d,f in os.walk(system_dir):
