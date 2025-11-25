@@ -151,6 +151,7 @@ for r,d,f in os.walk(system_dir):
 							pla_com[0] = pla_com[0] + placement_ligand_coords[atom][0]
 							pla_com[1] = pla_com[1] + placement_ligand_coords[atom][1]
 							pla_com[2] = pla_com[2] + placement_ligand_coords[atom][2]
+							natoms = natoms + 1
 
 						if natoms != 0:
 							pla_com[0] = pla_com / natoms
