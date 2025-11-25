@@ -40,7 +40,7 @@ systems_dict = {
     "9I0W": [3, 105, 107]
 }
 """
-
+"""
 #rerun for more accurate residues list
 systems_dict = {
     "9HZ0": [26, 42, 44, 91, 100, 145],#
@@ -65,6 +65,11 @@ systems_dict = {
     #"9I0W": [3, 105, 107],#broken no redo
     "9MZX": [55, 58, 64, 66, 80, 124, 150]#
     
+}
+"""
+
+systems_dict = {
+    "9I0W": [3, 105, 107]
 }
 
 
