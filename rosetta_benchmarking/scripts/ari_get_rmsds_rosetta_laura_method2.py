@@ -154,9 +154,9 @@ for r,d,f in os.walk(system_dir):
 							natoms = natoms + 1
 
 						if natoms != 0:
-							pla_com[0] = pla_com / natoms
-							pla_com[1] = pla_com / natoms
-							pla_com[2] = pla_com / natoms						
+							pla_com[0] = pla_com[0] / natoms
+							pla_com[1] = pla_com[1] / natoms
+							pla_com[2] = pla_com[2] / natoms						
 
 
 						if natoms > 0:
