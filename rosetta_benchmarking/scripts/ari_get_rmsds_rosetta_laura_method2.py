@@ -111,6 +111,7 @@ for r,d,f in os.walk(system_dir):
 
 						#variable to store teh ddg
 						ddg = 100
+						anchor_res = ""
 
 						placement_read_file = open(r2 + "/" + placement_file, "r")
 						for line in placement_read_file.readlines():
@@ -129,6 +130,10 @@ for r,d,f in os.walk(system_dir):
 
 							if line.startswith("Scoring: Post-HighResDock system ddG:"):
 								ddg = float(line.strip().split()[4])
+
+							if line.startswith("Table Values "):
+								anchor_res = line.split(",")[5]
+
 
 						#now, derive the placement rmsd
 						distance_sum = 0
@@ -165,7 +170,7 @@ for r,d,f in os.walk(system_dir):
 							rmsd = (((lig_com[0] - pla_com[0]) ** 2) + ((lig_com[1] - pla_com[1]) ** 2) + ((lig_com[2] - pla_com[2]) ** 2)) ** 0.5
 
 						#send values to the list
-						placements_data.append([rmsd,ddg,r2 + "/" + placement_file])
+						placements_data.append([rmsd,ddg,r2 + "/" + placement_file,anchor_res])
 
 			if len(placements_data) == 0:
 				print("NO PLACEMENTS FOR THIS SYSTEM!")
@@ -217,3 +222,66 @@ for r,d,f in os.walk(system_dir):
 			system_write_file.write(f"top all: {top_all_rmsd}\n")
 			system_write_file.write(f"top 10: {top_10_rmsd}\n")
 			system_write_file.write(f"top 1: {top_1_rmsd}\n")
+
+			#now, run through each anchor residue index and determine the best per anchor residue, to determine if any anchors are bad and are just placing in a different pocket
+			#iterate over the sorted placements data and rehash the data into a dictionary for easier processing
+
+			placements_by_anchor_dict = {}
+
+			for placement in placements_data:
+				#skip if somehow no anchor
+				if placement[3] == "":
+					continue
+
+				#see if the anchor is a key, and if not, create a new key list
+				if placement[3] not in placements_by_anchor_dict.keys():
+					placements_by_anchor_dict[placement[3]] = []
+
+				#append the placement (should still be in ddg order)
+				placements_by_anchor_dict[placement[3]].append(placement)
+
+			#iterate over the anchor dict and then determine the best rmsd for each of the 3 groups and print/write
+			for anchor in placements_by_anchor_dict.keys():
+				#determine the best rmsd for all, top 10, and top 1
+				top_1_rmsd = placements_by_anchor_dict[anchor][0]
+
+				#top 10
+				#default to keeping the first
+				top_10_rmsd = placements_by_anchor_dict[anchor][0]
+				for i in range(0,10):
+					#safety check to make sure we don't run out of bounds in case there are fewer than 10 palcements (which seems unlikely)
+					if len(placements_by_anchor_dict[anchor]) > i:
+						#check if better than currently held
+						if placements_by_anchor_dict[anchor][i][0] < top_10_rmsd[0]:
+							top_10_rmsd = placements_by_anchor_dict[anchor][i]
+
+
+				#top all
+				top_all_rmsd = placements_by_anchor_dict[anchor][0]
+				for i in range(0,len(placements_by_anchor_dict[anchor])):
+
+					#check if better than currently held
+					if placements_by_anchor_dict[anchor][i][0] < top_all_rmsd[0]:
+						top_all_rmsd = placements_by_anchor_dict[anchor][i]
+
+				#return the top rmsds
+				print("anchor res " + str(anchor))
+				print("top all: ", top_all_rmsd)
+				print("top 10: ", top_10_rmsd)
+				print("top 1: ", top_1_rmsd)
+
+				write_file.write(dire + "\n")
+				write_file.write("anchor res " + str(anchor) +"\n")
+				write_file.write(f"top all: {top_all_rmsd}\n")
+				write_file.write(f"top 10: {top_10_rmsd}\n")
+				write_file.write(f"top 1: {top_1_rmsd}\n")
+
+				#open and write a system_specific file to write the data for too
+				#system_write_file = open(r + "/" + dire + "/" + dire + "_best_rmsds.txt","w")
+				system_write_file.write("anchor res " + str(anchor) +"\n")
+				system_write_file.write(dire + "\n")
+				system_write_file.write(f"top all: {top_all_rmsd}\n")
+				system_write_file.write(f"top 10: {top_10_rmsd}\n")
+				system_write_file.write(f"top 1: {top_1_rmsd}\n")
+
+
