@@ -92,11 +92,12 @@ for r,d,f in os.walk(system_dir):
 				lig_com[0] = lig_com[0] + native_ligand_coords[atom][0]
 				lig_com[1] = lig_com[1] + native_ligand_coords[atom][1]
 				lig_com[2] = lig_com[2] + native_ligand_coords[atom][2]
+				natoms = natoms + 1
 
 			if natoms != 0:
-				lig_com[0] = lig_com / natoms
-				lig_com[1] = lig_com / natoms
-				lig_com[2] = lig_com / natoms
+				lig_com[0] = lig_com[0] / natoms
+				lig_com[1] = lig_com[1] / natoms
+				lig_com[2] = lig_com[2] / natoms
 
 			#test print of the native atom data
 			print("Native atom data: ", native_ligand_coords)
