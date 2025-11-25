@@ -105,7 +105,7 @@ for r,d,f in os.walk(system_dir):
 			#now, read through each system and derive the placement
 			for r2,d2,f2 in os.walk(r + "/" + dire + "/native"):
 				for placement_file in f2:
-					if "_individual_conf_" in placement_file and placement_file.endswith(".pdb"):
+					if "ligand" in placement_file and placement_file.endswith(".pdb"):
 						#we have a placement file; derive the ligand data
 						placement_ligand_coords = {}
 

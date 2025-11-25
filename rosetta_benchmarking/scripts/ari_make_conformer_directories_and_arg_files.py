@@ -40,37 +40,28 @@ systems_dict = {
     "9I0W": [3, 105, 107]
 }
 """
-"""
+
 #rerun for more accurate residues list
 systems_dict = {
     "9HZ0": [26, 42, 44, 91, 100, 145],#
     "9I1H": [60, 92, 93, 218, 220, 329, 365, 392, 475, 481],#
-    #"9LGN": [112, 115, 176],#good no redo
+    "9LGN": [112, 115, 176],#good no redo
     "9LYF": [14, 86, 209, 246, 250, 255, 294],#
     "9M3N": [44, 46, 86, 87, 99, 105, 111, 166],#
-    #"9M7M": [21, 24, 28, 39, 44, 47, 48, 49, 50, 52, 55, 113],#probably fine, no redo
-    "9N48": [36, 49, 51, 67, 80, 94, 96, 98, 149, 158, 159],#
-    #"9QEK": [42, 91, 93, 96, 147, 148, 150],#probably fine, no redo
+    "9M7M": [21, 24, 28, 39, 44, 47, 48, 49, 50, 52, 55, 113],#probably fine, no redo
+    "9QEK": [42, 91, 93, 96, 147, 148, 150],#probably fine, no redo
     "9I0T": [66, 91, 184, 186],#
-    #"9LNH": [171],#cholesterol, ignore
     "9ODR": [35, 63, 69, 83, 85],#
     "9LO7": [73, 186, 249, 253, 282, 285],#
     "9OG3": [205, 206, 208, 210, 319, 327, 387],#
     "9QEL": [17, 22, 32, 91, 128],#
-    #"9M3O": [267],#fine, no redo
-    #"9I4H": [200],#broken, don't worry about redo
+    "9M3O": [267],#fine, no redo
+    "9I4H": [174, 187 ,200, 267, 282],#
     "9LFU": [27, 42, 65, 86, 88, 141, 152],#
     "9LSL": [223, 234, 241, 245, 248],#
-    "9QAC": [34, 38, 46, 89],#
-    #"9I0W": [3, 105, 107],#broken no redo
-    "9MZX": [55, 58, 64, 66, 80, 124, 150]#
-    
-}
-"""
+    "9QAC": [34, 38, 46, 89]#
 
-systems_dict = {
-    #"9I0W": [39, 49, 98, 154, 213, 221]
-    "9I4H": [174, 187 ,200, 267, 282]
+    
 }
 
 
@@ -167,58 +158,64 @@ for system in systems_dict.keys():
 						if "chain_" in file2 and file2.endswith(".pdb"):
 							backbone_file = file2
 
+				#iterate and run over each anchor residue
+				for resid in systems_dict[system]:
 
-				argfile = open("args", "w")
+					os.system("mkdir " + str(resid))
+					os.chdir(str(resid))
 
-				argfile.write("#keep seed constant\n")
-				argfile.write("-constant_seed\n")
+					argfile = open("args", "w")
 
-				argfile.write("#input empty receptor protein\n")
-				argfile.write("-s ../test_params/" + backbone_file + "\n")
+					argfile.write("#keep seed constant\n")
+					argfile.write("-constant_seed\n")
 
-				argfile.write("#directory of ligand(s) to attempt to dock\n")
-				argfile.write("#POINT TO test_params DIRECTORY\n")
-				argfile.write("-params_directory_path test_params/\n")
+					argfile.write("#input empty receptor protein\n")
+					argfile.write("-s ../test_params/" + backbone_file + "\n")
 
-				argfile.write("#ligand motifs library\n")
-				argfile.write("#this is the motifs file you will use\n")
-				argfile.write("-motif_filename /pi/summer.thyme-umw/2024_intern_lab_space/FINAL_motifs_list_filtered_2_3_2023.motifs\n")
+					argfile.write("#directory of ligand(s) to attempt to dock\n")
+					argfile.write("#POINT TO test_params DIRECTORY\n")
+					argfile.write("-params_directory_path test_params/\n")
 
-				argfile.write("#index of residue(s) to dock ligands against\n")
-				argfile.write("-protein_discovery_locus " + anchor_res_list + " \n")
+					argfile.write("#ligand motifs library\n")
+					argfile.write("#this is the motifs file you will use\n")
+					argfile.write("-motif_filename /pi/summer.thyme-umw/2024_intern_lab_space/FINAL_motifs_list_filtered_2_3_2023.motifs\n")
 
-				argfile.write("#minimum cutoffs for fa_atr, fa_rep, and combined fa_atr_rep to be under\n")
-				argfile.write("#keep constant\n")
-				argfile.write("-fa_atr_cutoff = -2\n")
-				argfile.write("-fa_rep_cutoff = 150\n")
-				argfile.write("#-ddg_cutoff = -9\n")
+					argfile.write("#index of residue(s) to dock ligands against\n")
+					argfile.write("-protein_discovery_locus " + anchor_res_list + " \n")
 
-				argfile.write("#constrain coordinates\n")
-				argfile.write("#keep\n")
-				argfile.write("-constrain_relax_to_start_coords\n")
+					argfile.write("#minimum cutoffs for fa_atr, fa_rep, and combined fa_atr_rep to be under\n")
+					argfile.write("#keep constant\n")
+					argfile.write("-fa_atr_cutoff = -2\n")
+					argfile.write("-fa_rep_cutoff = 150\n")
+					argfile.write("#-ddg_cutoff = -9\n")
 
-				argfile.write("#keep all placements\n")
-				argfile.write("-best_pdbs_to_keep 0\n")
-				argfile.close()
+					argfile.write("#constrain coordinates\n")
+					argfile.write("#keep\n")
+					argfile.write("-constrain_relax_to_start_coords\n")
 
-				#bsub job throttle to make sure we do not exceed our local limit
-				#write the length of the bjobs queue to this current location
-				os.system("bjobs | wc -l > bjobs_length.txt")
-				job_count = 0
-				with open("bjobs_length.txt") as f:
-					job_count = int(f.read().strip())
-				while job_count > 3000:
-					#sleep for 1 second to not overburden the system
-					os.system("sleep 1")
+					argfile.write("#keep all placements\n")
+					argfile.write("-best_pdbs_to_keep 0\n")
+					argfile.close()
+
+					#bsub job throttle to make sure we do not exceed our local limit
+					#write the length of the bjobs queue to this current location
 					os.system("bjobs | wc -l > bjobs_length.txt")
+					job_count = 0
 					with open("bjobs_length.txt") as f:
 						job_count = int(f.read().strip())
-				#remove the length file to avoid clutter
-				os.system("rm bjobs_length.txt")
+					while job_count > 3000:
+						#sleep for 1 second to not overburden the system
+						os.system("sleep 1")
+						os.system("bjobs | wc -l > bjobs_length.txt")
+						with open("bjobs_length.txt") as f:
+							job_count = int(f.read().strip())
+					#remove the length file to avoid clutter
+					os.system("rm bjobs_length.txt")
 
-				#now, run Rosetta in a bsub job
-				os.system("bsub -q long -M 5000 -R \"rusage[mem=5000]\" -W 8:00 \"/pi/summer.thyme-umw/2024_intern_lab_space/rosetta/source/bin/ligand_discovery_search_protocol.linuxgccrelease @args\"")
+					#now, run Rosetta in a bsub job
+					os.system("bsub -q long -M 5000 -R \"rusage[mem=5000]\" -W 8:00 \"/pi/summer.thyme-umw/2024_intern_lab_space/rosetta/source/bin/ligand_discovery_search_protocol.linuxgccrelease @args\"")
 
+					os.chdir("..")
 
 
 				#at end, move back up
