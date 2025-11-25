@@ -112,6 +112,7 @@ for system in systems_dict.keys():
 	#file_base = file.split(".")[0]
 
 	#make a directory and move the file
+	os.system("rm -drf native")
 	os.system("mkdir native")
 
 	#move the file to the directory
