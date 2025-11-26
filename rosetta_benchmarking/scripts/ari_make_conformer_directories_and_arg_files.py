@@ -170,18 +170,18 @@ for system in systems_dict.keys():
 					argfile.write("-constant_seed\n")
 
 					argfile.write("#input empty receptor protein\n")
-					argfile.write("-s ../test_params/" + backbone_file + "\n")
+					argfile.write("-s ../../test_params/" + backbone_file + "\n")
 
 					argfile.write("#directory of ligand(s) to attempt to dock\n")
 					argfile.write("#POINT TO test_params DIRECTORY\n")
-					argfile.write("-params_directory_path test_params/\n")
+					argfile.write("-params_directory_path ../test_params/\n")
 
 					argfile.write("#ligand motifs library\n")
 					argfile.write("#this is the motifs file you will use\n")
 					argfile.write("-motif_filename /pi/summer.thyme-umw/2024_intern_lab_space/FINAL_motifs_list_filtered_2_3_2023.motifs\n")
 
 					argfile.write("#index of residue(s) to dock ligands against\n")
-					argfile.write("-protein_discovery_locus " + anchor_res_list + " \n")
+					argfile.write("-protein_discovery_locus " + str(resid) + " \n")
 
 					argfile.write("#minimum cutoffs for fa_atr, fa_rep, and combined fa_atr_rep to be under\n")
 					argfile.write("#keep constant\n")
